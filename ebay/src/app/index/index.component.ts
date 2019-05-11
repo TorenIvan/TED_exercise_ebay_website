@@ -29,9 +29,13 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.dtOptions = {
+    this.datatable = $('tableP').DataTable(this.dtOptions = {
       pagingType: 'full_numbers',
       columns: [
+        {
+          title: 'Details',
+          orderable: false
+        },
         { title: 'id' },
         { title: 'Seller' },
         { title: 'Product' },
@@ -44,13 +48,12 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
-        { "searchable": false, "visible": false, "targets": 0 },
         { "searchable": false, "visible": false, "targets": 1 },
-        { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 8 }
+        { "searchable": false, "visible": false, "targets": 7 },
+        { "searchable": false, "visible": false, "targets": 9 }
       ]
-    };
+    });
       
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
       if(data != null) {
@@ -78,6 +81,34 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  format () {
+    // 'd' is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+    '<tr>'+
+        '<td>Extra info:</td>'+
+        '<td>And any further details here (images etc)...</td>'+
+    '</tr>'+
+'</table>';
+  }
+
+  changeDetail() {
+    const tr = $('#detail-btn');
+    const row = this.datatable.row( tr );
+ 
+    if ( row.child.isShown() ) {
+      // This row is already open - close it
+      row.child.hide();
+      tr.removeClass('shown');
+    } else {
+      // Open this row
+      row.child( this.format());
+      console.log(this.format());
+      console.log(tr.addClass('shown'));
+      tr.addClass('shown');
+      console.log("done");
+    }
   }
 
 }
