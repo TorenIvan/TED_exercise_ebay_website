@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -12,7 +13,9 @@ import 'datatables.net-dt';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css']
 })
-export class IndexComponent implements OnDestroy, OnInit {
+export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
+  @ViewChild(DataTableDirective)
+  datatableElement: DataTableDirective;
 
   dtOptions: DataTables.Settings = {};
 
@@ -28,7 +31,18 @@ export class IndexComponent implements OnDestroy, OnInit {
 
     this.dtOptions = {
       pagingType: 'full_numbers',
-      order: [[ 1, "asc" ]],
+      columns: [
+        { title: 'id' },
+        { title: 'Seller' },
+        { title: 'Product' },
+        { title: 'Buy Price' },
+        { title: 'Currently' },
+        { title: 'First Bid' },
+        { title: 'Number of Bids' },
+        { title: 'Start Date' },
+        { title: 'End Date' }
+      ],
+      order: [[ 2, "asc" ]],
       columnDefs: [
         { "searchable": false, "visible": false, "targets": 0 },
         { "searchable": false, "visible": false, "targets": 1 },
@@ -43,6 +57,22 @@ export class IndexComponent implements OnDestroy, OnInit {
         this.products = data;
         this.dtTrigger.next();
       }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.pipe();
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns().every(function () {
+        const that = this;
+        $('input', this.footer()).on('keyup change', function () {
+          if (that.search() !== this['value']) {
+            that
+              .search(this['value'])
+              .draw();
+          }
+        });
+      });
     });
   }
 

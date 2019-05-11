@@ -1,19 +1,6 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>creator</th>
-            <th>product</th>
-            <th>buy price</th>
-            <th>currently</th>
-            <th>first bid</th>
-            <th>number of bids</th>
-            <th>start date</th>
-            <th>end date</th>
-        </tr>
-    </thead>
+<table id="tableP" datatable [dtOptions]="dtOptions" class="row-border hover">
     <tbody>
         <tr *ngFor="let product of products">
             <td>{{product.id}}</td>
@@ -29,15 +16,15 @@
     </tbody>
     <tfoot>
         <tr>
-            <th>id</th>
-            <th>creator</th>
-            <th>product</th>
-            <th>buy price</th>
-            <th>currently</th>
-            <th>first bid</th>
-            <th>number of bids</th>
-            <th>start date</th>
-            <th>end date</th>
+            <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
+            <th><input type="text" placeholder="Search creator" name="search-creator" /></th>
+            <th><input type="text" placeholder="Search product" name="search-product" /></th>
+            <th><input type="text" placeholder="Search buy price" name="search-buy-price" /></th>
+            <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
+            <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
+            <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
+            <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
+            <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
         </tr>
     </tfoot>
 </table>
