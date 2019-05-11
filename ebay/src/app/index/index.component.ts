@@ -28,12 +28,13 @@ export class IndexComponent implements OnDestroy, OnInit {
 
     this.dtOptions = {
       pagingType: 'full_numbers',
+      order: [[ 1, "asc" ]],
       columnDefs: [
-        { "visible": false, "targets": 0 },
-        { "visible": false, "targets": 1 },
-        { "visible": false, "targets": 5 },
-        { "visible": false, "targets": 6 },
-        { "visible": false, "targets": 8 }
+        { "searchable": false, "visible": false, "targets": 0 },
+        { "searchable": false, "visible": false, "targets": 1 },
+        { "searchable": false, "visible": false, "targets": 5 },
+        { "searchable": false, "visible": false, "targets": 6 },
+        { "searchable": false, "visible": false, "targets": 8 }
       ]
     };
       
