@@ -1,0 +1,43 @@
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>creator</th>
+            <th>product</th>
+            <th>buy price</th>
+            <th>currently</th>
+            <th>first bid</th>
+            <th>number of bids</th>
+            <th>start date</th>
+            <th>end date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{product.id}}</td>
+            <td>{{product.user_id}}</td>
+            <td>{{product.product_id}}</td>
+            <td>{{product.buy_price}}</td>
+            <td>{{product.currently}}</td>
+            <td>{{product.first_bid}}</td>
+            <td>{{product.number_of_bids}}</td>
+            <td>{{product.start_date}}</td>
+            <td>{{product.end_date}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>id</th>
+            <th>creator</th>
+            <th>product</th>
+            <th>buy price</th>
+            <th>currently</th>
+            <th>first bid</th>
+            <th>number of bids</th>
+            <th>start date</th>
+            <th>end date</th>
+        </tr>
+    </tfoot>
+</table>
