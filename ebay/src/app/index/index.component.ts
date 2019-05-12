@@ -32,10 +32,6 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
     this.datatable = $('tableP').DataTable(this.dtOptions = {
       pagingType: 'full_numbers',
       columns: [
-        {
-          title: 'Details',
-          orderable: false
-        },
         { title: 'id' },
         { title: 'Seller' },
         { title: 'Product' },
@@ -44,15 +40,29 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
         { title: 'First Bid' },
         { title: 'Number of Bids' },
         { title: 'Start Date' },
-        { title: 'End Date' }
+        { title: 'End Date' },
+        {
+          title: 'Details',
+          orderable: false
+        }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
-        { "searchable": false, "visible": false, "targets": 1 },
+        { "searchable": false, "visible": false, "targets": 0 },
+        { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 7 },
-        { "searchable": false, "visible": false, "targets": 9 }
-      ]
+        { "searchable": false, "visible": false, "targets": 8 }
+      ],
+      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+        const self = this;
+        // Unbind first in order to avoid any duplicate handler
+        // (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', row).unbind('click');
+        $('td', row).bind('click', () => {
+          console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
+        });
+        return row;
+      }
     });
       
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
@@ -83,32 +93,32 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
     this.dtTrigger.unsubscribe();
   }
 
-  format () {
-    // 'd' is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-    '<tr>'+
-        '<td>Extra info:</td>'+
-        '<td>And any further details here (images etc)...</td>'+
-    '</tr>'+
-'</table>';
-  }
+//   format () {
+//     // 'd' is the original data object for the row
+//     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+//     '<tr>'+
+//         '<td>Extra info:</td>'+
+//         '<td>And any further details here (images etc)...</td>'+
+//     '</tr>'+
+// '</table>';
+//   }
 
-  changeDetail() {
-    const tr = $('#detail-btn');
-    const row = this.datatable.row( tr );
+//   changeDetail() {
+//     const tr = $('#detail-btn');
+//     const row = this.datatable.row( tr );
  
-    if ( row.child.isShown() ) {
-      // This row is already open - close it
-      row.child.hide();
-      tr.removeClass('shown');
-    } else {
-      // Open this row
-      row.child( this.format());
-      console.log(this.format());
-      console.log(tr.addClass('shown'));
-      tr.addClass('shown');
-      console.log("done");
-    }
-  }
+//     if ( row.child.isShown() ) {
+//       // This row is already open - close it
+//       row.child.hide();
+//       tr.removeClass('shown');
+//     } else {
+//       // Open this row
+//       row.child( this.format());
+//       console.log(this.format());
+//       console.log(tr.addClass('shown'));
+//       tr.addClass('shown');
+//       console.log("done");
+//     }
+//   }
 
 }

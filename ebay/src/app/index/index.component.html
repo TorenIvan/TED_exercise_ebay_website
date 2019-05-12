@@ -3,7 +3,6 @@
 <table id="tableP" datatable [dtOptions]="dtOptions" class="row-border hover" cellspasing="0">
     <tbody>
         <tr *ngFor="let product of products">
-            <td><button id="detail-btn" (click)="changeDetail()">details</button></td>
             <td>{{product.id}}</td>
             <td>{{product.user_id}}</td>
             <td>{{product.product_id}}</td>
@@ -13,11 +12,11 @@
             <td>{{product.number_of_bids}}</td>
             <td>{{product.start_date}}</td>
             <td>{{product.end_date}}</td>
+            <td><button>More Details</button></td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <th><input type="text" placeholder="" name="detail-button" hidden disabled/></th>
             <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
             <th><input type="text" placeholder="Search seller" name="search-seller" /></th>
             <th><input type="text" placeholder="Search product" name="search-product" /></th>
@@ -27,6 +26,7 @@
             <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
             <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
             <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
+            <th><input type="text" placeholder="" name="detail-button" hidden disabled/></th>
         </tr>
     </tfoot>
 </table>
