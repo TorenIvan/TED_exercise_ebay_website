@@ -1,6 +1,6 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-<table id="tableP" datatable [dtOptions]="dtOptions" class="row-border hover" cellspasing="0">
+<table id="tableP" datatable [dtOptions]="dtOptions" class="display" cellspasing="0">
     <tbody>
         <tr *ngFor="let product of products">
             <td>{{product.id}}</td>
@@ -12,7 +12,6 @@
             <td>{{product.number_of_bids}}</td>
             <td>{{product.start_date}}</td>
             <td>{{product.end_date}}</td>
-            <td><button>More Details</button></td>
         </tr>
     </tbody>
     <tfoot>
@@ -26,7 +25,42 @@
             <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
             <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
             <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
-            <th><input type="text" placeholder="" name="detail-button" hidden disabled/></th>
         </tr>
     </tfoot>
 </table>
+
+
+<!--Modal-->
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <!--Dialog-->
+    <div class="modal-dialog modal-notify modal-info" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                    Details
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+          </button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+                <div [innerHTML]="modalBody"></div>
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <button type="button" mdbBtn color="info" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
+            Close
+          </button>
+            </div>
+            <!--Footer-->
+        </div>
+        <!--/.Content-->
+    </div>
+    <!--/.Dialog-->
+</div>
+<!--/.Modal-->
