@@ -8,14 +8,14 @@ import { ModalDirective } from 'angular-bootstrap-md';
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
-import { format } from 'util';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
+export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
+
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
 
@@ -35,7 +35,7 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
-
+    
     this.datatable = $('tableP').DataTable(this.dtOptions = {
       pagingType: 'full_numbers',
       columns: [
@@ -78,7 +78,11 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
+  }
+
+  ngAfterViewInit() {
     this.dtTrigger.pipe();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
@@ -92,10 +96,6 @@ export class IndexComponent implements OnDestroy, OnInit, AfterViewInit {
         });
       });
     });
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
   }
 
   format(data : string) {
