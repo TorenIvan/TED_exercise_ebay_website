@@ -8,14 +8,16 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { IndexComponent } from './index/index.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent,
-    IndexComponent
+    IndexComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

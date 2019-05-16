@@ -11,4 +11,8 @@ export class TableServiceService {
   getAllAuctions() {
     return this.httpClient.post('/api/read.php', {})
   }
+
+  checkUser(username, password) {
+    return this.httpClient.post('/api/signin.php', {username, password})
+  }
 }

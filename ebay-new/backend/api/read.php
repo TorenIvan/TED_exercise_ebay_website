@@ -2,13 +2,6 @@
 
 require 'connect.php';
 
-// $_POST = json_decode(file_get_contents('php://input'), true);
-//
-// if(isset($_POST) && !empty($_POST)) {
-//   $username = $_POST['username'];
-//   $password = $_POST['password'];
-// }
-
 $auctions = [];
 $sql = "SELECT * FROM auction";
 
@@ -35,3 +28,5 @@ else
 {
   http_response_code(404);
 }
+
+?>
