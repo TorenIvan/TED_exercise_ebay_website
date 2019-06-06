@@ -1,64 +1,152 @@
-<table id="tableP" datatable [dtOptions]="dtOptions" class="display" cellspasing="0">
-    <tbody>
-        <tr *ngFor="let product of products">
-            <td>{{product.id}}</td>
-            <td>{{product.user_id}}</td>
-            <td>{{product.product_id}}</td>
-            <td>{{product.buy_price}}</td>
-            <td>{{product.currently}}</td>
-            <td>{{product.first_bid}}</td>
-            <td>{{product.number_of_bids}}</td>
-            <td>{{product.start_date}}</td>
-            <td>{{product.end_date}}</td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
-            <th><input type="text" placeholder="Search seller" name="search-seller" /></th>
-            <th><input type="text" placeholder="Search product" name="search-product" /></th>
-            <th><input type="text" placeholder="Search buy price" name="search-buy-price" /></th>
-            <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
-            <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
-            <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
-            <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
-            <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
-        </tr>
-    </tfoot>
-</table>
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Index</title>
+    <!--Made with love by Mutiullah Samim -->
 
-<!--Modal-->
-<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
-    <!--Dialog-->
-    <div class="modal-dialog modal-notify modal-info" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header text-center">
-                <h4 class="modal-title white-text w-100 font-weight-bold py-2">
-                    Details
-                </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
-          <span aria-hidden="true" class="white-text">&times;</span>
-        </button>
-            </div>
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-            <!--Body-->
-            <div class="modal-body">
-                <div [innerHTML]="modalBody"></div>
-            </div>
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" routerLink="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-            <!--Footer-->
-            <div class="modal-footer justify-content-center">
-                <button type="button" mdbBtn color="info" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
-          Close
-        </button>
-            </div>
-            <!--Footer-->
+    <!--DataTables CDN && js file-->
+    <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+
+    <!-- A grey horizontal navbar that becomes vertical on small screens -->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+
+        <a class="navbar-brand" routerLink="#">Logo</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/signin">Logout</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container dTableCont">
+        <div class="d-flex justify-content-center h-100">
+
+            <table id="tableP" datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td>{{product.id}}</td>
+                        <td>{{product.user_surname}}</td>
+                        <td>{{product.product_name}}</td>
+                        <td>{{product.buy_price}}</td>
+                        <td>{{product.currently}}</td>
+                        <td>{{product.first_bid}}</td>
+                        <td>{{product.number_of_bids}}</td>
+                        <td>{{product.start_date}}</td>
+                        <td>{{product.end_date}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.country}}</td>
+                        <td>{{product.state}}</td>
+                        <td>{{product.town}}</td>
+                        <td>{{product.address}}</td>
+                        <td>{{product.postcode}}</td>
+                        <td>{{product.latitude}}</td>
+                        <td>{{product.longitude}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search seller" name="search-seller" /></th>
+                        <th><input type="text" placeholder="Search product" name="search-product" /></th>
+                        <th><input type="text" placeholder="Search buy price" name="search-buy-price" /></th>
+                        <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
+                        <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
+                        <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
+                        <th><input type="text" placeholder="description" name="description" /></th>
+                        <th><input type="text" placeholder="country" name="country" hidden disabled/></th>
+                        <th><input type="text" placeholder="state" name="state" hidden disabled/></th>
+                        <th><input type="text" placeholder="town" name="town" hidden disabled/></th>
+                        <th><input type="text" placeholder="address" name="address" hidden disabled/></th>
+                        <th><input type="text" placeholder="postcode" name="postcode" hidden disabled/></th>
+                        <th><input type="text" placeholder="latitude" name="latitude" hidden disabled/></th>
+                        <th><input type="text" placeholder="longitude" name="longitude" hidden disabled/></th>
+                    </tr>
+                </tfoot>
+            </table>
+
         </div>
-        <!--/.Content-->
     </div>
-    <!--/.Dialog-->
-</div>
-<!--/.Modal-->
+
+
+    <!--Modal-->
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Details
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div [innerHTML]="modalBody"></div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" mdbBtn color="info" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
+                        Close
+                        </button>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal-->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark pt-4">
+
+        <!-- Footer Elements -->
+        <div class="container">
+
+            <!-- Call to action -->
+            <ul class="list-unstyled list-inline text-center py-2">
+                <li class="list-inline-item">
+                    <h5 class="mb-1">Register for free</h5>
+                </li>
+                <li class="list-inline-item">
+                    <a routerLink="/signup" class="btn btn-outline-white btn-rounded">Sign up!</a>
+                </li>
+            </ul>
+            <!-- Call to action -->
+
+        </div>
+        <!-- Footer Elements -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a routerLink=""> Diva.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</body>
+
+</html>

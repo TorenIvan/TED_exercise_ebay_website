@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 html,
 body {
-    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+    // background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    // background-size: cover;
+    // background-repeat: no-repeat;
     height: 100vh;
     font-family: 'Numans', sans-serif;
+}
+
+a {
+    color: rgb(253, 193, 11);
+}
+
+a:hover {
+    color: white;
 }
 
 .container {
@@ -24,7 +32,9 @@ body {
 .social_icon span {
     font-size: 60px;
     margin-left: 10px;
-    color: #FFC312;
+    color: rgb(47, 158, 226);
+    ;
+    ;
 }
 
 .social_icon span:hover {
@@ -44,7 +54,8 @@ body {
 
 .input-group-prepend span {
     width: 50px;
-    background-color: #FFC312;
+    background-color: rgb(47, 158, 226);
+    ;
     color: black;
     border: 0 !important;
 }
@@ -66,8 +77,11 @@ input:focus {
 }
 
 .login_btn {
-    color: black;
-    background-color: #FFC312;
+    color: white;
+    text-decoration: aqua;
+    font-weight: 1000;
+    background-color: rgb(47, 158, 226);
+    ;
     width: 120px;
 }
 

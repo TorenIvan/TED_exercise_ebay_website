@@ -47,19 +47,33 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         { title: 'First Bid' },
         { title: 'Number of Bids' },
         { title: 'Start Date' },
-        { title: 'End Date' }
+        { title: 'End Date' },
+        { title: 'Description' },
+        { title: 'Country' },
+        { title: 'State' },
+        { title: 'Town' },
+        { title: 'Address' },
+        { title: 'Postcode' },
+        { title: 'Latitude' },
+        { title: 'Longitude' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
         { "searchable": false, "visible": false, "targets": 0 },
         { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 8 }
+        { "searchable": false, "visible": false, "targets": 8 },
+        { "searchable": false, "visible": false, "targets": 9 },
+        { "searchable": false, "visible": false, "targets": 10 },
+        { "searchable": false, "visible": false, "targets": 11 },
+        { "searchable": false, "visible": false, "targets": 12 },
+        { "searchable": false, "visible": false, "targets": 13 },
+        { "searchable": false, "visible": false, "targets": 14 },
+        { "searchable": false, "visible": false, "targets": 15 },
+        { "searchable": false, "visible": false, "targets": 16 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
-        // Unbind first in order to avoid any duplicate handler
-        // (see https://github.com/l-lin/angular-datatables/issues/87)
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
@@ -83,7 +97,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dtTrigger.pipe();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -96,21 +109,21 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
+    this.dtTrigger.pipe();
   }
 
   format(data : string) {
     const p = data.split(',');
     return '<div class="container">'
               + '<div class="row">'
-                + '<div class="col">' + p[0] + '</div>'
-                + '<div class="col">' + p[1] + '</div>'
-                + '<div class="col">' + p[2] + '</div>'
-                + '<div class="col">' + p[3] + '</div>'
-                + '<div class="col">' + p[4] + '</div>'
-                + '<div class="col">' + p[5] + '</div>'
-                + '<div class="col">' + p[6] + '</div>'
-                + '<div class="col">' + p[7] + '</div>'
-                + '<div class="col">' + p[8] + '</div>'
+                + '<div class="col"><h1>Product: </h1><p>' + p[2] + '</p></div>'
+                + '<div class="col"><h1>Seller: </h1><p>' + p[1] + '</p></div>'
+                + '<div class="col"><h1>Description: </h1><p>' + p[9] + '</p></div>'
+                + '<div class="col"><h1>Address: </h1><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div>'
+                + '<div class="col"><h1>Buy Price: </h1><p>' + p[3] + '</p></div>'
+                + '<div class="col"><h1>Currently: </h1><p>' + p[4] + '</p></div>'
+                + '<div class="col"><h1>Start Date: </h1><p>' + p[7] + '</p></div>'
+                + '<div class="col"><h1>End Date: </h1><p>' + p[8] + '</p></div>'
               + '</div>'
             + '</div>';
   }

@@ -1,3 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+html,
+body {
+    //     background-image: url('../../assets/lightBlueGradient.png');
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.navbar {
+    padding: 1% 6%;
+}
+
+.navbar-nav {
+    flex-direction: row;
+}
+
+.nav-link {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+}
+
+.dTableCont {
+    height: 85%;
+    align-content: center;
+    padding-block-start: 5%;
+}
+
+.dTable {
+    max-height: 70%;
+    height: fit-content;
+}
+
+// ----------- DataTable scss! --------------------------------------------------------------------------
 //
 // Colour customisation
 //
@@ -27,15 +62,22 @@ $jqueryui: false !default;
 //
 // Functions / mixins
 //
-@function tint( $color, $percent) {
-    @return mix(white, $color, $percent);
+@function tint( $color,
+$percent) {
+    @return mix(white,
+    $color,
+    $percent);
 }
 
-@function shade( $color, $percent) {
-    @return mix($table-shade, $color, $percent);
+@function shade( $color,
+$percent) {
+    @return mix($table-shade,
+    $color,
+    $percent);
 }
 
-@mixin gradient( $from, $to) {
+@mixin gradient( $from,
+$to) {
     background-color: $from;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $from), color-stop(100%, $to));
     /* Chrome,Safari4+ */
@@ -406,7 +448,8 @@ table.dataTable td {
             &.current:hover {
                 color: $table-control-color !important;
                 border: 1px solid darken( $table-paging-button-active, 27%);
-                @include gradient( lighten($table-paging-button-active, 28%), $table-paging-button-active);
+                @include gradient( lighten($table-paging-button-active, 28%),
+                $table-paging-button-active);
             }
             &.disabled,
             &.disabled:hover,
@@ -420,11 +463,13 @@ table.dataTable td {
             &:hover {
                 color: white !important;
                 border: 1px solid $table-paging-button-hover;
-                @include gradient( lighten($table-paging-button-hover, 28%), $table-paging-button-hover);
+                @include gradient( lighten($table-paging-button-hover, 28%),
+                $table-paging-button-hover);
             }
             &:active {
                 outline: none;
-                @include gradient( lighten($table-paging-button-hover, 10%), darken($table-paging-button-hover, 2%));
+                @include gradient( lighten($table-paging-button-hover, 10%),
+                darken($table-paging-button-hover, 2%));
                 box-shadow: inset 0 0 3px #111;
             }
         }
