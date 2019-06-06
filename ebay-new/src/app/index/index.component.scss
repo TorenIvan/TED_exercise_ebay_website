@@ -16,6 +16,21 @@ body {
     flex-direction: row;
 }
 
+.navbar-brand {
+    color: #111;
+}
+
+.navbar-nav.ml-auto li a {
+    color: #111;
+}
+
+.navbar-nav.ml-auto li a:hover {
+    color: #111;
+    transform: scale(1.5);
+    opacity: 1;
+    transition: 0.5s;
+}
+
 .nav-link {
     padding-right: 2rem !important;
     padding-left: 2rem !important;
