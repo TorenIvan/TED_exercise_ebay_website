@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

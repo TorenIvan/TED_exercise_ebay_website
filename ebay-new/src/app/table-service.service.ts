@@ -15,4 +15,12 @@ export class TableServiceService {
   checkUser(username, password) {
     return this.httpClient.post('/api/signin.php', {username, password})
   }
+
+  newUser(name, surname, email, phone, country, state, town, address, postcode, afm, username, password) {
+    return this.httpClient.post('api/signup.php', {name, surname, email, phone, country, state, town, address, postcode, afm, username, password})
+  }
+
+  sendEmail(email) {
+    return this.httpClient.post('api/retrievepass.php', {email})
+  }
 }
