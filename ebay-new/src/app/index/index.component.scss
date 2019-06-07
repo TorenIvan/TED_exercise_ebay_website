@@ -10,6 +10,7 @@ body {
 
 .navbar {
     padding: 1% 6%;
+    background: rgb(150, 203, 232);
 }
 
 .navbar-nav {
@@ -45,6 +46,10 @@ body {
 .dTable {
     max-height: 70%;
     height: fit-content;
+}
+
+.page-footer {
+    background: rgb(122, 172, 203);
 }
 
 // ----------- DataTable scss! --------------------------------------------------------------------------

@@ -5,11 +5,11 @@ require 'connect.php';
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 if(isset($_POST) && !empty($_POST)) {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    // $username = "diva";
-    //     $password = "diva";
+    // $username = "administrator";
+    // $password = "admin";
 
     $username = htmlspecialchars($username);
     $password = htmlspecialchars($password);
@@ -18,55 +18,49 @@ if(isset($_POST) && !empty($_POST)) {
     // echo $password;
     $user = [];
 
-    $sql = "SELECT id, user_category_id, username, password, name, surname, phone_number, email, country, state, town, address, postcode, afm, rating_bidder, rating_seller  FROM user WHERE username=? AND password=?;";
-    // echo $username;
+    $sql1 = "SELECT password FROM user WHERE username=?;";
 
-    if($stmt = mysqli_prepare($con, $sql)) {
-        // echo $username;
-
-        mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+    if($stmt1 = mysqli_prepare($con, $sql1)) {
+        mysqli_stmt_bind_param($stmt1, "s", $param_username);
         $param_username = $username;
-        $param_password = $password;
 
-        if(mysqli_stmt_execute($stmt)) {
+        if(mysqli_stmt_execute($stmt1)) {
             // echo $username;
 
-            mysqli_stmt_store_result($stmt);
-            // echo $username;
+            mysqli_stmt_bind_result($stmt1, $data_password);
 
-            mysqli_stmt_bind_result($stmt, $id, $user_category_id, $username, $password, $name, $surname, $phone_number, $email, $country, $state, $town, $address, $postcode, $afm, $rating_bidder, $rating_seller);
-            if(mysqli_stmt_fetch($stmt) == 1) {
+            if(mysqli_stmt_fetch($stmt1) == 1) {
                 // echo $username;
 
-                $user['id'] = $id;
-                $user['user_category_id'] = $user_category_id;
-                $user['username'] = $username;
-                $user['password'] = $password;
-                $user['name'] = $name;
-                $user['surname'] = $surname;
-                $user['phone_number'] = $phone_number;
-                $user['email'] = $email;
-                $user['country'] = $country;
-                $user['state'] = $state;
-                $user['town'] = $town;
-                $user['address'] = $address;
-                $user['postcode'] = $postcode;
-                $user['afm'] = $afm;
-                $user['rating_bidder'] = $rating_bidder;
-                $user['rating_seller'] = $rating_seller;
+                if(password_verify($password, $data_password)) {
 
+                    mysqli_stmt_close($stmt1);
 
-                echo json_encode($user);
+                    $sql = "SELECT id, user_category_id, name, surname, phone_number, email, country, state, town, address, postcode, afm, rating_bidder, rating_seller FROM user WHERE username=\"".$param_username."\";";
+                    // echo $username;
+                    
+                    $result = mysqli_query($con, $sql);
+                    // echo $username;
+                    if(mysqli_num_rows($result) > 0) {
+                        // echo $username;
+
+                        $row = mysqli_fetch_assoc($result);
+                        echo json_encode($row);
+                    } else {
+                        echo json_encode("1 ".$sql);
+                    }
+                } else {
+                    echo json_encode("Wrong Password. Please try again.");
+                }
             } else {
-                http_response_code(404);
+                echo json_encode("No user with username \"".$username);
             }
         }
         else {
-            http_response_code(404);
+            echo json_encode("6");;
         }
-        mysqli_stmt_close($stmt);
     } else {
-        http_response_code(404);
+        echo json_encode("7");;
     }
 } else {
     // http_response_code("NO ONE REQUESTED THIS! WHY DO YOU ASK FOR IT?!");
