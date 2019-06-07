@@ -36,7 +36,14 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     
-    this.datatable = $('tableP').DataTable(this.dtOptions = {
+    this.tableService.getAllAuctions().subscribe((data: Product[]) => {
+      if(data != null) {
+        this.products = data;
+        this.dtTrigger.next();
+      }
+    });
+
+    this.dtOptions = {
       pagingType: 'full_numbers',
       columns: [
         { title: 'id' },
@@ -82,21 +89,18 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         return row;
       }
-    });
-      
-    this.tableService.getAllAuctions().subscribe((data: Product[]) => {
-      if(data != null) {
-        this.products = data;
-        this.dtTrigger.next();
-      }
-    });
+    };
+
+    this.rerender();
   }
 
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
   }
+  
 
   ngAfterViewInit() {
+    this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -109,7 +113,15 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
-    this.dtTrigger.pipe();
+  }
+
+  rerender(): void{
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 
   format(data : string) {

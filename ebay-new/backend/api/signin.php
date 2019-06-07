@@ -14,6 +14,11 @@ if(isset($_POST) && !empty($_POST)) {
     $username = htmlspecialchars($username);
     $password = htmlspecialchars($password);
 
+    if(trim($username) == "guest" && trim($password) == "guest") {
+        echo json_encode("0");
+        exit;
+    }
+
     // echo $username;
     // echo $password;
     $user = [];

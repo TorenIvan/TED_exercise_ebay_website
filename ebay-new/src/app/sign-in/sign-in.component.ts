@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,7 +9,7 @@ import { TableServiceService } from '../table-service.service';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private tableService: TableServiceService) { }
+  constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
   }
@@ -22,6 +23,9 @@ export class SignInComponent implements OnInit {
     this.tableService.checkUser(username, password).subscribe(data => {
       if(data != null) {
         console.log(data)
+        if(data == "0") {
+          this.rooter.navigateByUrl('/index')
+        }
       } else {
         window.alert(data)
       }

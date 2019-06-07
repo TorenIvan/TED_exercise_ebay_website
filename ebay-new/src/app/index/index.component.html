@@ -13,7 +13,14 @@
 
     <!--DataTables CDN && js file-->
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tableP').Datatable();
+        })
+    </script>
 </head>
 
 <body>
@@ -36,7 +43,7 @@
         <div class="d-flex justify-content-center h-100">
 
             <table id="tableP" datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
-                <tbody>
+                <tbody *ngIf="products?.length != 0">
                     <tr *ngFor="let product of products">
                         <td>{{product.id}}</td>
                         <td>{{product.user_surname}}</td>
@@ -57,27 +64,32 @@
                         <td>{{product.longitude}}</td>
                     </tr>
                 </tbody>
-                <tfoot>
+                <tbody *ngIf="products?.length == 0">
                     <tr>
-                        <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
-                        <th><input type="text" placeholder="Search seller" name="search-seller" /></th>
-                        <th><input type="text" placeholder="Search product" name="search-product" /></th>
-                        <th><input type="text" placeholder="Search buy price" name="search-buy-price" /></th>
-                        <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
-                        <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
-                        <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
-                        <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
-                        <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
-                        <th><input type="text" placeholder="description" name="description" /></th>
-                        <th><input type="text" placeholder="country" name="country" hidden disabled/></th>
-                        <th><input type="text" placeholder="state" name="state" hidden disabled/></th>
-                        <th><input type="text" placeholder="town" name="town" hidden disabled/></th>
-                        <th><input type="text" placeholder="address" name="address" hidden disabled/></th>
-                        <th><input type="text" placeholder="postcode" name="postcode" hidden disabled/></th>
-                        <th><input type="text" placeholder="latitude" name="latitude" hidden disabled/></th>
-                        <th><input type="text" placeholder="longitude" name="longitude" hidden disabled/></th>
+                        <td colspan="5" class="no-data-available">No data!</td>
                     </tr>
-                </tfoot>
+                    <tbody>
+                        <tfoot>
+                            <tr>
+                                <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
+                                <th><input type="text" placeholder="Search seller" name="search-seller" /></th>
+                                <th><input type="text" placeholder="Search product" name="search-product" /></th>
+                                <th><input type="text" placeholder="Search buy price" name="search-buy-price" /></th>
+                                <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
+                                <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
+                                <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
+                                <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
+                                <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
+                                <th><input type="text" placeholder="description" name="description" /></th>
+                                <th><input type="text" placeholder="country" name="country" hidden disabled/></th>
+                                <th><input type="text" placeholder="state" name="state" hidden disabled/></th>
+                                <th><input type="text" placeholder="town" name="town" hidden disabled/></th>
+                                <th><input type="text" placeholder="address" name="address" hidden disabled/></th>
+                                <th><input type="text" placeholder="postcode" name="postcode" hidden disabled/></th>
+                                <th><input type="text" placeholder="latitude" name="latitude" hidden disabled/></th>
+                                <th><input type="text" placeholder="longitude" name="longitude" hidden disabled/></th>
+                            </tr>
+                        </tfoot>
             </table>
 
         </div>
