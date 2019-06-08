@@ -19,6 +19,11 @@
                 </div>
                 <div class="card-body">
                     <form (submit)=signUp($event)>
+                        <div class="form-group">
+                            <p class="input-instruction d-flex justify-content-center">Please fill all the fields below</p>
+                        </div>
+                        <hr>
+                        <p class="input-title">Username:</p>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
@@ -27,57 +32,65 @@
                         </div>
                         <div class="row">
                             <div class="input-group form-group col">
+                                <p class="input-title">Password:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
                                 <input id="nuPassword" type="password" class="form-control" placeholder="Password">
                             </div>
                             <div class="input-group form-group col">
+                                <p class="input-title">Confirm Password:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input id="nuConfPassword" type="password" class="form-control" placeholder="Confirm password">
+                                <input id="nuConfPassword" type="password" class="form-control" placeholder="Confirm Password">
                             </div>
                         </div>
-                        <br>
+                        <hr>
                         <div class="row">
                             <div class="input-group form-group col">
+                                <p class="input-title">Name:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
                                 <input id="nuName" type="text" class="form-control" placeholder="Name">
                             </div>
                             <div class="input-group form-group col">
+                                <p class="input-title">Surname:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
                                 <input id="nuSurname" type="text" class="form-control" placeholder="Surname">
                             </div>
                         </div>
-                        <br>
+                        <hr>
                         <div class="row">
                             <div class="input-group form-group col">
+                                <p class="input-title">Email:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 </div>
                                 <input id="nuEmail" type="email" class="form-control" placeholder="Email">
                             </div>
                             <div class="input-group form-group col">
+                                <p class="input-title">Phone Number:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input id="nuPhone" type="number" class="form-control" placeholder="Phone number">
+                                <input id="nuPhone" type="number" class="form-control" placeholder="Phone Number">
                             </div>
                         </div>
-                        <br>
+                        <hr>
                         <div class="row">
                             <div class="input-group form-group col">
+                                <p class="input-title">Country:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                                 </div>
                                 <input id="nuCountry" type="text" class="form-control" placeholder="Country">
                             </div>
                             <div class="input-group form-group col">
+                                <p class="input-title">State:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                                 </div>
@@ -86,12 +99,14 @@
                         </div>
                         <div class="row">
                             <div class="input-group form-group col">
+                                <p class="input-title">Town:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                                 </div>
                                 <input id="nuTown" type="text" class="form-control" placeholder="Town">
                             </div>
                             <div class="input-group form-group col">
+                                <p class="input-title">Address:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                                 </div>
@@ -100,6 +115,7 @@
                         </div>
                         <div class="row">
                             <div class="input-group form-group col">
+                                <p class="input-title">Postcode:</p>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
                                 </div>
@@ -108,14 +124,15 @@
                             <div class="input-group form-group col">
                             </div>
                         </div>
-                        <br>
+                        <hr>
+                        <p class="input-title">TIN / ΑΦΜ:</p>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-signature"></i></span>
                             </div>
                             <input id="nuAFM" type="number" min="100000000" max="999999999" class="form-control" placeholder="TIN / ΑΦΜ">
                         </div>
-                        <br>
+                        <hr>
                         <div class="form-group">
                             <input type="submit" value="Sign up" class="btn float-right signup_btn">
                         </div>

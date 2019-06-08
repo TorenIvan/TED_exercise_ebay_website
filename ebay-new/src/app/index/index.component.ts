@@ -126,17 +126,27 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   format(data : string) {
     const p = data.split(',');
+    if(p[8] == "") {
+      return '<div class="container">'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
+              + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
+              + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
+              + '<div class="col"></div><br>'
+            + '</div>';
+    }
     return '<div class="container">'
-              + '<div class="row">'
-                + '<div class="col"><h1>Product: </h1><p>' + p[2] + '</p></div>'
-                + '<div class="col"><h1>Seller: </h1><p>' + p[1] + '</p></div>'
-                + '<div class="col"><h1>Description: </h1><p>' + p[9] + '</p></div>'
-                + '<div class="col"><h1>Address: </h1><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div>'
-                + '<div class="col"><h1>Buy Price: </h1><p>' + p[3] + '</p></div>'
-                + '<div class="col"><h1>Currently: </h1><p>' + p[4] + '</p></div>'
-                + '<div class="col"><h1>Start Date: </h1><p>' + p[7] + '</p></div>'
-                + '<div class="col"><h1>End Date: </h1><p>' + p[8] + '</p></div>'
-              + '</div>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
+              + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
+              + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
+              + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><p>' + p[8] + '</p></div></div><br>'
             + '</div>';
   }
 
