@@ -6,8 +6,8 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
 // db credentials
 define('DB_HOST', 'localhost');
-define('DB_USER', 'ted_admin');
-define('DB_PASS', 'Adm1n!01');
+define('DB_USER', 'root');
+define('DB_PASS', 'toor');
 define('DB_NAME', 'ted_ebay');
 
 // Connect with the database.
@@ -25,3 +25,5 @@ function connect()
 }
 
 $con = connect();
+
+?>

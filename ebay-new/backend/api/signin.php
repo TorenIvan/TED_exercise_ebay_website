@@ -43,7 +43,7 @@ if(isset($_POST) && !empty($_POST)) {
 
                     $sql = "SELECT id, user_category_id, name, surname, phone_number, email, country, state, town, address, postcode, afm, rating_bidder, rating_seller FROM user WHERE username=\"".$param_username."\";";
                     // echo $username;
-                    
+
                     $result = mysqli_query($con, $sql);
                     // echo $username;
                     if(mysqli_num_rows($result) > 0) {
