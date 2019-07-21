@@ -1,5 +1,10 @@
 <?php
 
+#summer zodiac
+#// TODO:
+  #$_POST for everything on html file
+  #check for XSS
+  #...etc comming soon
 require 'connect.php';
 
 $_POST = json_decode(file_get_contents('php://input'), true);
