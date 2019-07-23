@@ -34,19 +34,19 @@ require 'connect.php';
 
           $sql = "SELECT name,email from user WHERE email = \"".$param_email."\"; ";
     //      print_r($param_email);
-          print_r($sql);
+          //print_r($sql);
 
           $result = mysqli_query($con, $sql);
 
           if (mysqli_num_rows($result) > 0) {
-            print_r("resulted");
+            print_r("result : ");
             $row = mysqli_fetch_assoc($result);
             print_r($row);
             echo json_encode($row);
 
           } else {
             json_encode("4");
-            print_r("sosta");
+            //print_r("sosta");
           }
       } else {
         json_encode("3");
