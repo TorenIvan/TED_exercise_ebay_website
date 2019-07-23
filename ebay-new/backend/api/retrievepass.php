@@ -29,7 +29,7 @@ require 'connect.php';
       mysqli_stmt_bind_result($stmttemp, $mail);
 
       if (mysqli_stmt_fetch($stmttemp)==1) {
-          mysqli_stmt_close($stmt1);
+          mysqli_stmt_close($stmttemp);
           //print_r("fetch and closed");
 
           $sql = "SELECT name,email from user WHERE email = \"".$param_email."\"; ";
@@ -38,16 +38,16 @@ require 'connect.php';
 
           $result = mysqli_query($con, $sql);
 
-        //  if (mysqli_num_rows($result) > 0) {
+          if (mysqli_num_rows($result) > 0) {
             print_r("resulted");
             $row = mysqli_fetch_assoc($result);
             print_r($row);
             echo json_encode($row);
 
-          //} else {
-            //json_encode("4");
-        //    print_r("sosta");
-          //}
+          } else {
+            json_encode("4");
+            print_r("sosta");
+          }
       } else {
         json_encode("3");
       }
