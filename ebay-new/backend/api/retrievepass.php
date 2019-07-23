@@ -32,7 +32,7 @@ require 'connect.php';
           mysqli_stmt_close($stmttemp);
           //print_r("fetch and closed");
 
-          $sql = "SELECT name,email from user WHERE email = \"".$param_email."\"; ";
+          $sql = "SELECT name, password, email from user WHERE email = \"".$param_email."\"; ";
     //      print_r($param_email);
           //print_r($sql);
 
@@ -43,6 +43,18 @@ require 'connect.php';
             $row = mysqli_fetch_assoc($result);
             print_r($row);
             echo json_encode($row);
+
+            #this is where the fun begins
+
+            #parameters of mail
+            // $to = $param_email;
+            // $subject = "Retrieve password";
+            // $txt = "Hello world!";
+            // $headers = "From: webmaster@example.com" . "\r\n" .
+            // "CC: somebodyelse@example.com";
+            //
+            // #just send it
+            // mail($to,$subject,$txt,$headers);
 
           } else {
             json_encode("4");
