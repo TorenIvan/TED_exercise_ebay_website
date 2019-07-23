@@ -13,10 +13,14 @@ define('DB_NAME', 'ted_ebay');
 // Connect with the database.
 function connect()
 {
-  $connect = mysqli_connect(DB_HOST ,DB_USER ,DB_PASS ,DB_NAME);
-
+//  echo "string";
+  $connect =mysqli_connect(DB_HOST ,DB_USER ,DB_PASS ,DB_NAME);
+//  echo "string";
   if (mysqli_connect_errno($connect)) {
+    print_r('not connected');
     die("Failed to connect:" . mysqli_connect_error());
+  }else {
+  //  echo 'connected';
   }
 
   mysqli_set_charset($connect, "utf8");
