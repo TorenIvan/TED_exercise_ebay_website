@@ -1,0 +1,10 @@
+(for) pempti{
+  //genika oti prolabeis gia na deis ligo foto, alla stoxos einai:
+  1.  forgot password(to send only);
+  2.  delete user{
+        delete the row for the table and whatever he is into(auctions etc). Here we have many sql queries to define the user connections on db
+      }
+  3.  edit user{
+        change every attribute on the table user(take example a user on db)
+      }
+}

@@ -8,7 +8,7 @@
   #check if someone is already in db with that username or password or email or phone_number or afm (query using prepared statements) -done
   #check if email is realistic  -done?
   #encrypt password before inserting on db -done
-  #insert everything on db using prepared statements
+  #insert everything on db using prepared statements	-done
 require 'connect.php';
 
 //$_POST = json_decode(file_get_contents('php://input'), true);
