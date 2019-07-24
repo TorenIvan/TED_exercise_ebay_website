@@ -7,7 +7,7 @@ require 'connect.php';
 
 // if (isset($_POST) && !empty($_POST)) {
 
-  $email="admin@hotmail.com";
+  $email="vaggelisshmos@gmail.com";
   #Protection for XSS
   $email = htmlspecialchars($email);
 
@@ -47,14 +47,15 @@ require 'connect.php';
             #this is where the fun begins
 
             #parameters of mail
-            // $to = $param_email;
-            // $subject = "Retrieve password";
-            // $txt = "Hello world!";
-            // $headers = "From: webmaster@example.com" . "\r\n" .
-            // "CC: somebodyelse@example.com";
-            //
-            // #just send it
-            // mail($to,$subject,$txt,$headers);
+            $to = $param_email;
+            $subject = "Retrieve password";
+            $txt = $row['password'];
+            $headers = "From: admin@tedebay.com" . "\r\n" .
+
+            #just send it
+            mail($to,$subject,$txt,$headers);
+
+            print_r("send_it\n");
 
           } else {
             json_encode("4");
