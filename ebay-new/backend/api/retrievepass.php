@@ -21,7 +21,7 @@ require 'connect.php';
   if ($stmttemp = mysqli_prepare($con,$sqltemp)) {
     mysqli_stmt_bind_param($stmttemp,"s",$param_email);
     //print_r("prepare and bind");
-    #what?
+    #set parameter
     $param_email=$email;
     if (mysqli_stmt_execute($stmttemp)) {
       //print_r("execute");
