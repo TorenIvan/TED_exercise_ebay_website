@@ -5,9 +5,9 @@
   #$_POST for everything on html file -done
   #check for XSS  -done
   #...etc comming soon  -done
-  #check if someone is already in db with that username or password or email or phone_number or afm (query using prepared statements)
-  #check if email is realistic
-  #encode password before inserting on db
+  #check if someone is already in db with that username or password or email or phone_number or afm (query using prepared statements) -done
+  #check if email is realistic  -done?
+  #encrypt password before inserting on db -done
   #insert everything on db using prepared statements
 require 'connect.php';
 
@@ -15,7 +15,7 @@ require 'connect.php';
 
 //if(isset($_POST) && !empty($_POST)) {
 
-    $username = "diva";
+    $username = "divaa";
     $tpassword = "filou";
     $name = "filos";
     $surname = "filou";
@@ -98,8 +98,35 @@ require 'connect.php';
         }else {
 
           print_r("Ola kala\n");
+
           //edo sunexizoume, den bre8ike user with the same username or password or email or phone_number or afm
           //check for email now, if it's realistic
+          //the only safe way to do that is by sending an email to user, he clicks it, and the activate the rest. But unfortunately, we don't have the passion to do that and the front end is far away to ask him what we shoud do.
+          //So we chose two other options (optional options xD) to close the gap for the email problem. Some of these may have been already done by our master front end dev
+          //In our example, email is valid but it doesn't exist. Unfortunately, we check true.
+          //Let's get started:::
+
+          // Check that the address is formatted correctly
+          if (filter_var($param_email, FILTER_VALIDATE_EMAIL) !== FALSE) {
+            print_r("1st try email ok  ");
+          }else {
+            print_r("1st try email is not ok  ");
+            json_encode("8");
+          }
+          // Check that the DNS record exists for the domain name
+          $domain = substr($param_email, strpos($param_email, '@') + 1);
+          if  (checkdnsrr($domain) !== FALSE) {
+            print_r('2nd try email is ok cause domain is valid!');
+          }else {
+            print_r('2nd try email is not ok ');
+          }
+          //that's all for now m8s
+
+          //Now we want to encrypt our password to sha384(as it seems on a file i found for our front end dev)
+          $salt= substr(str_shuffle(MD5(microtime())), 0, 10);  //optional
+          $new_pass = hash('sha384', $param_password);
+          print_r($new_pass);
+
         }
 
       }else {
