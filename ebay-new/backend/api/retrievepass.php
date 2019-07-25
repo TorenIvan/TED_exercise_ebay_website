@@ -50,9 +50,14 @@ require 'connect.php';
             $to = $param_email;
             $subject = "Retrieve password";
             $txt = $row['password'];
-            $headers = "From: admin@tedebay.com" . "\r\n" .
+            $headers = $headers=array(
+              'From: "admin@ted_ebay.com',
+              'Content-Type:text/html;charset=UTF-8',
+              );
+            $headers = implode("\r\n", $headers);
 
             #just send it
+            //You should do localy sudo apt-get install sendmail
             mail($to,$subject,$txt,$headers);
 
             print_r("send_it\n");

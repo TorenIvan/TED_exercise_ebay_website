@@ -1,10 +1,30 @@
-(for) pempti{
+(for) sabbato{
   //genika oti prolabeis gia na deis ligo foto, alla stoxos einai:
-  1.  forgot password(to send only);
+  1.  forgot password(to send only);  -done(almost), symela has to see it
   2.  delete user{
         delete the row for the table and whatever he is into(auctions etc). Here we have many sql queries to define the user connections on db
       }
   3.  edit user{
         change every attribute on the table user(take example a user on db)
       }
+  4.  delete auction{//same as 2.}
+  5.  edit auction{//same as 3.}
 }
+
+
+(for) kuriaki{
+  connections of php files:
+    all require connect.php
+    to signup.php 8a stelnei ton xristi sto  6. userwait.php. Ara to signup requires userwait.php. Giati omos na ton stelnei ekei? pame na doume apo kato...
+    prepei na ginei to userwait.php sto opoio o user 8a perimenei mexri na ginei eggrisi. Otan ginetai eggrisi, 8a stelnei kapoio flag sti symela oti egine, kai 8a ton pigaini sto signin.php. Alla pos ginetai auti i egkrisi? Pame apo kato...
+    to userwait.php requires  7. acceptuser.php. To teleutaio 8a exei mia lista me users pou perimenoun na eggrafoun. 8a epistrefei ti lista sto frontend kai 8a lambanei minimata apodoxis apo to front end gia kapoio user(basei username), 8a ton bgazei apo ti lista kai 8a epistrefei sto waituser.php opou 8a kanei json_encode (flag diladi kati) ston front end oti bgike apo ti lista, pigaine ton sto signin
+    Ara,      signup -> waituser -> acceptuser -> waituser -> signin
+}
+
+//8a doume pote
+Ti allo 8eloume? Let's find out:
+  8.  Insert auction (symela gives me username, pairno ta upoloipa apo ta post methods)
+  9.  Show all auctions
+  10. Map
+  11. Messaging
+  12  LSH
