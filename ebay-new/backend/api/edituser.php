@@ -10,10 +10,11 @@ require 'connect.php';
   //epilegoume to user pou ta kanei ola auta
     $sqltt = "SELECT * FROM user where username = 'divasa';";
     $resultt = mysqli_query($con, $sqltt);
-    //userk is the user on db with at least one same attribute as the one doing sign up
+
     $usertt = mysqli_fetch_assoc($resultt);
 
-    $username = "divasaa";
+    //parameters after editing, we will take them from post. This is for now!
+    $username = "divasaaa";
     $tpassword = "filosu";
     $name = "filoss";
     $surname = "filsou";
@@ -26,16 +27,26 @@ require 'connect.php';
     $postcode="123556789";
     $afm = 123456889;
     $id = $usertt['id'];
+    $user_category_id = $usertt['user_category_id'];
     $rating_bidder = $usertt['rating_bidder'];
     $rating_seller = $usertt['rating_seller'];
     //delete user
+    //divasa is the name of the user who is doing the edit and he want's to edit himself
     $sqld = "DELETE FROM user where username = 'divasa';";
-    if($resultd = mysqli_query($con,$sqld)){}else {
+    if($resultd = mysqli_query($con,$sqld)){
+      print_r("deleted\n");
+    }else {
       print_r("something is wrong with delete query\n");
       json_encode("something is wrong with delete query");
       exit;
     }
 
+    // $sqla = "SELECT * from auction where (select id from user where username = 'divasa' and id = auction.user_id);";
+    // $resulta = mysqli_query($con, $sqlta);
+    //
+    // while ($userta = mysqli_fetch_assoc($resulta)){
+    //   //do nothing, just for the save
+    // }
 
     //xss protection and of the user of post method(at the same time 2 things)
     // $username = htmlspecialchars($_POST['Username']);
@@ -140,10 +151,11 @@ require 'connect.php';
 
 
           //  And now let's go to insert the values
-          $sql = "INSERT INTO user (id, username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm, rating_bidder, rating_seller) VALUES (?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+          $sql = "INSERT INTO user (id, user_category_id, username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm, rating_bidder, rating_seller) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
           if($stmt = mysqli_prepare($con, $sql)) {
-            mysqli_stmt_bind_param($stmt, "isssssssssssidd", $id, $uusername, $ppassword, $nname, $ssurname, $eemail, $pphone_number, $ccountry, $sstate, $ttown, $aaddress, $ppostcode, $aafm, $rating_bidder, $rating_seller);
+            mysqli_stmt_bind_param($stmt, "iisssssssssssidd", $id, $user_category_id, $uusername, $ppassword, $nname, $ssurname, $eemail, $pphone_number, $ccountry, $sstate, $ttown, $aaddress, $ppostcode, $aafm, $rating_bidder, $rating_seller);
             $id=$usertt['id'];
+            $user_category_id = $usertt['user_category_id'];
             $uusername=$param_username;
             $ppassword=$new_pass;
             $nname=$name;
@@ -163,6 +175,9 @@ require 'connect.php';
             mysqli_stmt_execute($stmt);
             print_r("executed\n");
             print_r($id);
+
+            //at last we are gonna update the user_id that has changed from auctions that user participated
+            $sqla = "UPDATE from auction where (select id from user where username = 'divasa' and id = auction.user_id) SET user_id = $id;";  //parto
 
 
           }else {
