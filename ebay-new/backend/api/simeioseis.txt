@@ -4,7 +4,7 @@
   2.  delete user{
         delete the row for the table and whatever he is into(auctions etc). Here we have many sql queries to define the user connections on db
       }
-  3.  edit user{
+  3.  edit user{	--done
         change every attribute on the table user(take example a user on db)
       }
   4.  delete auction{//same as 2.}
