@@ -1,18 +1,4 @@
-(for) sabbato{
-  //genika oti prolabeis gia na deis ligo foto, alla stoxos einai:
-  1.  forgot password(to send only);  -done(almost), symela has to see it
-  2.  delete user{
-        delete the row for the table and whatever he is into(auctions etc). Here we have many sql queries to define the user connections on db
-      }
-  3.  edit user{	--done
-        change every attribute on the table user(take example a user on db)
-      }
-  4.  delete auction{//same as 2.}
-  5.  edit auction{//same as 3.}
-}
-
-
-(for) kuriaki{
+(for) 8adoumen{
   connections of php files:
     all require connect.php
     to signup.php 8a stelnei ton xristi sto  6. userwait.php. Ara to signup requires userwait.php. Giati omos na ton stelnei ekei? pame na doume apo kato...
