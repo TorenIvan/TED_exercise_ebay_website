@@ -15,18 +15,18 @@ require 'connect.php';
 
 //if(isset($_POST) && !empty($_POST)) {
 
-    $username = "divasa";
-    $tpassword = "filosu";
-    $name = "filoss";
-    $surname = "filsou";
-    $email = "vaggelisshmos@gmail.com";
-    $phone_number=6945754545;
+    $username = "dsssss";
+    $tpassword = "fulis";
+    $name = "filis";
+    $surname = "fulis";
+    $email = "v@gmail.com";
+    $phone_number=6999999999;
     $country="gr";
     $state="elasona";
     $town="zouliani";
     $address="edo29";
     $postcode="123556789";
-    $afm = 123456889;
+    $afm = 999999999;
 
     //xss protection and of the user of post method(at the same time 2 things)
     // $username = htmlspecialchars($_POST['Username']);
@@ -71,6 +71,7 @@ require 'connect.php';
 
           //if he exists
           if ($userk) {
+            print_r($userk);
             //let's find the attribute that is the same
             if ($userk['username'] === $param_username) {
               print_r("found same username\n");
@@ -129,32 +130,37 @@ require 'connect.php';
           print_r($new_pass);
           print_r("\n");
 
+          //edo 8a ginetai require ston wait_user
+
+         require 'acceptuser.php';
+
 
           //  And now let's go to insert the values
-          $sql = "INSERT INTO user (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-          if($stmt = mysqli_prepare($con, $sql)) {
-            mysqli_stmt_bind_param($stmt, "sssssssssssi", $uusername, $ppassword, $nname, $ssurname, $eemail, $pphone_number, $ccountry, $sstate, $ttown, $aaddress, $ppostcode, $aafm);
-            $uusername=$param_username;
-            $ppassword=$new_pass;
-            $nname=$name;
-            $ssurname=$surname;
-            $eemail=$param_email;
-            $pphone_number=$param_phone_number;
-            $ccountry=$country;
-            $sstate=$state;
-            $ttown=$town;
-            $aaddress=$address;
-            $ppostcode=$postcode;
-            $aafm=$param_afm;
-
-            //execute and insert into the db
-            mysqli_stmt_execute($stmt);
-            print_r("executed\n");
-
-
-          }else {
-            json_encode("10");
-          }
+          // $sql = "INSERT INTO user (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+          // if($stmt = mysqli_prepare($con, $sql)) {
+          //   mysqli_stmt_bind_param($stmt, "sssssssssssi", $uusername, $ppassword, $nname, $ssurname, $eemail, $pphone_number, $ccountry, $sstate, $ttown, $aaddress, $ppostcode, $aafm);
+          //   $uusername=$param_username;
+          //   $ppassword=$new_pass;
+          //   $nname=$name;
+          //   $ssurname=$surname;
+          //   $eemail=$param_email;
+          //   $pphone_number=$param_phone_number;
+          //   $ccountry=$country;
+          //   $sstate=$state;
+          //   $ttown=$town;
+          //   $aaddress=$address;
+          //   $ppostcode=$postcode;
+          //   $aafm=$param_afm;
+          //
+          //
+          //   //execute and insert into the db
+          //   mysqli_stmt_execute($stmt);
+          //   print_r("executed\n");
+          //
+          //
+          // }else {
+          //   json_encode("10");
+          // }
 
         }
 
