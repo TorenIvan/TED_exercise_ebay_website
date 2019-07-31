@@ -1,13 +1,13 @@
 <?php
 
-
+//require 'createlist.php';
 require 'puttolist.php';  //ta bazei sti lista prin ta xosei basi
 
 //waits till json decode
 //EDO SYMELA-------EDO
 
 
-$username = "kapoios";
+$username = "kapoiona";
 $flag=0;  //esto
 
 if ($flag===1) {

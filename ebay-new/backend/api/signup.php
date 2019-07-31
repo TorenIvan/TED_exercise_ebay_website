@@ -15,11 +15,11 @@ require 'connect.php';
 
 //if(isset($_POST) && !empty($_POST)) {
 
-    $username = "kapoian";
-    $tpassword = "kapoian";
-    $name = "kapoian";
-    $surname = "kapoian";
-    $email = "kapoian@gmail.com";
+    $username = "kapoiana";
+    $tpassword = "kapoiana";
+    $name = "kapoias";
+    $surname = "kapoias";
+    $email = "kapoiana@gmail.com";
     $phone_number=6988889999;
     $country="gr";
     $state="elasona";
