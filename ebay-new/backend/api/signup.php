@@ -15,18 +15,18 @@ require 'connect.php';
 
 //if(isset($_POST) && !empty($_POST)) {
 
-    $username = "dsssss";
-    $tpassword = "fulis";
-    $name = "filis";
-    $surname = "fulis";
-    $email = "v@gmail.com";
-    $phone_number=6999999999;
+    $username = "kapoian";
+    $tpassword = "kapoian";
+    $name = "kapoian";
+    $surname = "kapoian";
+    $email = "kapoian@gmail.com";
+    $phone_number=6988889999;
     $country="gr";
     $state="elasona";
     $town="zouliani";
     $address="edo29";
     $postcode="123556789";
-    $afm = 999999999;
+    $afm = 999998888;
 
     //xss protection and of the user of post method(at the same time 2 things)
     // $username = htmlspecialchars($_POST['Username']);
