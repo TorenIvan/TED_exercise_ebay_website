@@ -8,6 +8,10 @@ body {
     font-family: 'Numans', sans-serif;
 }
 
+p {
+    height: fit-content;
+}
+
 .navbar {
     padding: 1% 6%;
     background: rgb(150, 203, 232);
@@ -64,6 +68,41 @@ body {
 
 .page-footer {
     background: rgb(122, 172, 203);
+}
+
+.biddingForm {
+    padding: 2% 10% 0 10%;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.email_btn {
+    color: white;
+    align-self: flex-start;
+    font-weight: 1000;
+    background-color: green;
+    width: auto;
+}
+
+.email_btn:hover {
+    color: black;
+    background-color: mix(white, green, 20%);
+}
+
+.bidButton {
+    border-radius: 5%;
+    font-size: 16px;
+    box-shadow: transparent;
+    text-transform: none;
 }
 
 // ----------- DataTable scss! --------------------------------------------------------------------------

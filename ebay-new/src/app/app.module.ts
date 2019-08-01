@@ -14,6 +14,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { WaitingAcceptanceComponent } from './waiting-acceptance/waiting-acceptance.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { IndexUserComponent } from './index-user/index-user.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NewPasswordComponent } from './new-password/new-password.component';
     SignUpComponent,
     ForgotPasswordComponent,
     WaitingAcceptanceComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    IndexUserComponent
   ],
   imports: [
     BrowserModule,

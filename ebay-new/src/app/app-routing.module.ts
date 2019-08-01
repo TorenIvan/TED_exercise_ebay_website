@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { WaitingAcceptanceComponent } from './waiting-acceptance/waiting-acceptance.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { IndexUserComponent } from './index-user/index-user.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
   },
   {
     path: 'index', component: IndexComponent
+  },
+  {
+    path: 'indexuser', component: IndexUserComponent
   },
   {
     path: 'waiting', component: WaitingAcceptanceComponent

@@ -23,4 +23,8 @@ export class TableServiceService {
   sendEmail(email) {
     return this.httpClient.post('api/retrievepass.php', {email})
   }
+
+  getMyAuctions(id) {
+    return null;
+  }
 }
