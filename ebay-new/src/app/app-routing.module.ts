@@ -4,6 +4,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { IndexComponent } from './index/index.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { WaitingAcceptanceComponent } from './waiting-acceptance/waiting-acceptance.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,12 @@ const routes: Routes = [
   },
   {
     path: 'index', component: IndexComponent
+  },
+  {
+    path: 'waiting', component: WaitingAcceptanceComponent
+  },
+  {
+    path: 'newpassword', component: NewPasswordComponent
   }
 ];
 

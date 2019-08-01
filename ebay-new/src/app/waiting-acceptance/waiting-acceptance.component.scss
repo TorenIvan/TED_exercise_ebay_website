@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+html,
+body {
+    // background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+a {
+    color: rgb(253, 193, 11);
+}
+
+a:hover {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+.message {
+    font-size: 20px;
+    padding-left: 2.5%;
+}
+
+img {
+    padding: 4% 0 6% 31%;
+}
+
+.result {
+    color: white;
+    font-size: 140%;
+    text-shadow: 2px 2px 20px white;
+    font-weight: 900;
+}
+
+.container {
+    height: 100vh;
+    align-content: center;
+}
+
+.card {
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 800px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: rgb(47, 158, 226);
+    ;
+    ;
+}
+
+.social_icon span:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.card-header h3 {
+    color: white;
+}
+
+.social_icon {
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: rgb(47, 158, 226);
+    ;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.email_btn {
+    color: white;
+    align-self: flex-start;
+    text-decoration: aqua;
+    font-weight: 1000;
+    background-color: rgb(47, 158, 226);
+    width: auto;
+}
+
+.email_btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
