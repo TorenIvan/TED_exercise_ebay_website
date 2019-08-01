@@ -48,6 +48,7 @@ require 'connect.php';
 
     //now we are gonna prepare the first statement to see if there is already a user like him
     $sqltemp = "SELECT * FROM user WHERE email=? OR username=? OR password=? OR phone_number=? OR afm=? LIMIT 1;";
+    $sqltemplist = "SELECT * FROM userlist WHERE email=? OR username=? OR password=? OR phone_number=? OR afm=? LIMIT 1;";
     if($stmttemp = mysqli_prepare($con, $sqltemp)) {
 
       //bind parameters
@@ -93,14 +94,66 @@ require 'connect.php';
 
           }else {
             json_encode("3");
-
+            print_r("edo oxi");
           }
 
         }else {
 
-          print_r("Ola kala\n");
+          print_r("Ola kala sto table user\n");
 
-          //edo sunexizoume, den bre8ike user with the same username or password or email or phone_number or afm
+          //edo sunexizoume, den bre8ike user with the same username or password or email or phone_number or afm sto table user, as psaksoume an einai se anamoni o user
+          if($stmttemplist = mysqli_prepare($con, $sqltemplist)) {
+
+            //bind parameters
+            mysqli_stmt_bind_param($stmttemplist, "ssssi", $pparam_email, $pparam_username, $pparam_password, $pparam_phone_number, $pparam_afm);
+
+            //set parameters and execute
+            $pparam_email=$email;
+            $pparam_username=$username;
+            $pparam_password=$tpassword;
+            $pparam_phone_number=$phone_number;
+            $pparam_afm=$afm;
+            if (mysqli_stmt_execute($stmttemplist)) {
+
+              if (mysqli_stmt_fetch($stmttemplist) > 0) {
+                mysqli_stmt_close($stmttemplist);
+
+                $sqltl="SELECT * FROM userlist WHERE email= '".$param_email."' OR username= '".$param_username."' OR password= '".$param_password."' OR phone_number= '".$param_phone_number."' OR afm= '".$param_afm."' LIMIT 1;";
+                $result = mysqli_query($con, $sqltl);
+                //userk is the user on db with at least one same attribute as the one doing sign up
+                $usertl = mysqli_fetch_assoc($result);
+
+                //if he exists
+                if ($usertl) {
+                  //print_r($usertl);
+                  //let's find the attribute that is the same
+                  if ($usertl['username'] === $pparam_username) {
+                    print_r("found same username on waiting list\n");
+                    json_encode("4");
+                  }elseif ($usertl['password'] === $pparam_password) {
+                    print_r("found same password on waiting list\n");
+                    json_encode("5");
+                  }elseif ($usertl['email'] === $pparam_email) {
+                    print_r("found same email on waiting list\n");
+                    json_encode("6");
+                  }elseif ($usertl['phone_number'] === $pparam_phone_number) {
+                    print_r("found same phone number on waiting list\n");
+                    json_encode("7");
+                  }else {
+                    //same afm
+                    print_r("found same afm on waiting list\n");
+                    json_encode('8');
+                  }
+                  exit();
+                }else {
+                  json_encode("tl");
+                  print_r("tl");
+                }
+              }else {
+                print_r("Ola kala den bre8ike sto waiting list\n");
+              }
+            }
+          }
           //check for email now, if it's realistic
           //the only safe way to do that is by sending an email to user, he clicks it, and the activate the rest. But unfortunately, we don't have the passion to do that and the front end is far away to ask him what we shoud do.
           //So we chose two other options (optional options xD) to close the gap for the email problem. Some of these may have been already done by our master front end dev
