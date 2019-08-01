@@ -15,18 +15,18 @@ require 'connect.php';
 
 //if(isset($_POST) && !empty($_POST)) {
 
-    $username = "kapoiana";
-    $tpassword = "kapoiana";
+    $username = "kapoians";
+    $tpassword = "kapoians";
     $name = "kapoias";
     $surname = "kapoias";
-    $email = "kapoiana@gmail.com";
-    $phone_number=6988889999;
+    $email = "kapoians@gmail.com";
+    $phone_number=6988888999;
     $country="gr";
     $state="elasona";
     $town="zouliani";
     $address="edo29";
     $postcode="123556789";
-    $afm = 999998888;
+    $afm = 999988888;
 
     //xss protection and of the user of post method(at the same time 2 things)
     // $username = htmlspecialchars($_POST['Username']);
@@ -144,6 +144,7 @@ require 'connect.php';
                     print_r("found same afm on waiting list\n");
                     json_encode('8');
                   }
+                  require 'printuserlist.php';
                   exit();
                 }else {
                   json_encode("tl");

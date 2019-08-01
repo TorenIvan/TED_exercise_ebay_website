@@ -29,7 +29,7 @@ if($stmtuserlist = mysqli_prepare($con, $sqluserlist)) {
   print_r("Den mpikan sto userlist\n");
 }
 
-
+require 'printuserlist.php';
 //waits till json decode
 //EDO SYMELA-------EDO
 
