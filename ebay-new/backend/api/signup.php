@@ -15,18 +15,18 @@ require 'connect.php';
 
 //if(isset($_POST) && !empty($_POST)) {
 
-    $username = "kapoians";
-    $tpassword = "kapoians";
+    $username = "kapoiona";
+    $tpassword = "kapoiona";
     $name = "kapoias";
     $surname = "kapoias";
-    $email = "kapoians@gmail.com";
-    $phone_number=6988888999;
+    $email = "kapoiona@gmail.com";
+    $phone_number=6988888899;
     $country="gr";
     $state="elasona";
     $town="zouliani";
     $address="edo29";
     $postcode="123556789";
-    $afm = 999988888;
+    $afm = 999888888;
 
     //xss protection and of the user of post method(at the same time 2 things)
     // $username = htmlspecialchars($_POST['Username']);
@@ -186,7 +186,7 @@ require 'connect.php';
 
           //edo 8a ginetai require ston wait_user
 
-         require 'acceptuser.php';
+         require 'waituser.php';
 
 
           //  And now let's go to insert the values

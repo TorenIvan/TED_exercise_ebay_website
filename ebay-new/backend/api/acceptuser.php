@@ -1,51 +1,59 @@
 <?php
 
-print_r("Mpikes acceptuser");
+require 'connect.php';
 
-$sqluserlist = "INSERT INTO userlist (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-if($stmtuserlist = mysqli_prepare($con, $sqluserlist)) {
-  mysqli_stmt_bind_param($stmtuserlist, "sssssssssssi", $uusername, $ppassword, $nname, $ssurname, $eemail, $pphone_number, $ccountry, $sstate, $ttown, $aaddress, $ppostcode, $aafm);
-  $uusername=$param_username;
-  $ppassword=$new_pass;
-  $nname=$name;
-  $ssurname=$surname;
-  $eemail=$param_email;
-  $pphone_number=$param_phone_number;
-  $ccountry=$country;
-  $sstate=$state;
-  $ttown=$town;
-  $aaddress=$address;
-  $ppostcode=$postcode;
-  $aafm=$param_afm;
-
-
-  //execute and insert into the db
-  mysqli_stmt_execute($stmtuserlist);
-  print_r("Mpikan sto temporary table (lista)\n");
-
-
-}else {
-  json_encode("13");
-  print_r("Den mpikan sto userlist\n");
-}
-
-require 'printuserlist.php';
-//waits till json decode
-//EDO SYMELA-------EDO
-
-
-$username = "kapoiona";
-$flag=0;  //esto
+//pairnei ena username tetoio oste na 8elei na ginei accept
+$lid = 16;
+$flag=1;  //esto oti den 8elei na ton balei
 
 if ($flag===1) {
-  print_r("flag is 1\n");
-  require 'getfromlist.php';    //kai xwstastivasi
-  require 'xwstavasi.php';
+  $param = [];
+  print_r("flag is 1\n"); //ara 8a mpei
+  $sqll = "SELECT * from userlist WHERE id = $lid;"; //pare ta kai bale ta se metablites oste na ta steilei sto xwstavasi(en to metaksu den xreiazetai sqlinjection check, gt exoun ginei idi check gia na mpoun sti lista. ALLA YOLO!!!)
+  print_r($sqll);
+  if($resultl=mysqli_query($con,$sqll)){
+    // Process all rows
+    //echo "a";
+    //$count=0;
+    while($row = mysqli_fetch_assoc($resultl)){
+    //  echo "mpikes";
+      #print_r($row);
+      $param['id'] = $row['id'];
+      $param['username'] = $row['username'];
+      $param['password'] = $row['password'];
+      $param['name'] = $row['name'];
+      $param['surname'] = $row['surname'];
+      $param['email'] = $row['email'];
+      $param['phone_number'] = $row['phone_number'];
+      $param['country'] = $row['country'];
+      $param['state'] = $row['state'];
+      $param['town'] = $row['town'];
+      $param['address'] = $row['address'];
+      $param['postcode'] = $row['postcode'];
+      $param['afm'] = $row['afm'];
+    }
+    require 'xwstavasi.php';
+    $sqld = "DELETE from userlist where id = $lid;";
+    if($resultd = mysqli_query($con,$sqld)){
+      print_r("Deleted from userlist\n");
+      json_encode("User accepted. He could sigin now");
+      print_r("User accepted. He could sigin now\n");
+    }else {
+      json_encode("Something is wrong with mysqli_query");
+      print_r("Something is wrong with mysqli_query");
+    }
+  }else{
+    //"aa";
+    print_r("aa");
+    http_response_code(404);
+
+  }
+
+
 }else {
   print_r("flag is NOT 1\n");
   json_decode("Can't access m8. Admin is not intrested in you yet\n.      SORRY!!!!\n");
   print_r("Can't access m8. Admin is not intrested in you yet\n.      SORRY!!!!\n");
 }
 
-
-?>
+ ?>

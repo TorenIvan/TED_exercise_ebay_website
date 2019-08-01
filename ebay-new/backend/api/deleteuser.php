@@ -31,7 +31,7 @@ if($resultl = mysqli_query($con,$sqll)){
   }
 
   //now we can delete the user
-  $sql = " DELETE from user where id = $idd;";
+  $sql = "DELETE from user where id = $idd;";
   if($result = mysqli_query($con,$sql)){
     print_r("OLA KALA, efuges userako\n");
   }else {
