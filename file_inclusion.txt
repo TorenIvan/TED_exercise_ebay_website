@@ -1,0 +1,11 @@
+FOR REMOTE FILE INCLUSION:
+
+	1) Just do :	sudo nano /etc/php/7.2/apache2/php.ini
+
+	2) And then :	Change allow_url_fopen and allow_url_include, both to Off
+
+	3) CTRL+O
+
+	4) CTRL+X 
+
+	5) Restart apache
