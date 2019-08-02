@@ -4,18 +4,16 @@ require 'connect.php';
 
 $users = [];
 
-$sql = "SELECT * FROM user";
-
+$count = 0;
+$sql = "SELECT * FROM userlist";
 if($result=mysqli_query($con,$sql)){
   // Process all rows
-  echo "a";
-  $count=0;
+  //echo "a";
   while($row = mysqli_fetch_assoc($result))
   {
-    echo "mpikes";
+    //echo "mpikes";
     #print_r($row);
     $users[$count]['id'] = $row['id'];
-    $users[$count]['user_category_id'] = $row['user_category_id'];
     $users[$count]['username'] = $row['username'];
     $users[$count]['password'] = $row['password'];
     $users[$count]['name'] = $row['name'];
@@ -28,11 +26,10 @@ if($result=mysqli_query($con,$sql)){
     $users[$count]['address'] = $row['address'];
     $users[$count]['postcode'] = $row['postcode'];
     $users[$count]['afm'] = $row['afm'];
-    $users[$count]['rating_bidder'] = $row['rating_bidder'];
-    $users[$count]['rating_seller'] = $row['rating_seller'];
+    //$count--;
     $count++;
   }
-  echo json_encode($users);
+  json_encode($users);
   print_r($users);
 }else{
   "aa";
@@ -40,4 +37,5 @@ if($result=mysqli_query($con,$sql)){
 
 }
 echo($result);
-?>
+
+ ?>
