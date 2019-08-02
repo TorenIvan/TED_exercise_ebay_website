@@ -15,6 +15,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { WaitingAcceptanceComponent } from './waiting-acceptance/waiting-acceptance.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { IndexUserComponent } from './index-user/index-user.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { IndexUserComponent } from './index-user/index-user.component';
     ForgotPasswordComponent,
     WaitingAcceptanceComponent,
     NewPasswordComponent,
-    IndexUserComponent
+    IndexUserComponent,
+    PersonalInfoComponent,
+    PersonalAuctionsComponent
   ],
   imports: [
     BrowserModule,

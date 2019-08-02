@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
 import { Subject } from 'rxjs';
@@ -10,17 +10,17 @@ import 'datatables.net';
 import 'datatables.net-dt';
 
 @Component({
-  selector: 'app-index-user',
-  templateUrl: './index-user.component.html',
-  styleUrls: ['./index-user.component.scss']
+  selector: 'app-personal-auctions',
+  templateUrl: './personal-auctions.component.html',
+  styleUrls: ['./personal-auctions.component.scss']
 })
-export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
 
-  @ViewChild(ModalDirective)
-  modal: ModalDirective;
+  @ViewChildren(ModalDirective)
+  modal: QueryList<ModalDirective>;
 
   modalBody: string;
 
@@ -32,15 +32,20 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtTrigger: Subject<any> = new Subject();
 
-  openform = false;
+  ableToDeleteAuction: false; // an uparxei estw kai ena bid den mporei na diagrafei
 
-  bidded = false;
+  idUser: number;
+
+  idAuction: string;
 
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
 
-    this.tableService.getAllAuctions().subscribe((data: Product[]) => {
+    // id xrhsth
+    this.idUser=1;
+
+    this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
       if(data != null) {
         this.products = data;
         this.dtTrigger.next();
@@ -89,13 +94,12 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.modalBody = this.format(data.toString());
-          this.modal.show();
+          this.modal.first.show();
         });
         return row;
       }
     };
 
-    console.log(this.datatableElement.dtInstance);
     this.rerender();
   }
 
@@ -121,16 +125,23 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   rerender(): void{
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
+        if(data != null) {
+          this.products = data;
+          this.dtTrigger.next();
+        }
       });
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 
   format(data : string) {
     const p = data.split(',');
+    this.idAuction = p[0];
     if(p[8] == "") {
       return '<div class="container">'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
@@ -155,16 +166,20 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
             + '</div>';
   }
 
-  openBiddingForm() {
-    if(this.openform == true)
-      this.openform = false;
-    else
-      this.openform = true;
+  deleteAuction() {
+    console.log("auction deleted with id: " + this.idAuction);
+    this.modal.last.hide();
+    this.modal.first.hide();
+    this.rerender;
   }
 
-  addBid(event) {
-    event.preventDefault();
-    this.bidded = true;
+  openDeleteModal() {
+    this.modal.first.hide();
+    this.modal.last.show();
   }
 
+  cancelDelete() {
+    this.modal.first.show();
+    this.modal.last.hide();
+  }
 }

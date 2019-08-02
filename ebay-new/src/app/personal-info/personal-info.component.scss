@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+html,
+body {
+    //     background-image: url('../../assets/lightBlueGradient.png');
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Numans', sans-serif;
+}
+
+.navbar {
+    padding: 1% 6%;
+    background: rgb(150, 203, 232);
+}
+
+.navbar-nav {
+    flex-direction: row;
+}
+
+.navbar-brand {
+    color: #111;
+}
+
+.navbar-nav.ml-auto li a {
+    color: #111;
+}
+
+.navbar-nav.ml-auto li a:hover {
+    color: #111;
+    transform: scale(1.5);
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.navbar-nav.ml-auto li a:focus {
+    outline: none;
+    background-color: mix(black, #96CBE8, 15%);
+}
+
+.navbar-nav.ml-auto li a:focus::after {
+    outline: none;
+    background-color: #96CBE8;
+}
+
+.nav-link {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+}
+
+.hiddenItem {
+    display: none;
+}
+
+.page-footer {
+    background: rgb(122, 172, 203);
+}
+
+.save_btn {
+    color: white;
+    align-self: flex-start;
+    font-weight: 1000;
+    background-color: #4285F4;
+    width: auto;
+    padding: 20px 50px 20px 50px;
+}
+
+.save_btn:hover {
+    color: white;
+    background-color: mix(white, #4285F4, 17%);
+}
+
+.profForm {
+    height: 84%;
+    padding: 6% 0 6% 0;
+}
+
+.formCol {
+    margin: 20px 0 0 0;
+}

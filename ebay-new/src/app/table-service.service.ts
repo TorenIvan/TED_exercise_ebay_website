@@ -25,6 +25,10 @@ export class TableServiceService {
   }
 
   getMyAuctions(id) {
-    return null;
+    return this.httpClient.post('/api/useronlyauction.php', {id})
+  }
+
+  getUserInfo(id) {
+    return {};
   }
 }

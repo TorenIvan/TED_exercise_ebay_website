@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Account</title>
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" routerLink="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <!-- A grey horizontal navbar that becomes vertical on small screens -->
+    <nav class="navbar navbar-expand-sm navbar-dark">
+
+        <a class="navbar-brand" routerLink="#">DIVA</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/indexuser">Auctions List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/personalauctions">My Auctions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/signin">Logout</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <br>
+
+    <div class="container profForm">
+        <form (submit)=saveProfileChanges($event)>
+            <div class="input-group form-group">
+                <input id="id" class="hiddenItem" type="number" min="0" value="{{user.id}}" hidden>
+            </div>
+            <div class="input-group form-group">
+                <div class="row">
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Username:</span>
+                        </div>
+                        <div class="row">
+                            <input id="username" type="text" value="{{user.username}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Name:</span>
+                        </div>
+                        <div class="row">
+                            <input id="name" type="text" value="{{user.name}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Surname:</span>
+                        </div>
+                        <div class="row">
+                            <input id="surname" type="text" value="{{user.surname}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Email:</span>
+                        </div>
+                        <div class="row">
+                            <input id="email" type="email" value="{{user.email}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Phone Number:</span>
+                        </div>
+                        <div class="row">
+                            <input id="phone" type="text" value="{{user.phone_number}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Country:</span>
+                        </div>
+                        <div class="row">
+                            <input id="country" type="text" value="{{user.country}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>State:</span>
+                        </div>
+                        <div class="row">
+                            <input id="state" type="text" value="{{user.state}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Town:</span>
+                        </div>
+                        <div class="row">
+                            <input id="town" type="text" value="{{user.town}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Address:</span>
+                        </div>
+                        <div class="row">
+                            <input id="address" type="text" value="{{user.address}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Postcode:</span>
+                        </div>
+                        <div class="row">
+                            <input id="postcode" type="text" value="{{user.postcode}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>TIN / ΑΦΜ:</span>
+                        </div>
+                        <div class="row">
+                            <input id="afm" type="number" value="{{user.afm}}">
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Bidder Rating:</span>
+                        </div>
+                        <div class="row">
+                            <input id="ratingB" type="text" value="{{user.rating_bidder}}" disabled>
+                        </div>
+                    </div>
+                    <div class="col formCol">
+                        <div class="row">
+                            <span>Seller Rating:</span>
+                        </div>
+                        <div class="row">
+                            <input id="ratingS" type="text" value="{{user.rating_seller}}" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3"></div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3"></div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                        <div class="d-flex justify-content-center">
+                            <input type="submit" value="Save" class="btn float-center save_btn">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3"></div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="d-flex justify-content-center form-group">
+                <p class="result" id="result">{{result}}</p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small pt-4">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a routerLink=""> Diva.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+</body>
+
+</html>

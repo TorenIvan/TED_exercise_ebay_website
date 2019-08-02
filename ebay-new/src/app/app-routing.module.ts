@@ -7,6 +7,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { WaitingAcceptanceComponent } from './waiting-acceptance/waiting-acceptance.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { IndexUserComponent } from './index-user/index-user.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,12 @@ const routes: Routes = [
   },
   {
     path: 'newpassword', component: NewPasswordComponent
+  },
+  {
+    path: 'personalinfo', component: PersonalInfoComponent
+  },
+  {
+    path: 'personalauctions', component: PersonalAuctionsComponent
   }
 ];
 
