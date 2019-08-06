@@ -8,6 +8,7 @@ import { ModalDirective } from 'angular-bootstrap-md';
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-personal-auctions',
@@ -32,11 +33,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   dtTrigger: Subject<any> = new Subject();
 
-  ableToDeleteAuction: false; // an uparxei estw kai ena bid den mporei na diagrafei
+  ableToDeleteAuction: boolean; // an uparxei estw kai ena bid den mporei na diagrafei
+
+  ableToSubmitAuction: boolean;
 
   idUser: number;
 
   idAuction: string;
+
+  tableInstance: any;
+
+  modals: any;
 
   constructor(private tableService: TableServiceService) { }
 
@@ -53,6 +60,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     });
 
     this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       columns: [
         { title: 'id' },
@@ -94,6 +102,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.modalBody = this.format(data.toString());
+          this.ableToDeleteAuction = false;
           this.modal.first.show();
         });
         return row;
@@ -109,7 +118,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   
 
   ngAfterViewInit() {
+    this.modals = this.modal.toArray();
     this.dtTrigger.next();
+    this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -125,17 +136,15 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   rerender(): void{
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
       this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
-        if(data != null) {
           this.products = data;
           this.dtTrigger.next();
-        }
       });
       // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
+      // this.dtTrigger.next();
     });
   }
 
@@ -166,20 +175,42 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
             + '</div>';
   }
 
+  openFormForNewAuction() {
+    this.modals[2].show();
+    this.modals[0].hide();
+    this.modals[1].hide();
+    this.ableToSubmitAuction = true;
+  }
+
+  addAuction() {
+    event.preventDefault();
+    console.log("New Auction YAY!");
+    this.ableToSubmitAuction = false;
+
+    this.modals[2].hide();
+
+    this.rerender();
+  }
+
   deleteAuction() {
+    this.ableToDeleteAuction = true;
     console.log("auction deleted with id: " + this.idAuction);
-    this.modal.last.hide();
-    this.modal.first.hide();
-    this.rerender;
+    this.modals[1].hide();
+    this.modals[0].hide();
+    this.modals[2].hide();
+    this.rerender();
   }
 
   openDeleteModal() {
-    this.modal.first.hide();
-    this.modal.last.show();
+    this.modals[0].hide();
+    this.modals[1].show();
+    this.modals[2].hide();
   }
 
   cancelDelete() {
-    this.modal.first.show();
-    this.modal.last.hide();
+    this.ableToDeleteAuction = false;
+    this.modals[0].show();
+    this.modals[1].hide();
+    this.modals[2].hide();
   }
 }

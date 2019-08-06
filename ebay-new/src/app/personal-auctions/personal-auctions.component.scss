@@ -52,9 +52,9 @@ p {
 }
 
 .dTableCont {
-    height: 85%;
+    height: 70%;
     align-content: center;
-    padding-block-start: 5%;
+    padding-block-start: 1%;
 }
 
 .dTable {
@@ -102,11 +102,32 @@ input:focus {
     outline-color: mix(white, red, 20%);
 }
 
-.bidButton {
-    border-radius: 5%;
-    font-size: 16px;
-    box-shadow: transparent;
-    text-transform: none;
+.newButton {
+    color: white;
+    align-self: flex-start;
+    font-weight: 1000;
+    background-color: mix(black, green, 20%);
+    // outline-color: mix(black, green, 20%);
+    // outline-width: 1px;
+    width: auto;
+    // outline-style: solid;
+}
+
+.newButton:hover {
+    color: black;
+    background-color: mix(white, green, 95%);
+    outline-color: mix(white, green, 20%);
+    outline-style: solid;
+    outline-width: 1px;
+}
+
+.newButtonCont {
+    padding-block-start: 2%;
+    padding-block-end: 1%;
+}
+
+.newFormColumns {
+    margin: 15px 0 0 0;
 }
 
 // ----------- DataTable scss! --------------------------------------------------------------------------
