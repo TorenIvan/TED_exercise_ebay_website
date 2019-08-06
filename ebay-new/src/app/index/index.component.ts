@@ -66,18 +66,18 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
-        { "searchable": false, "visible": false, "targets": 0 },
-        { "searchable": false, "visible": false, "targets": 5 },
-        { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 8 },
-        { "searchable": false, "visible": false, "targets": 9 },
-        { "searchable": false, "visible": false, "targets": 10 },
-        { "searchable": false, "visible": false, "targets": 11 },
-        { "searchable": false, "visible": false, "targets": 12 },
-        { "searchable": false, "visible": false, "targets": 13 },
-        { "searchable": false, "visible": false, "targets": 14 },
-        { "searchable": false, "visible": false, "targets": 15 },
-        { "searchable": false, "visible": false, "targets": 16 }
+        { "targets": [ 0 ], "visible": false, "searchable": false },
+        { "targets": [ 5 ], "visible": false, "searchable": false },
+        { "targets": [ 6 ], "visible": false, "searchable": false },
+        { "targets": [ 8 ], "visible": false, "searchable": false },
+        { "targets": [ 9 ], "visible": false, "searchable": false },
+        { "targets": [ 10 ], "visible": false, "searchable": false },
+        { "targets": [ 11 ], "visible": false, "searchable": false },
+        { "targets": [ 12 ], "visible": false, "searchable": false },
+        { "targets": [ 13 ], "visible": false, "searchable": false },
+        { "targets": [ 14 ], "visible": false, "searchable": false },
+        { "targets": [ 15 ], "visible": false, "searchable": false },
+        { "targets": [ 16 ], "visible": false, "searchable": false }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;

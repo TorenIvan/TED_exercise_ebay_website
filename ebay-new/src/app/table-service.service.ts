@@ -25,7 +25,7 @@ export class TableServiceService {
   }
 
   getMyAuctions(id) {
-    return this.httpClient.post('/api/useronlyauction.php', {id})
+    return this.httpClient.post('/api/read.php', {id})
   }
 
   getUserInfo(id) {
