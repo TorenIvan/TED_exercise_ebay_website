@@ -1,3 +1,193 @@
-<p>
-  applications works!
-</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Applications</title>
+    <!--Made with love by Mutiullah Samim -->
+
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" routerLink="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!--DataTables CDN && js file-->
+    <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tableP').Datatable();
+        })
+    </script>
+</head>
+
+<body>
+
+    <!-- A grey horizontal navbar that becomes vertical on small screens -->
+    <nav class="navbar navbar-expand-sm navbar-dark">
+
+        <a class="navbar-brand" routerLink="#">DIVA</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/userslist">Users List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/indexadmin">Auctions List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/signin">Logout</a>
+            </li>
+        </ul>
+
+    </nav>
+
+
+    <div class="container dTableCont">
+        <div class="d-flex justify-content-center h-100">
+
+            <table id="tableP" #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
+                <tbody *ngIf="users?.length != 0">
+                    <tr *ngFor="let user of users">
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.surname}}</td>
+                        <td>{{user.phone_number}}</td>
+                        <td>{{user.country}}</td>
+                        <td>{{user.state}}</td>
+                        <td>{{user.town}}</td>
+                        <td>{{user.address}}</td>
+                        <td>{{user.postcode}}</td>
+                        <td>{{user.afm}}</td>
+                        <td>{{user.latitude}}</td>
+                        <td>{{user.longitude}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="users == null">
+                    <tr>
+                        <td colspan="5" class="no-data-available">No applications!</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search username" name="search-username" /></th>
+                        <th><input type="text" placeholder="Search email" name="search-email" /></th>
+                        <th><input type="text" placeholder="Search name" name="search-name" /></th>
+                        <th><input type="text" placeholder="Search surname" name="search-surname" /></th>
+                        <th><input type="text" placeholder="Search phone number" name="search-phone-number" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search country" name="search-country" /></th>
+                        <th><input type="text" placeholder="Search state" name="search-state" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search town" name="search-town" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search address" name="search-address" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search postcode" name="search-postcode" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search afm" name="search-afm" /></th>
+                        <th><input type="text" placeholder="Search latitude" name="search-latitude" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search longitude" name="search-longitude" hidden disabled/></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+    <!--Modal info-->
+    <div mdbModal #frame1="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Details
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="b" [innerHTML]="modalBody"></div>
+                    <div>
+                        <button type="button" class="btn acceptButton" (click)="openAcceptModal()">Accept User</button>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame1.hide()" mdbWavesEffect>
+                        Close
+                        </button>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal info-->
+
+
+    <!--Modal delete-->
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Confirmation
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <p>Are you sure you want to accept this user?</p>
+                </div>
+
+                <!--Footer-->
+                <div class="row">
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="danger" class="waves-effect" (click)="cancelAccept()" mdbWavesEffect>
+                            No
+                        </button>
+                    </div>
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="success" class="waves-effect" (click)="acceptUser()" mdbWavesEffect>
+                            Yes
+                        </button>
+                    </div>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal delete-->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small pt-4">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a routerLink=""> Diva.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</body>
+
+</html>

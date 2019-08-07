@@ -11,6 +11,7 @@ import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions.component';
 import { IndexAdminComponent } from './index-admin/index-admin.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { ApplicationsComponent } from './applications/applications.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,9 @@ const routes: Routes = [
   },
   {
     path: 'userslist', component: UsersListComponent
+  },
+  {
+    path: 'applications', component: ApplicationsComponent
   }
 ];
 

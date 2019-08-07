@@ -35,4 +35,8 @@ export class TableServiceService {
   getAllUsers() {
     return this.httpClient.post('/api/printusers.php', {})
   }
+
+  getApplications() {
+    return this.httpClient.post('/api/printuserlist.php', {})
+  }
 }

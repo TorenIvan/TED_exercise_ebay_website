@@ -70,9 +70,9 @@
                         <td>{{product.longitude}}</td>
                     </tr>
                 </tbody>
-                <tbody *ngIf="products?.length == 0">
+                <tbody *ngIf="products? == null">
                     <tr>
-                        <td colspan="5" class="no-data-available">No data!</td>
+                        <td colspan="5" class="no-data-available">No availiable auctions!</td>
                     </tr>
                 </tbody>
                 <tfoot>

@@ -41,13 +41,6 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
-    this.tableService.getAllUsers().subscribe((data: User[]) => {
-      if(data != null) {
-        this.users = data;
-        this.dtTrigger.next();
-      }
-    });
-
     this.dtOptions = {
       retrieve: true,
       pagingType: 'full_numbers',
@@ -92,6 +85,11 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         return row;
       }
     };
+
+    this.tableService.getAllUsers().subscribe((data: User[]) => {
+      this.users = data;
+      this.dtTrigger.next();
+    });
 
     this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
       dtInstance.draw();

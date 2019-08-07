@@ -38,12 +38,12 @@ if($result=mysqli_query($con,$sql)){
     $count++;
   }
   json_encode($users);
-  print_r($users);
+  // print_r($users);
 }else{
   "aa";
   http_response_code(404);
 
 }
-echo($result);
+// echo($result);
 
  ?>

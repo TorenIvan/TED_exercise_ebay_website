@@ -53,10 +53,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.idUser=1;
 
     this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
-      if(data != null) {
-        this.products = data;
-        this.dtTrigger.next();
-      }
+      this.products = data;
+      this.dtTrigger.next();
     });
 
     this.dtOptions = {
@@ -141,12 +139,12 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
-      this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
-          this.products = data;
-          this.dtTrigger.next();
-      });
+      // this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
+      //     this.products = data;
+      //     this.dtTrigger.next();
+      // });
       // Call the dtTrigger to rerender again
-      // this.dtTrigger.next();
+      this.dtTrigger.next();
     });
   }
 

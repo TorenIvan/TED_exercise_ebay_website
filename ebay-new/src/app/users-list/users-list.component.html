@@ -49,7 +49,7 @@
     <div class="container dTableCont">
         <div class="d-flex justify-content-center h-100">
 
-            <table id="tableP" #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable w-auto" cellspasing="0">
+            <table id="tableP" #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <tbody *ngIf="users?.length != 0">
                     <tr *ngFor="let user of users">
                         <td>{{user.id}}</td>
@@ -68,9 +68,9 @@
                         <td>{{user.longitude}}</td>
                     </tr>
                 </tbody>
-                <tbody *ngIf="users?.length == 0">
+                <tbody *ngIf="users == null">
                     <tr>
-                        <td colspan="5" class="no-data-available">No data!</td>
+                        <td colspan="5" class="no-data-available">No users in the system yet!</td>
                     </tr>
                 </tbody>
                 <tfoot>

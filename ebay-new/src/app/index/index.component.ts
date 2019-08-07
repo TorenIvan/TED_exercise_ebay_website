@@ -37,10 +37,8 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
-      if(data != null) {
-        this.products = data;
-        this.dtTrigger.next();
-      }
+      this.products = data;
+      this.dtTrigger.next();
     });
 
     this.dtOptions = {
