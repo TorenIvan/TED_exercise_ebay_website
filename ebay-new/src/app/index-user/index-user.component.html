@@ -15,12 +15,12 @@
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
+    <!-- 
     <script>
         $(document).ready(function() {
             $('#tableP').Datatable();
         })
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -48,7 +48,7 @@
     <div class="container dTableCont">
         <div class="d-flex justify-content-center h-100">
 
-            <table id="tableP" datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
+            <table #tableP datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
                 <tbody *ngIf="products?.length != 0">
                     <tr *ngFor="let product of products">
                         <td>{{product.id}}</td>
@@ -103,7 +103,7 @@
 
 
     <!--Modal-->
-    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-notify modal-info" role="document">
             <!--Content-->

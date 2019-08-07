@@ -34,13 +34,20 @@
                             "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
                             "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
                             "node_modules/bootstrap/scss/bootstrap.scss",
-                            "node_modules/angular-bootstrap-md/scss/mdb-free.scss"
+                            "node_modules/angular-bootstrap-md/scss/mdb-free.scss",
+                            "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",
                             "node_modules/datatables.net/js/jquery.dataTables.js",
                             "node_modules/chart.js/dist/Chart.js",
-                            "node_modules/hammerjs/hammer.min.js"
+                            "node_modules/hammerjs/hammer.min.js",
+                            "node_modules/jszip/dist/jszip.js",
+                            "node_modules/datatables.net-buttons/js/dataTables.buttons.js",
+                            "node_modules/datatables.net-buttons/js/buttons.colVis.js",
+                            "node_modules/datatables.net-buttons/js/buttons.flash.js",
+                            "node_modules/datatables.net-buttons/js/buttons.html5.js",
+                            "node_modules/datatables.net-buttons/js/buttons.print.js"
                         ],
                         "es5BrowserSupport": true
                     },

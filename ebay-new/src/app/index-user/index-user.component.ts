@@ -95,8 +95,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    console.log(this.datatableElement.dtInstance);
-    this.rerender();
+    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
   }
 
   ngOnDestroy() {

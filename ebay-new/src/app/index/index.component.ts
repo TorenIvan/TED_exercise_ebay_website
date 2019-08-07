@@ -91,7 +91,9 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.rerender();
+    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
   }
 
   ngOnDestroy() {
@@ -115,14 +117,14 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  rerender(): void{
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
-  }
+  // rerender(): void{
+  //   this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     // Destroy the table first
+  //     dtInstance.destroy();
+  //     // Call the dtTrigger to rerender again
+  //     this.dtTrigger.next();
+  //   });
+  // }
 
   format(data : string) {
     const p = data.split(',');

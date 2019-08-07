@@ -16,11 +16,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             $('#tableP').Datatable();
         })
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -55,7 +55,7 @@
     <div class="container dTableCont">
         <div class="d-flex justify-content-center h-100">
 
-            <table id="tableP" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
+            <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <tbody *ngIf="products?.length != 0">
                     <tr *ngFor="let product of products">
                         <td>{{product.id}}</td>
@@ -230,6 +230,14 @@
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span>Buy Price:</span>
+                                    </div>
+                                    <div class="row">
+                                        <input>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span>Category:</span>
                                     </div>
                                     <div class="row">
                                         <input>

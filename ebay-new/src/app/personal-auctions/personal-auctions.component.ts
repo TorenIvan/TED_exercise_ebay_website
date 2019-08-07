@@ -109,7 +109,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       }
     };
 
-    this.rerender();
+    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
   }
 
   ngOnDestroy() {

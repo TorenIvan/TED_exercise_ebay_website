@@ -17,6 +17,7 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { IndexUserComponent } from './index-user/index-user.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions.component';
+import { IndexAdminComponent } from './index-admin/index-admin.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions
     NewPasswordComponent,
     IndexUserComponent,
     PersonalInfoComponent,
-    PersonalAuctionsComponent
+    PersonalAuctionsComponent,
+    IndexAdminComponent
   ],
   imports: [
     BrowserModule,

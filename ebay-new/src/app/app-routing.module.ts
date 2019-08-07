@@ -9,6 +9,7 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { IndexUserComponent } from './index-user/index-user.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions.component';
+import { IndexAdminComponent } from './index-admin/index-admin.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,9 @@ const routes: Routes = [
   },
   {
     path: 'indexuser', component: IndexUserComponent
+  },
+  {
+    path: 'indexadmin', component: IndexAdminComponent
   },
   {
     path: 'waiting', component: WaitingAcceptanceComponent

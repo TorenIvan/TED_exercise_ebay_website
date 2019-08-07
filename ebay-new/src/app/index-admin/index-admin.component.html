@@ -12,14 +12,17 @@
     <link rel="stylesheet" routerLink="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--DataTables CDN && js file-->
-    <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <!-- 
-    <script>
+    <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" routerLink="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+
+    <!-- <script>
         $(document).ready(function() {
             $('#tableP').Datatable();
-        })
+        });
     </script> -->
 </head>
 
@@ -33,6 +36,12 @@
         <!-- Links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+                <a class="nav-link" routerLink="/userslist">Users List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/applications">Applications</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" routerLink="/signin">Logout</a>
             </li>
         </ul>
@@ -43,6 +52,28 @@
         <div class="d-flex justify-content-center h-100">
 
             <table #tableP datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
+
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Seller</th>
+                        <th>Product</th>
+                        <th>Buy Price</th>
+                        <th>Currently</th>
+                        <th>First Bid</th>
+                        <th>Number of Bids</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Description</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>Town</th>
+                        <th>Address</th>
+                        <th>Postcode</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
                 <tbody *ngIf="products?.length != 0">
                     <tr *ngFor="let product of products">
                         <td>{{product.id}}</td>
@@ -119,7 +150,7 @@
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <button type="button" mdbBtn color="info" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
                         Close
                         </button>
                 </div>
@@ -133,23 +164,6 @@
 
     <!-- Footer -->
     <footer class="page-footer font-small pt-4">
-
-        <!-- Footer Elements -->
-        <div class="container">
-
-            <!-- Call to action -->
-            <ul class="list-unstyled list-inline text-center py-2">
-                <li class="list-inline-item">
-                    <h5 class="mb-1">Register for free</h5>
-                </li>
-                <li class="list-inline-item">
-                    <a routerLink="/signup" class="btn btn-outline-white btn-rounded">Sign up!</a>
-                </li>
-            </ul>
-            <!-- Call to action -->
-
-        </div>
-        <!-- Footer Elements -->
 
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">© 2018 Copyright:
