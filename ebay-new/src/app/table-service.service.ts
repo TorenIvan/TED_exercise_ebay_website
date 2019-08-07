@@ -31,4 +31,8 @@ export class TableServiceService {
   getUserInfo(id) {
     return {};
   }
+
+  getAllUsers() {
+    return this.httpClient.post('/api/printusers.php', {})
+  }
 }

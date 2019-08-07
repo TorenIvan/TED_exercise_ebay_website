@@ -18,6 +18,8 @@ import { IndexUserComponent } from './index-user/index-user.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions.component';
 import { IndexAdminComponent } from './index-admin/index-admin.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { ApplicationsComponent } from './applications/applications.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { IndexAdminComponent } from './index-admin/index-admin.component';
     IndexUserComponent,
     PersonalInfoComponent,
     PersonalAuctionsComponent,
-    IndexAdminComponent
+    IndexAdminComponent,
+    UsersListComponent,
+    ApplicationsComponent
   ],
   imports: [
     BrowserModule,
