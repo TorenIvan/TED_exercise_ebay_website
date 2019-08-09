@@ -1,6 +1,7 @@
 <?php
 
-print_r("Mpikes acceptuser");
+#//print_r("Mpikes acceptuser");
+require 'signup.php';
 
 $sqluserlist = "INSERT INTO userlist (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 if($stmtuserlist = mysqli_prepare($con, $sqluserlist)) {
@@ -21,15 +22,17 @@ if($stmtuserlist = mysqli_prepare($con, $sqluserlist)) {
 
   //execute and insert into the db
   mysqli_stmt_execute($stmtuserlist);
-  print_r("Mpikan sto temporary table (lista)\n");
+  #//print_r("Mpikan sto temporary table (lista)\n");
+
+  echo json_encode(99);
 
 
 }else {
   json_encode("13");
-  print_r("Den mpikan sto userlist\n");
+  //print_r("Den mpikan sto userlist\n");
 }
 
-require 'printuserlist.php';
+#require 'printuserlist.php';
 //waits till json decode
 //EDO SYMELA-------EDO
 //APLA ASE TOUS NA PERINOUN
@@ -38,3 +41,4 @@ require 'printuserlist.php';
 
 
 ?>
+//print_r

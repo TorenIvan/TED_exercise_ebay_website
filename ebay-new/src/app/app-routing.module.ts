@@ -30,7 +30,7 @@ const routes: Routes = [
     path: 'index', component: IndexComponent
   },
   {
-    path: 'indexuser', component: IndexUserComponent
+    path: 'indexuser/:id', component: IndexUserComponent
   },
   {
     path: 'indexadmin', component: IndexAdminComponent
@@ -56,7 +56,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

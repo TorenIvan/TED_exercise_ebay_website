@@ -37,7 +37,7 @@ if($result=mysqli_query($con,$sql)){
     //$count--;
     $count++;
   }
-  json_encode($users);
+  echo json_encode($users);
   // print_r($users);
 }else{
   "aa";

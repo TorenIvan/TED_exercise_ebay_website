@@ -29,13 +29,13 @@ if($result=mysqli_query($con,$sql)){
     //$count--;
     $count++;
   }
-  json_encode($users);
-  print_r($users);
+  echo json_encode($users);
+  // print_r($users);
 }else{
   "aa";
   http_response_code(404);
 
 }
-echo($result);
+// echo($result);
 
  ?>

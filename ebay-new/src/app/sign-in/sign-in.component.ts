@@ -26,6 +26,11 @@ export class SignInComponent implements OnInit {
         if(data == "0") {
           this.rooter.navigateByUrl('/index')
         }
+        else if(data == 1){
+          this.rooter.navigateByUrl('/indexadmin')
+        }else if(data>1){
+          this.rooter.navigateByUrl('/indexuser/id=' + data)
+        }
       } else {
         window.alert(data)
       }

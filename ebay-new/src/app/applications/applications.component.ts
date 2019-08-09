@@ -4,6 +4,7 @@ import { User } from '../user';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
+import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -35,8 +36,8 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
   tableInstance: any;
 
   idUser: string;
-  
-  constructor(private tableService: TableServiceService) { }
+
+  constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -141,10 +142,13 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   acceptUser() {
+    this.tableService.acceptUser(this.idUser, 1).subscribe(data => {
+        console.log(data);
+    });
     console.log("user accepted with id: " + this.idUser);
     this.modal.first.hide();
     this.modal.last.hide();
-    this.rerender();
+    this.rooter.navigateByUrl('/applications');
   }
 
   openAcceptModal() {

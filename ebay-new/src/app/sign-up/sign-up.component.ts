@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -8,7 +9,7 @@ import { TableServiceService } from '../table-service.service';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor(private tableService: TableServiceService) { }
+  constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
   }
@@ -32,9 +33,22 @@ export class SignUpComponent implements OnInit {
 
     if(name && surname && email && phone && country && state && town && address && postcode && afm && username && password && confPassword == password) {
       this.tableService.newUser(name, surname, email, phone, country, state, town, address, postcode, afm, username, password).subscribe(data => {
-        if(data != null) {
-          form.querySelector('#result').style.color = "white"
-          form.querySelector('#result').innerHTML = data
+        if(data == 99) {
+          // form.querySelector('#result').style.color = "white"
+          // form.querySelector('#result').innerHTML = data
+          this.rooter.navigateByUrl('/waiting')
+        }
+        else if(data == 4){
+          form.querySelector('#result').style.color = "yellow"
+          form.querySelector('#result').innerHTML = "There is already a user with that username!"
+        }
+        else if(data == 6){
+          form.querySelector('#result').style.color = "yellow"
+          form.querySelector('#result').innerHTML = "There is already a user with that email!"
+        }
+        else {
+          form.querySelector('#result').style.color = "rgb(165, 0, 0)"
+          form.querySelector('#result').innerHTML = "There was a problem! Sign up failed."
         }
       })
     } else if(!name || !surname || !email || !phone || !country || !state || !town || !address || !postcode || !afm || !username || !password){
@@ -43,7 +57,7 @@ export class SignUpComponent implements OnInit {
     } else {
       form.querySelector('#result').style.color = "rgb(165, 0, 0)"
       form.querySelector('#result').innerHTML = "Passwords don't match!"
-    }    
+    }
   }
 
 }

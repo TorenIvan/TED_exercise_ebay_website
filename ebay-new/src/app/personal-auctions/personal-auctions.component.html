@@ -209,14 +209,14 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div class="container">
-                        <form (submit)="addAuction()">
+                        <form (submit)="addAuction($event)">
                             <div class="row">
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span>Product:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fp">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -224,7 +224,7 @@
                                         <span>Description:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fd">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -232,7 +232,7 @@
                                         <span>Buy Price:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fbp">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -240,7 +240,7 @@
                                         <span>Category:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fca">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -248,7 +248,7 @@
                                         <span>Country:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fco">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -256,7 +256,7 @@
                                         <span>State:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fs">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -264,7 +264,7 @@
                                         <span>Town:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="ft">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -272,7 +272,7 @@
                                         <span>Address:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fa">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -280,7 +280,7 @@
                                         <span>Postcode:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fpc">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -288,7 +288,7 @@
                                         <span>Latitude:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="fla">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -296,7 +296,7 @@
                                         <span>Longitude:</span>
                                     </div>
                                     <div class="row">
-                                        <input>
+                                        <input id="flo">
                                     </div>
                                 </div>
                                 <br>

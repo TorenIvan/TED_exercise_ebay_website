@@ -50,7 +50,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   ngOnInit() {
 
     // id xrhsth
-    this.idUser=1;
+    this.idUser=2;
 
     this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
       this.products = data;
@@ -115,7 +115,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
   }
-  
+
 
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
@@ -182,8 +182,26 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.ableToSubmitAuction = true;
   }
 
-  addAuction() {
+  addAuction(event) {
     event.preventDefault();
+    const form = event.target
+    const product = form.querySelector('#fp').value
+    const description = form.querySelector('#fd').value
+    const buy_price = form.querySelector('#fbp').value
+    const category = form.querySelector('#fca').value
+    const country = form.querySelector('#fco').value
+    const state = form.querySelector('#fs').value
+    const town = form.querySelector('#ft').value
+    const address = form.querySelector('#fa').value
+    const postcode = form.querySelector('#fpc').value
+    const latitude = form.querySelector('#fla').value
+    const longitude = form.querySelector('#flo').value
+
+    const end_date = null;
+
+    this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date).subscribe(data => {
+      console.log(data)
+    });
     console.log("New Auction YAY!");
     this.ableToSubmitAuction = false;
 
@@ -194,6 +212,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   deleteAuction() {
     this.ableToDeleteAuction = true;
+    this.tableService.deleteAuction(this.idAuction).subscribe(data => {
+      console.log(data)
+    });
     console.log("auction deleted with id: " + this.idAuction);
     this.modals[1].hide();
     this.modals[0].hide();

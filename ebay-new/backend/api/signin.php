@@ -48,11 +48,15 @@ if(isset($_POST) && !empty($_POST)) {
                     // echo $username;
                     if(mysqli_num_rows($result) > 0) {
                         // echo $username;
-
                         $row = mysqli_fetch_assoc($result);
-                        echo json_encode($row);
+                        if ($row['user_category_id'] == 1) {
+                          echo json_encode(1);
+                        }else {
+                          echo json_encode($row['id']); //user
+                        }
+                        // echo json_encode($row);
                     } else {
-                        echo json_encode("1 ".$sql);
+                        echo json_encode("-1 ".$sql);
                     }
                 } else {
                     echo json_encode("Wrong Password. Please try again.");
@@ -62,10 +66,10 @@ if(isset($_POST) && !empty($_POST)) {
             }
         }
         else {
-            echo json_encode("6");;
+            echo json_encode("-6");
         }
     } else {
-        echo json_encode("7");;
+        echo json_encode("-7");
     }
 } else {
     // http_response_code("NO ONE REQUESTED THIS! WHY DO YOU ASK FOR IT?!");

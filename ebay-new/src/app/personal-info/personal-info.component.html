@@ -36,7 +36,7 @@
     <br>
 
     <div class="container profForm">
-        <form (submit)=saveProfileChanges($event)>
+        <form (submit)=saveProfileChanges($event) *ngIf="user?.length != 0">
             <div class="input-group form-group">
                 <input id="id" class="hiddenItem" type="number" min="0" value="{{user.id}}" hidden>
             </div>

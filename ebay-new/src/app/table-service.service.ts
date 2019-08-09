@@ -25,11 +25,11 @@ export class TableServiceService {
   }
 
   getMyAuctions(id) {
-    return this.httpClient.post('/api/read.php', {id})
+    return this.httpClient.post('/api/usersonlyauctions.php', {id})
   }
 
   getUserInfo(id) {
-    return {};
+    return this.httpClient.post('/api/userinfo.php', {id})
   }
 
   getAllUsers() {
@@ -37,6 +37,22 @@ export class TableServiceService {
   }
 
   getApplications() {
-    return this.httpClient.post('/api/printuserlist.php', {})
+    return this.httpClient.post('/api/printuserlistwithconnect.php', {})
+  }
+
+  deleteUser(id) {
+    return this.httpClient.post('/api/deleteuser.php', {id})
+  }
+
+  acceptUser(id, flag) {
+    return this.httpClient.post('/api/acceptuser.php', {id, flag})
+  }
+
+  addAuction(user_id, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date) {
+    return this.httpClient.post('/api/addauction.php', {user_id, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date})
+  }
+
+  deleteAuction(id) {
+    return this.httpClient.post('/api/deleteauction.php', {id})
   }
 }

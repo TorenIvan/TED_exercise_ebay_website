@@ -11,36 +11,35 @@
   #insert everything on db using prepared statements	-done
 require 'connect.php';
 
-//$_POST = json_decode(file_get_contents('php://input'), true);
+$_POST = json_decode(file_get_contents('php://input'), true);
 
-//if(isset($_POST) && !empty($_POST)) {
-
-    $username = "kapoiona";
-    $tpassword = "kapoiona";
-    $name = "kapoias";
-    $surname = "kapoias";
-    $email = "kapoiona@gmail.com";
-    $phone_number=6988888899;
-    $country="gr";
-    $state="elasona";
-    $town="zouliani";
-    $address="edo29";
-    $postcode="123556789";
-    $afm = 999888888;
+if(isset($_POST) && !empty($_POST)) {
+    // $username = "kapoiona";
+    // $tpassword = "kapoiona";
+    // $name = "kapoias";
+    // $surname = "kapoias";
+    // $email = "kapoiona@gmail.com";
+    // $phone_number=6988888899;
+    // $country="gr";
+    // $state="elasona";
+    // $town="zouliani";
+    // $address="edo29";
+    // $postcode="123556789";
+    // $afm = 999888888;
 
     //xss protection and of the user of post method(at the same time 2 things)
-    // $username = htmlspecialchars($_POST['Username']);
-    // $tpassword = htmlspecialchars($_POST['Password']);//temporary password. It is gonna be encoded
-    // $name = htmlspecialchars($_POST['Name']);
-    // $surname = htmlspecialchars($_POST['Surname']);
-    // $email = htmlspecialchars($_POST['Email']);
-    // $phone_number = htmlspecialchars($_POST['Phone Number']);
-    // $country = htmlspecialchars($_POST['Country']);
-    // $state = htmlspecialchars($_POST['State']);
-    // $town = htmlspecialchars($_POST['Town']);
-    // $address = htmlspecialchars($_POST['Address']);
-    // $postcode = htmlspecialchars($_POST['Postcode']);
-    // $afm = htmlspecialchars($_POST['TIN / ΑΦΜ']);
+    $username = htmlspecialchars($_POST['username']);
+    $tpassword = htmlspecialchars($_POST['password']);//temporary password. It is gonna be encoded
+    $name = htmlspecialchars($_POST['name']);
+    $surname = htmlspecialchars($_POST['surname']);
+    $email = htmlspecialchars($_POST['email']);
+    $phone_number = htmlspecialchars($_POST['phone']);
+    $country = htmlspecialchars($_POST['country']);
+    $state = htmlspecialchars($_POST['state']);
+    $town = htmlspecialchars($_POST['town']);
+    $address = htmlspecialchars($_POST['address']);
+    $postcode = htmlspecialchars($_POST['postcode']);
+    $afm = htmlspecialchars($_POST['afm']);
 
 
 
@@ -72,34 +71,34 @@ require 'connect.php';
 
           //if he exists
           if ($userk) {
-            print_r($userk);
+            //print_r($userk);
             //let's find the attribute that is the same
             if ($userk['username'] === $param_username) {
-              print_r("found same username\n");
-              json_encode("4");
-            }elseif ($userk['password'] === $param_password) {
-              print_r("found same password\n");
-              json_encode("5");
+              ////print_r("found same username\n");
+              echo 4;
+            }elseif ($userk['password'] == $param_password) {
+              //print_r("found same password\n");
+              echo 5;
             }elseif ($userk['email'] === $param_email) {
-              print_r("found same email\n");
-              json_encode("6");
-            }elseif ($userk['phone_number'] === $param_phone_number) {
-              print_r("found same phone number\n");
-              json_encode("7");
+              //print_r("found same email\n");
+              echo 6;
+            }elseif ($userk['phone_number'] == $param_phone_number) {
+              //print_r("found same phone number\n");
+              echo 7;
             }else {
               //same afm
-              print_r("found same afm\n");
-              json_encode('8');
+              //print_r("found same afm\n");
+              echo 8;
             }
 
           }else {
-            json_encode("3");
-            print_r("edo oxi");
+            echo 3;
+            //print_r("edo oxi");
           }
 
         }else {
 
-          print_r("Ola kala sto table user\n");
+          //print_r("Ola kala sto table user\n");
 
           //edo sunexizoume, den bre8ike user with the same username or password or email or phone_number or afm sto table user, as psaksoume an einai se anamoni o user
           if($stmttemplist = mysqli_prepare($con, $sqltemplist)) {
@@ -110,7 +109,7 @@ require 'connect.php';
             //set parameters and execute
             $pparam_email=$email;
             $pparam_username=$username;
-            $pparam_password=$tpassword;
+            $pparam_password=password_hash($tpassword,PASSWORD_DEFAULT);
             $pparam_phone_number=$phone_number;
             $pparam_afm=$afm;
             if (mysqli_stmt_execute($stmttemplist)) {
@@ -125,33 +124,33 @@ require 'connect.php';
 
                 //if he exists
                 if ($usertl) {
-                  //print_r($usertl);
+                  ////print_r($usertl);
                   //let's find the attribute that is the same
                   if ($usertl['username'] === $pparam_username) {
-                    print_r("found same username on waiting list\n");
-                    json_encode("4");
+                    //print_r("found same username on waiting list\n");
+                    echo 4;
                   }elseif ($usertl['password'] === $pparam_password) {
-                    print_r("found same password on waiting list\n");
-                    json_encode("5");
+                    //print_r("found same password on waiting list\n");
+                    echo 5;
                   }elseif ($usertl['email'] === $pparam_email) {
-                    print_r("found same email on waiting list\n");
-                    json_encode("6");
+                    //print_r("found same email on waiting list\n");
+                    echo 6;
                   }elseif ($usertl['phone_number'] === $pparam_phone_number) {
-                    print_r("found same phone number on waiting list\n");
-                    json_encode("7");
+                    //print_r("found same phone number on waiting list\n");
+                    echo 7;
                   }else {
                     //same afm
-                    print_r("found same afm on waiting list\n");
-                    json_encode('8');
+                    //print_r("found same afm on waiting list\n");
+                    echo 8;
                   }
-                  require 'printuserlist.php';
+                  // require 'printuserlist.php';
                   exit();
                 }else {
-                  json_encode("tl");
-                  print_r("tl");
+                  echo -1;
+                  //print_r("tl");
                 }
               }else {
-                print_r("Ola kala den bre8ike sto waiting list\n");
+                //print_r("Ola kala den bre8ike sto waiting list\n");
               }
             }
           }
@@ -163,30 +162,54 @@ require 'connect.php';
 
           // Check that the address is formatted correctly
           if (filter_var($param_email, FILTER_VALIDATE_EMAIL) !== FALSE) {
-            print_r("1st try email ok  ");
+            //print_r("1st try email ok  ");
           }else {
-            print_r("1st try email is not ok  ");
-            json_encode("8");
+            //print_r("1st try email is not ok  ");
+            echo 8;
           }
           // Check that the DNS record exists for the domain name
           $domain = substr($param_email, strpos($param_email, '@') + 1);
           if  (checkdnsrr($domain) !== FALSE) {
-            print_r('2nd try email is ok cause domain is valid!');
+            //print_r('2nd try email is ok cause domain is valid!');
           }else {
-            print_r('2nd try email is not ok ');
-            json_encode("9");
+            //print_r('2nd try email is not ok ';
+            echo 9;
           }
           //that's all for now m8s
 
-          //Now we want to encrypt our password to sha384(as it seems on a file i found for our front end dev)
-          $salt= substr(str_shuffle(MD5(microtime())), 0, 10);  //optional
-          $new_pass = hash('sha384', $param_password);
-          print_r($new_pass);
-          print_r("\n");
-
           //edo 8a ginetai require ston wait_user
 
-         require 'waituser.php';
+         // require 'waituser.php';
+         $new_pass = $pparam_password;
+
+         $sqluserlist = "INSERT INTO userlist (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+         if($stmtuserlist = mysqli_prepare($con, $sqluserlist)) {
+           mysqli_stmt_bind_param($stmtuserlist, "sssssssssssi", $uusername, $ppassword, $nname, $ssurname, $eemail, $pphone_number, $ccountry, $sstate, $ttown, $aaddress, $ppostcode, $aafm);
+           $uusername=$param_username;
+           $ppassword=$new_pass;
+           $nname=$name;
+           $ssurname=$surname;
+           $eemail=$param_email;
+           $pphone_number=$param_phone_number;
+           $ccountry=$country;
+           $sstate=$state;
+           $ttown=$town;
+           $aaddress=$address;
+           $ppostcode=$postcode;
+           $aafm=$param_afm;
+
+
+           //execute and insert into the db
+           mysqli_stmt_execute($stmtuserlist);
+           #//print_r("Mpikan sto temporary table (lista)\n");
+
+           echo 99;
+
+
+         }else {
+           echo 13;
+           //print_r("Den mpikan sto userlist\n");
+         }
 
 
           //  And now let's go to insert the values
@@ -209,28 +232,28 @@ require 'connect.php';
           //
           //   //execute and insert into the db
           //   mysqli_stmt_execute($stmt);
-          //   print_r("executed\n");
+          //   //print_r("executed\n");
           //
           //
           // }else {
-          //   json_encode("10");
+          //   echo "10");
           // }
 
         }
 
       }else {
-        json_encode("2");
-        print_r("something is off with execution\n");
+        echo 2;
+        //print_r("something is off with execution\n";
       }
 
     }else {
-      json_encode("1");
+      echo 1;
     }
 
 
-//    echo json_encode("Let's say that i did that");
-// } else {
-//     // http_response_code("NO ONE REQUESTED THIS! WHY DO YOU ASK FOR IT?!");
-//     http_response_code(404);
-//}
+//    echo "Let's say that i did that");
+} else {
+    // http_response_code("NO ONE REQUESTED THIS! WHY DO YOU ASK FOR IT?!");
+    http_response_code(404);
+}
 ?>
