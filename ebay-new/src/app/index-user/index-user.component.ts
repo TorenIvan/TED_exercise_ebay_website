@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
 import { Subject } from 'rxjs';
@@ -19,10 +19,12 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
 
-  @ViewChild(ModalDirective)
-  modal: ModalDirective;
+  @ViewChildren(ModalDirective)
+  modal: QueryList<ModalDirective>;
 
   modalBody: string;
+
+  bidAmount: number;
 
   dtOptions: DataTables.Settings = {};
 
@@ -44,6 +46,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       this.products = data;
       this.dtTrigger.next();
     });
+
+    this.bidAmount = 0;
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -85,9 +89,10 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
+          this.bidAmount = 0;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.modalBody = this.format(data.toString());
-          this.modal.show();
+          this.modal.first.show();
         });
         return row;
       }
@@ -161,9 +166,16 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       this.openform = true;
   }
 
-  addBid(event) {
+  openBidModal(event) {
     event.preventDefault();
+    const form = event.target;
+    this.bidAmount = form.querySelector('#bidAmount').value;
+    this.modal.last.show();
+  }
+
+  addBid() {
     this.bidded = true;
+    this.modal.last.hide();
   }
 
 }

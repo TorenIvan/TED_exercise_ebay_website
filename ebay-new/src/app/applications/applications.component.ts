@@ -104,7 +104,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.tableService.getAllUsers().subscribe((data: User[]) => {
+    this.tableService.getApplications().subscribe((data: User[]) => {
         this.users = data;
         this.dtTrigger.next();
     });

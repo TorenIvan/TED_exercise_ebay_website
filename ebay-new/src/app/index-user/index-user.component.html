@@ -128,7 +128,7 @@
 
                 <!-- Bidding form -->
                 <div id="biddingForm" class="biddingForm" [hidden]="!openform">
-                    <form (submit)=addBid($event)>
+                    <form (submit)=openBidModal($event)>
                         <hr>
                         <div class="form-group">
                             <p>How much would you like to bid?</p>
@@ -143,10 +143,10 @@
                         <div class="d-flex justify-content-center form-group">
                             <input type="submit" value="Submit my bid!" class="btn float-center email_btn" [disabled]="bidded">
                         </div>
-                        <br>
+                        <!-- <br>
                         <div class="d-flex justify-content-center form-group">
                             <p class="result" id="result">{{result}}</p>
-                        </div>
+                        </div> -->
                         <hr>
                     </form>
                 </div>
@@ -165,6 +165,50 @@
         <!--/.Dialog-->
     </div>
     <!--/.Modal-->
+
+    <!--Modal bid-->
+    <div mdbModal #frame1="mdbModal" class="modal fade top" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Confirmation
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <p style="display: inline">Are you sure you want to bid </p>
+                    <h5 style="display: inline">{{bidAmount}} euros</h5>
+                    <p style="display: inline"> to this auction?</p>
+                </div>
+
+                <!--Footer-->
+                <div class="row">
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="danger" class="waves-effect" (click)="frame1.hide();" mdbWavesEffect>
+                        No
+                    </button>
+                    </div>
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="success" class="waves-effect" (click)="addBid()" mdbWavesEffect>
+                        Yes
+                    </button>
+                    </div>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal bid-->
 
     <!-- Footer -->
     <footer class="page-footer font-small pt-4">
