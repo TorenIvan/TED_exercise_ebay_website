@@ -44,7 +44,7 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.dtOptions = {
-      dom: 'lBfrtip',
+      dom: 'Blfrtip',
       buttons: [
         {
           text: 'JSON',

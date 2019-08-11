@@ -100,7 +100,7 @@
 
 
     <!--Modal info-->
-    <div mdbModal #frame1="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
             <!--Content-->
@@ -110,7 +110,7 @@
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">
                         Details
                     </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                         <span aria-hidden="true" class="white-text">&times;</span>
                         </button>
                 </div>
@@ -118,14 +118,19 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div class="b" [innerHTML]="modalBody"></div>
-                    <div>
-                        <button type="button" class="btn acceptButton" (click)="openAcceptModal()">Accept User</button>
+                    <div calss="row">
+                        <div class="col">
+                            <button type="button" class="btn rejectButton float-left" (click)="openRejectModal()">Reject User</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn acceptButton float-right" (click)="openAcceptModal()">Accept User</button>
+                        </div>
                     </div>
                 </div>
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame1.hide()" mdbWavesEffect>
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
                         Close
                         </button>
                 </div>
@@ -138,8 +143,8 @@
     <!--/.Modal info-->
 
 
-    <!--Modal delete-->
-    <div mdbModal #frame="mdbModal" class="modal fade top" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+    <!--Modal accept-->
+    <div mdbModal #frame1="mdbModal" class="modal fade top" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
             <!--Content-->
@@ -149,7 +154,7 @@
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">
                         Confirmation
                     </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
                         <span aria-hidden="true" class="white-text">&times;</span>
                     </button>
                 </div>
@@ -178,7 +183,49 @@
         </div>
         <!--/.Dialog-->
     </div>
-    <!--/.Modal delete-->
+    <!--/.Modal accept-->
+
+    <!--Modal reject-->
+    <div mdbModal #frame2="mdbModal" class="modal fade top" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Confirmation
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame2.hide()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <p>Are you sure you want to reject this user?</p>
+                </div>
+
+                <!--Footer-->
+                <div class="row">
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="danger" class="waves-effect" (click)="cancelReject()" mdbWavesEffect>
+                            No
+                        </button>
+                    </div>
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="success" class="waves-effect" (click)="rejectUser()" mdbWavesEffect>
+                            Yes
+                        </button>
+                    </div>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal reject-->
 
     <!-- Footer -->
     <footer class="page-footer font-small pt-4">

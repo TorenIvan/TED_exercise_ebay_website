@@ -87,6 +87,23 @@ p {
     outline-color: mix(white, green, 20%);
 }
 
+.rejectButton {
+    color: mix(black, red, 20%);
+    align-self: flex-start;
+    font-weight: 1000;
+    background-color: white;
+    outline-color: mix(black, red, 20%);
+    outline-width: 1px;
+    width: auto;
+    outline-style: solid;
+}
+
+.rejectButton:hover {
+    color: black;
+    background-color: mix(white, red, 95%);
+    outline-color: mix(white, red, 20%);
+}
+
 // ----------- DataTable scss! --------------------------------------------------------------------------
 //
 // Colour customisation

@@ -38,11 +38,13 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   idUser: string;
 
+  modals: any;
+
   constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
     this.dtOptions = {
-      dom: 'lBfrtip',
+      dom: 'Blfrtip',
       buttons: [
         {
           text: 'Accept All',
@@ -102,7 +104,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.tableService.getApplications().subscribe((data: User[]) => {
+    this.tableService.getAllUsers().subscribe((data: User[]) => {
         this.users = data;
         this.dtTrigger.next();
     });
@@ -117,6 +119,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.modals = this.modal.toArray();
     this.dtTrigger.next();
     this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -165,16 +168,38 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     console.log("user accepted with id: " + this.idUser);
     this.modal.first.hide();
+    this.modals[1].hide();
     this.modal.last.hide();
     this.rooter.navigateByUrl('/applications');
   }
 
   openAcceptModal() {
-    this.modal.last.show();
+    this.modals[1].show();
     this.modal.first.hide();
   }
 
   cancelAccept() {
+    this.modals[1].hide();
+    this.modal.first.show();
+  }
+
+  rejectUser() {
+    this.tableService.acceptUser(this.idUser, 0).subscribe(data => {
+        console.log(data);
+    });
+    console.log("user accepted with id: " + this.idUser);
+    this.modal.first.hide();
+    this.modal.last.hide();
+    this.modals[1].hide();
+    this.rooter.navigateByUrl('/applications');
+  }
+
+  openRejectModal() {
+    this.modal.last.show();
+    this.modal.first.hide();
+  }
+
+  cancelReject() {
     this.modal.first.show();
     this.modal.last.hide();
   }
