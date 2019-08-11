@@ -36,9 +36,9 @@
     <br>
 
     <div class="container profForm">
-        <form (submit)=saveProfileChanges($event) *ngIf="user?.length != 0">
+        <form (submit)=saveProfileChanges($event) [formGroup]="newForm">
             <div class="input-group form-group">
-                <input id="id" class="hiddenItem" type="number" min="0" value="{{user.id}}" hidden>
+                <input formControlName="id" class="hiddenItem" type="number" min="0">
             </div>
             <div class="input-group form-group">
                 <div class="row">
@@ -47,7 +47,7 @@
                             <span>Username:</span>
                         </div>
                         <div class="row">
-                            <input id="username" type="text" value="{{user.username}}">
+                            <input formControlName="username" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -55,7 +55,7 @@
                             <span>Name:</span>
                         </div>
                         <div class="row">
-                            <input id="name" type="text" value="{{user.name}}">
+                            <input formControlName="name" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -63,7 +63,7 @@
                             <span>Surname:</span>
                         </div>
                         <div class="row">
-                            <input id="surname" type="text" value="{{user.surname}}">
+                            <input formControlName="surname" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -71,7 +71,7 @@
                             <span>Email:</span>
                         </div>
                         <div class="row">
-                            <input id="email" type="email" value="{{user.email}}">
+                            <input formControlName="email" type="email">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -79,7 +79,7 @@
                             <span>Phone Number:</span>
                         </div>
                         <div class="row">
-                            <input id="phone" type="text" value="{{user.phone_number}}">
+                            <input formControlName="phone" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -87,7 +87,7 @@
                             <span>Country:</span>
                         </div>
                         <div class="row">
-                            <input id="country" type="text" value="{{user.country}}">
+                            <input formControlName="country" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -95,7 +95,7 @@
                             <span>State:</span>
                         </div>
                         <div class="row">
-                            <input id="state" type="text" value="{{user.state}}">
+                            <input formControlName="state" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -103,7 +103,7 @@
                             <span>Town:</span>
                         </div>
                         <div class="row">
-                            <input id="town" type="text" value="{{user.town}}">
+                            <input formControlName="town" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -111,7 +111,7 @@
                             <span>Address:</span>
                         </div>
                         <div class="row">
-                            <input id="address" type="text" value="{{user.address}}">
+                            <input formControlName="address" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -119,7 +119,7 @@
                             <span>Postcode:</span>
                         </div>
                         <div class="row">
-                            <input id="postcode" type="text" value="{{user.postcode}}">
+                            <input formControlName="postcode" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -127,7 +127,7 @@
                             <span>TIN / ΑΦΜ:</span>
                         </div>
                         <div class="row">
-                            <input id="afm" type="number" value="{{user.afm}}">
+                            <input formControlName="afm" type="number">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -135,7 +135,7 @@
                             <span>Bidder Rating:</span>
                         </div>
                         <div class="row">
-                            <input id="ratingB" type="text" value="{{user.rating_bidder}}" disabled>
+                            <input formControlName="ratingB" type="text">
                         </div>
                     </div>
                     <div class="col formCol">
@@ -143,7 +143,7 @@
                             <span>Seller Rating:</span>
                         </div>
                         <div class="row">
-                            <input id="ratingS" type="text" value="{{user.rating_seller}}" disabled>
+                            <input formControlName="ratingS" type="text">
                         </div>
                     </div>
                 </div>

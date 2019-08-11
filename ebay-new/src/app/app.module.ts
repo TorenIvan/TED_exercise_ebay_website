@@ -20,6 +20,8 @@ import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions
 import { IndexAdminComponent } from './index-admin/index-admin.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ApplicationsComponent } from './applications/applications.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { ApplicationsComponent } from './applications/applications.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     DataTablesModule,
