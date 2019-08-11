@@ -42,6 +42,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   idUser:number;
 
+  modals:any;
+
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
@@ -118,6 +120,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   
 
   ngAfterViewInit() {
+    this.modals = this.modal.toArray();
     this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
@@ -182,12 +185,21 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
     event.preventDefault();
     const form = event.target;
     this.bidAmount = form.querySelector('#bidAmount').value;
-    this.modal.last.show();
+    this.modals[1].show();
   }
 
   addBid() {
     this.bidded = true;
+    this.modals[1].hide();
+  }
+
+  openEndModal() {
+    this.modal.last.show();
+  }
+
+  endAuction() {
     this.modal.last.hide();
+    this.modal.first.hide();
   }
 
 }

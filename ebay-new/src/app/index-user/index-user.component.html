@@ -123,8 +123,11 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div class="b" [innerHTML]="modalBody"></div>
-                    <div>
+                    <div [hidden]="usersAuction">
                         <input type="button" value="Bid" class="btn btn-outline-info bidButton" [hidden]="usersAuction" (click)="openBiddingForm()">
+                    </div>
+                    <div [hidden]="!usersAuction">
+                        <input type="button" value="End Auction" class="btn endButton" [hidden]="!usersAuction" (click)="openEndModal()">
                     </div>
                 </div>
 
@@ -211,6 +214,48 @@
         <!--/.Dialog-->
     </div>
     <!--/.Modal bid-->
+
+    <!--Modal end auction-->
+    <div mdbModal #frame2="mdbModal" class="modal fade top" id="endModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Confirmation
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame2.hide()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <p>Are you sure you want to end this auction?</p>
+                </div>
+
+                <!--Footer-->
+                <div class="row">
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="danger" class="waves-effect" (click)="frame2.hide();" mdbWavesEffect>
+                            No
+                        </button>
+                    </div>
+                    <div class="modal-footer justify-content-center col">
+                        <button type="button" mdbBtn color="success" class="waves-effect" (click)="endAuction()" mdbWavesEffect>
+                            Yes
+                        </button>
+                    </div>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal end auction-->
 
     <!-- Footer -->
     <footer class="page-footer font-small pt-4">

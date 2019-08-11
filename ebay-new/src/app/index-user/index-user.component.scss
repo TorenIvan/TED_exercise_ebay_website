@@ -105,6 +105,23 @@ input:focus {
     text-transform: none;
 }
 
+.endButton {
+    color: mix(black, orange, 20%);
+    align-self: flex-start;
+    font-weight: 1000;
+    background-color: white;
+    outline-color: mix(black, orange, 20%);
+    outline-width: 2px;
+    width: auto;
+    outline-style: solid;
+}
+
+.endButton:hover {
+    color: black;
+    background-color: mix(white, orange, 95%);
+    outline-color: mix(white, orange, 20%);
+}
+
 // ----------- DataTable scss! --------------------------------------------------------------------------
 //
 // Colour customisation
