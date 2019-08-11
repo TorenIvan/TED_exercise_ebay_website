@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-personal-auctions',
@@ -37,6 +38,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   ableToSubmitAuction: boolean;
 
+  resultFlag: boolean;
+
   idUser: number;
 
   idAuction: string;
@@ -44,6 +47,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   tableInstance: any;
 
   modals: any;
+  
+  hhh: string;
 
   constructor(private tableService: TableServiceService) { }
 
@@ -180,6 +185,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.modals[0].hide();
     this.modals[1].hide();
     this.ableToSubmitAuction = true;
+    this.resultFlag = true;
   }
 
   addAuction(event) {
@@ -194,20 +200,25 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const town = form.querySelector('#ft').value
     const address = form.querySelector('#fa').value
     const postcode = form.querySelector('#fpc').value
-    const latitude = form.querySelector('#fla').value
-    const longitude = form.querySelector('#flo').value
+    const start_date = form.querySelector('#fsd').value
+    const end_date = form.querySelector('#fse').value
 
-    const end_date = null;
-
-    this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date).subscribe(data => {
-      console.log(data)
-    });
-    console.log("New Auction YAY!");
-    this.ableToSubmitAuction = false;
-
-    this.modals[2].hide();
-
-    this.rerender();
+    if(product.trim() && description.trim() && buy_price.trim() && category.trim() && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date.trim()) {
+      const latitude = 0;
+      const longitude = 0;
+      this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
+        console.log(data)
+        this.hhh = data.toString();
+      });
+      console.log("New Auction YAY!");
+      this.ableToSubmitAuction = false;
+      this.resultFlag = false;
+      this.modals[2].hide();
+    } else {
+      // alert not all necessary fields are filled
+      this.hhh = "Some necessary fields are empty!";
+      this.resultFlag = false;
+    }
   }
 
   deleteAuction() {

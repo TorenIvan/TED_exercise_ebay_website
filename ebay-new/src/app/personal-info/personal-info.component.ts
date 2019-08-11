@@ -12,14 +12,14 @@ export class PersonalInfoComponent implements OnInit {
   user: User[];
 
 
-  id: number;
+  idUser: number;
 
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
-    this.id = 2;
+    this.idUser = 2;
 
-    this.tableService.getUserInfo(this.id).subscribe((data: User[]) => {
+    this.tableService.getUserInfo(this.idUser).subscribe((data: User[]) => {
         this.user = data;
         console.log(data);
     });

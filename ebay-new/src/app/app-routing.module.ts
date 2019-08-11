@@ -21,37 +21,37 @@ const routes: Routes = [
     path: 'signin', component: SignInComponent
   },
   {
-    path: 'signup', component: SignUpComponent
+    path: 'signup', component: SignUpComponent, pathMatch: 'full'
   },
   {
-    path: 'forgotpassword', component: ForgotPasswordComponent
+    path: 'forgotpassword', component: ForgotPasswordComponent, pathMatch: 'full'
   },
   {
-    path: 'index', component: IndexComponent
+    path: 'index', component: IndexComponent, pathMatch: 'full'
   },
   {
-    path: 'indexuser/:id', component: IndexUserComponent
+    path: 'indexuser/:id', component: IndexUserComponent, pathMatch: 'full'
   },
   {
-    path: 'indexadmin', component: IndexAdminComponent
+    path: 'indexadmin', component: IndexAdminComponent, pathMatch: 'full'
   },
   {
-    path: 'waiting', component: WaitingAcceptanceComponent
+    path: 'waiting', component: WaitingAcceptanceComponent, pathMatch: 'full'
   },
   {
-    path: 'newpassword', component: NewPasswordComponent
+    path: 'newpassword', component: NewPasswordComponent, pathMatch: 'full'
   },
   {
-    path: 'personalinfo', component: PersonalInfoComponent
+    path: 'personalinfo/:id', component: PersonalInfoComponent, pathMatch: 'full'
   },
   {
-    path: 'personalauctions', component: PersonalAuctionsComponent
+    path: 'personalauctions/:id', component: PersonalAuctionsComponent, pathMatch: 'full'
   },
   {
-    path: 'userslist', component: UsersListComponent
+    path: 'userslist', component: UsersListComponent, pathMatch: 'full'
   },
   {
-    path: 'applications', component: ApplicationsComponent
+    path: 'applications', component: ApplicationsComponent, pathMatch: 'full'
   }
 ];
 

@@ -33,10 +33,10 @@
         <!-- Links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/personalinfo">My Account</a>
+                <a class="nav-link" routerLink="/personalinfo/id={{idUser}}">My Account</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/indexuser">Auctions List</a>
+                <a class="nav-link" routerLink="/indexuser/id={{idUser}}">Auctions List</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/signin">Logout</a>
@@ -109,7 +109,7 @@
 
 
     <!--Modal info-->
-    <div mdbModal #frame1="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-notify modal-info" role="document">
             <!--Content-->
@@ -119,7 +119,7 @@
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">
                         Details
                     </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                         <span aria-hidden="true" class="white-text">&times;</span>
                         </button>
                 </div>
@@ -134,7 +134,7 @@
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame1.hide()" mdbWavesEffect>
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
                         Close
                         </button>
                 </div>
@@ -148,7 +148,7 @@
 
 
     <!--Modal delete-->
-    <div mdbModal #frame="mdbModal" class="modal fade top" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+    <div mdbModal #frame1="mdbModal" class="modal fade top" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-dialog-centered modal-notify modal-info" role="document">
             <!--Content-->
@@ -158,7 +158,7 @@
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">
                         Confirmation
                     </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame1.hide()">
                         <span aria-hidden="true" class="white-text">&times;</span>
                     </button>
                 </div>
@@ -213,42 +213,42 @@
                             <div class="row">
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span>Product:</span>
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Product:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="fp">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 newFormColumns">
-                                    <div class="row">
-                                        <span>Description:</span>
-                                    </div>
-                                    <div class="row">
-                                        <input id="fd">
+                                        <input value="" type="text" id="fp">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span>Buy Price:</span>
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Description:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="fbp">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 newFormColumns">
-                                    <div class="row">
-                                        <span>Category:</span>
-                                    </div>
-                                    <div class="row">
-                                        <input id="fca">
+                                        <input value="" type="text" id="fd">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span>Country:</span>
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Buy Price:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="fco">
+                                        <input value="" type="number" min="1" id="fbp">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
+                                    </div>
+                                    <div class="row">
+                                        <input value="" type="text" id="fca">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Country:</span>
+                                    </div>
+                                    <div class="row">
+                                        <input value="" type="text" id="fco">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
@@ -256,54 +256,57 @@
                                         <span>State:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="fs">
+                                        <input value="" type="text" id="fs">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span>Town:</span>
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Town:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="ft">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 newFormColumns">
-                                    <div class="row">
-                                        <span>Address:</span>
-                                    </div>
-                                    <div class="row">
-                                        <input id="fa">
+                                        <input value="" type="text" id="ft">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span>Postcode:</span>
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Address:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="fpc">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 newFormColumns">
-                                    <div class="row">
-                                        <span>Latitude:</span>
-                                    </div>
-                                    <div class="row">
-                                        <input id="fla">
+                                        <input value="" type="text" id="fa">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span>Longitude:</span>
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Postcode:</span>
                                     </div>
                                     <div class="row">
-                                        <input id="flo">
+                                        <input value="" type="text" id="fpc">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Start Date:</span>
+                                    </div>
+                                    <div class="row">
+                                        <input value="" type="date" id="fsd">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span>End Date:</span>
+                                    </div>
+                                    <div class="row">
+                                        <input value="" type="date" id="fse">
                                     </div>
                                 </div>
                                 <br>
                             </div>
                             <br>
-                            <span style="color: rgb(199, 0, 0)">* All fields are required</span>
+                            <span style="color: rgb(199, 0, 0)">All fields with * are required</span>
                             <hr>
+                            <div class="justify-content-center row" [hidden]="resultFlag">
+                                <h5 style="color: rgb(196, 127, 0)">{{hhh}}</h5>
+                            </div>
                             <div class="justify-content-center row" style="width: inherit;">
                                 <button type="submit" class="btn newButton" [disabled]="!ableToSubmitAuction">Submit Auction</button>
                             </div>

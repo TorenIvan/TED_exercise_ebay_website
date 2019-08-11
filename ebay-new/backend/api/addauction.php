@@ -12,8 +12,8 @@ if(isset($_POST) && !empty($_POST)) {
   $currently = 0;
   $first_bid = 0;
   $number_of_bids = 0;
-  // $start_date = htmlspecialchars($_POST['start_date']);
-  $start_date = new DateTime('2019-07-01 12:30:11');
+  $start_date = htmlspecialchars($_POST['start_date']);
+  // $start_date = new DateTime('2019-07-01 12:30:11');
   $result_date = $start_date->format('Y-m-d H:i:s');
   $end_date = htmlspecialchars($_POST['end_date']);
   $pname = htmlspecialchars($_POST['product']);

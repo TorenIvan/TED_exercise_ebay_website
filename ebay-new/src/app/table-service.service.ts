@@ -48,8 +48,8 @@ export class TableServiceService {
     return this.httpClient.post('/api/acceptuser.php', {id, flag})
   }
 
-  addAuction(user_id, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date) {
-    return this.httpClient.post('/api/addauction.php', {user_id, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date})
+  addAuction(user_id, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date) {
+    return this.httpClient.post('/api/addauction.php', {user_id, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date})
   }
 
   deleteAuction(id) {

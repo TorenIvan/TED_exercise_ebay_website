@@ -31,7 +31,7 @@ export class SignUpComponent implements OnInit {
     const password = form.querySelector('#nuPassword').value
     const confPassword = form.querySelector('#nuConfPassword').value
 
-    if(name && surname && email && phone && country && state && town && address && postcode && afm && username && password && confPassword == password) {
+    if(name && surname && email && phone && country && town && address && postcode && afm && username && password && confPassword == password) {
       this.tableService.newUser(name, surname, email, phone, country, state, town, address, postcode, afm, username, password).subscribe(data => {
         if(data == 99) {
           // form.querySelector('#result').style.color = "white"
@@ -51,7 +51,7 @@ export class SignUpComponent implements OnInit {
           form.querySelector('#result').innerHTML = "There was a problem! Sign up failed."
         }
       })
-    } else if(!name || !surname || !email || !phone || !country || !state || !town || !address || !postcode || !afm || !username || !password){
+    } else if(!name || !surname || !email || !phone || !country || !town || !address || !postcode || !afm || !username || !password){
       form.querySelector('#result').style.color = "yellow"
       form.querySelector('#result').innerHTML = "All fields must be filled in!"
     } else {
