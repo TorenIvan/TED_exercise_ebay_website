@@ -38,9 +38,15 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   bidded = false;
 
+  usersAuction = false;
+
+  idUser:number;
+
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
+
+    this.idUser = 2;
 
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
       this.products = data;
@@ -68,7 +74,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { title: 'Address' },
         { title: 'Postcode' },
         { title: 'Latitude' },
-        { title: 'Longitude' }
+        { title: 'Longitude' },
+        { title: 'UserId' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -83,13 +90,15 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 13 },
         { "searchable": false, "visible": false, "targets": 14 },
         { "searchable": false, "visible": false, "targets": 15 },
-        { "searchable": false, "visible": false, "targets": 16 }
+        { "searchable": false, "visible": false, "targets": 16 },
+        { "searchable": false, "visible": false, "targets": 17 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           this.bidAmount = 0;
+          this.usersAuction = false;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.modalBody = this.format(data.toString());
           this.modal.first.show();
@@ -135,6 +144,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   format(data : string) {
     const p = data.split(',');
+    if(p[17] == this.idUser.toString()) {
+      this.usersAuction = true;
+    }
     if(p[8] == "") {
       return '<div class="container">'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'

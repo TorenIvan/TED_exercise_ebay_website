@@ -16,4 +16,5 @@ export interface Product{
     number_of_bids: number;
     start_date: string;
     end_date: string;
+    id_creator: number;
 }

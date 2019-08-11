@@ -68,6 +68,7 @@
                         <td>{{product.postcode}}</td>
                         <td>{{product.latitude}}</td>
                         <td>{{product.longitude}}</td>
+                        <td>{{product.id_creator}}</td>
                     </tr>
                 </tbody>
                 <tbody *ngIf="products   == null">
@@ -94,6 +95,7 @@
                         <th><input type="text" placeholder="postcode" name="postcode" hidden disabled/></th>
                         <th><input type="text" placeholder="latitude" name="latitude" hidden disabled/></th>
                         <th><input type="text" placeholder="longitude" name="longitude" hidden disabled/></th>
+                        <th><input type="text" placeholder="id" name="id" hidden disabled/></th>
                     </tr>
                 </tfoot>
             </table>
@@ -122,7 +124,7 @@
                 <div class="modal-body">
                     <div class="b" [innerHTML]="modalBody"></div>
                     <div>
-                        <input type="button" value="Bid" class="btn btn-outline-info bidButton" (click)="openBiddingForm()">
+                        <input type="button" value="Bid" class="btn btn-outline-info bidButton" [hidden]="usersAuction" (click)="openBiddingForm()">
                     </div>
                 </div>
 
