@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
+import 'datatables.net-buttons';
 
 @Component({
   selector: 'app-applications',
@@ -41,6 +42,23 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.dtOptions = {
+      dom: 'lBfrtip',
+      buttons: [
+        {
+          text: 'Accept All',
+          key: '1',
+          action: function ( e, dt, button, config ) {
+            alert("Accepted All()");
+          }
+        },
+        {
+          text: 'Reject All',
+          key: '2',
+          action: function (e, dt, node, config) {
+            alert("Rejected All()");
+          }
+        }
+      ],
       retrieve: true,
       pagingType: 'full_numbers',
       scrollX: true,
