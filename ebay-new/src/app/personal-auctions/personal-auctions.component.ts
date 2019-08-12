@@ -1,10 +1,15 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, VERSION, NgModule } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Category } from '../category';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { Pipe, PipeTransform } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FilterPipe } from '../filter.pipe';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -55,7 +60,18 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   
   hhh: string;
 
-  constructor(private tableService: TableServiceService) { }
+  name: string;
+  searchText: string = "";
+  selected_count: number = 0;
+  selected_categories: any;
+
+  constructor(private tableService: TableServiceService) {
+    this.name = `Angular! v${VERSION.full}`;
+    this.tableService.getAllCategories().subscribe((data: Category[]) => {
+      this.categories = data;
+      this.getSelected();
+    });
+  }
 
   ngOnInit() {
 
@@ -67,9 +83,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       this.dtTrigger.next();
     });
 
-    this.tableService.getAllCategories().subscribe((data: Category[]) => {
-      this.categories = data;
-    });
+    // this.tableService.getAllCategories().subscribe((data: Category[]) => {
+    //   this.categories = data;
+    // });
 
     this.dtOptions = {
       retrieve: true,
@@ -204,6 +220,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const description = form.querySelector('#fd').value
     const buy_price = form.querySelector('#fbp').value
     const category = form.querySelector('#fca').value
+    // const category = this.selected_categories;
     const country = form.querySelector('#fco').value
     const state = form.querySelector('#fs').value
     const town = form.querySelector('#ft').value
@@ -254,4 +271,47 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.modals[1].hide();
     this.modals[2].hide();
   }
+
+  // Getting Selected Games and Count
+  getSelected() {
+    this.selected_categories = this.categories.filter(s => {
+      return s.selected;
+    });
+    this.selected_count = this.selected_categories.length;
+    //alert(this.selected_games);    
+  }
+ 
+  // Clearing All Selections
+  clearSelection() {
+    this.searchText = "";
+    this.categories = this.categories.filter(g => {
+      g.selected = false;
+      return true;
+    });
+    this.getSelected();
+  }
+ 
+  //Delete Single Listed Game Tag
+  deleteCategory(id: number) {
+    this.searchText = "";
+    this.categories = this.categories.filter(g => {
+      if (g.id == id)
+        g.selected = false;
+ 
+      return true;
+    });
+    this.getSelected();
+  }
+ 
+  //Clear term types by user
+  clearFilter() {
+    this.searchText = "";
+  }
 }
+
+@NgModule({
+  imports: [BrowserModule, FormsModule],
+  declarations: [PersonalAuctionsComponent, FilterPipe],
+  bootstrap: [PersonalAuctionsComponent]
+})
+export class AppModule { }

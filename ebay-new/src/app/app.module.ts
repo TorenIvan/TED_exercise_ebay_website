@@ -22,6 +22,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     PersonalAuctionsComponent,
     IndexAdminComponent,
     UsersListComponent,
-    ApplicationsComponent
+    ApplicationsComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

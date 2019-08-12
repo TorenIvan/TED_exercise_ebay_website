@@ -275,6 +275,8 @@
                                         <input value="" type="text" id="fpc">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Start Date:</span>
@@ -291,16 +293,37 @@
                                         <input value="" type="date" id="fse">
                                     </div>
                                 </div>
-                                <div class="col-xl-4 newFormColumns">
-                                    <div class="row">
-                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
-                                    </div>
-                                    <div class="row">
-                                        <select id="fca" name="fca" [(ngModel)]="selectedCategory" class="form-control" *ngIf="categories?.length != 0">
+                                <div class="col newFormColumns">
+                                    <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
+                                    <!-- <select id="fca" name="fca" [(ngModel)]="selectedCategory" class="form-control" *ngIf="categories?.length != 0">
                                             <option *ngFor="let c of categories" [value]="c.id">
                                                 {{c.description}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                    <!-- Search Field -->
+                                    <div>
+                                        <div class="filter-wrap">
+                                            <input [(ngModel)]="searchText" placeholder="Filter Categories" class="filter-input" name="dwd">
+                                            <span class="filter-clear" *ngIf="searchText.length>0" (click)="clearFilter()">X</span>
+                                        </div>
+                                    </div>
+                                    <!-- Clear Link -->
+                                    <div class="clear-selection" title="Click to Clear Selections" (click)="clearSelection()" *ngIf="selected_count">Clear Selection</div>
+
+                                    <div class="w">
+                                        <!-- Game List -->
+                                        <ul class="categories-list">
+                                            <li *ngFor="let c of categories | filter: searchText" class="category-item">
+                                                <input (change)="getSelected()" type="checkbox" value="{{c.id}}" [(ngModel)]="c.selected" name="categories" />
+                                                <span class="category-text">{{c.description}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Selected Games-->
+                                    <div class="selected-categories-wrap">
+                                        <div class="selected-category" *ngFor="let s of selected_categories">
+                                            <span>{{s.description}} <span class="delete-category" (click)="deleteCategory(s.id)" title="Click to delete">X</span></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <br>

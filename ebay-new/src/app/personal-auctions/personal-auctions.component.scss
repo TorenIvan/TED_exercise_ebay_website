@@ -130,6 +130,88 @@ input:focus {
     margin: 15px 0 0 0;
 }
 
+.filter-input {
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 2px solid #ccc;
+    margin-bottom: 2px;
+    padding-right: 30px;
+}
+
+.clear-selection {
+    font-size: 12px;
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.category-list {
+    margin-top: 35px;
+}
+
+.w {
+    margin: 15px 0 0 0;
+    overflow-y: scroll;
+    height: 180px;
+}
+
+li.category-item {
+    list-style: none;
+    font-size: 16px;
+    padding: 5px 0px;
+}
+
+li.category-item input {
+    height: 20px;
+    width: 20px;
+}
+
+.category-text {
+    vertical-align: top;
+}
+
+.filter-wrap {
+    position: relative;
+}
+
+.filter-clear {
+    position: absolute;
+    margin-left: -24px;
+    margin-top: 11px;
+    cursor: pointer;
+}
+
+.selected-categories-wrap {
+    overflow-y: scroll;
+    height: 90px;
+}
+
+.selected-category {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 16px;
+    background: #B9CFEA;
+    margin-bottom: 10px;
+    padding: 2px 11px 4px 11px;
+    border-radius: 8px;
+}
+
+.delete-category {
+    font-size: 13px;
+    padding: 3px 6px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.delete-category:hover {
+    background: #99ABC1;
+    padding: 3px 6px;
+    border-radius: 15px;
+}
+
 // ----------- DataTable scss! --------------------------------------------------------------------------
 //
 // Colour customisation
