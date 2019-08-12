@@ -237,14 +237,6 @@
                                 </div>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
-                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
-                                    </div>
-                                    <div class="row">
-                                        <input value="" type="text" id="fca">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 newFormColumns">
-                                    <div class="row">
                                         <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Country:</span>
                                     </div>
                                     <div class="row">
@@ -297,6 +289,18 @@
                                     </div>
                                     <div class="row">
                                         <input value="" type="date" id="fse">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
+                                    </div>
+                                    <div class="row">
+                                        <select id="fca" name="fca" [(ngModel)]="selectedCategory" class="form-control" *ngIf="categories?.length != 0">
+                                            <option *ngFor="let c of categories" [value]="c.id">
+                                                {{c.description}}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <br>

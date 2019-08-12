@@ -55,4 +55,8 @@ export class TableServiceService {
   deleteAuction(id) {
     return this.httpClient.post('/api/deleteauction.php', {id})
   }
+
+  getAllCategories() {
+    return this.httpClient.post('/api/categories.php', {})
+  }
 }

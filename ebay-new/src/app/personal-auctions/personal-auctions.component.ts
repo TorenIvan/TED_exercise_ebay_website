@@ -4,6 +4,7 @@ import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
+import { Category } from '../category';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -25,6 +26,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   modal: QueryList<ModalDirective>;
 
   modalBody: string;
+
+  categories: Category[];
+
+  selectedCategory: Category;
 
   dtOptions: DataTables.Settings = {};
 
@@ -60,6 +65,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
       this.products = data;
       this.dtTrigger.next();
+    });
+
+    this.tableService.getAllCategories().subscribe((data: Category[]) => {
+      this.categories = data;
     });
 
     this.dtOptions = {
