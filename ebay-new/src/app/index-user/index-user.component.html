@@ -123,6 +123,10 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div class="b" [innerHTML]="modalBody"></div>
+                    <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lon">
+                        <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+                    </agm-map>
+                    <br>
                     <div [hidden]="usersAuction">
                         <input type="button" value="Bid" class="btn btn-outline-info bidButton" [hidden]="usersAuction" (click)="openBiddingForm()">
                     </div>

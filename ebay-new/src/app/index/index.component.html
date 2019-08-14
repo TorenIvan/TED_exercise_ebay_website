@@ -13,8 +13,7 @@
 
     <!--DataTables CDN && js file-->
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
     <!-- 
     <script>
         $(document).ready(function() {
@@ -24,7 +23,6 @@
 </head>
 
 <body>
-
     <!-- A grey horizontal navbar that becomes vertical on small screens -->
     <nav class="navbar navbar-expand-sm navbar-dark">
 
@@ -115,6 +113,9 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div class="b" [innerHTML]="modalBody"></div>
+                    <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lon">
+                        <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+                    </agm-map>
                 </div>
 
                 <!--Footer-->
@@ -159,6 +160,10 @@
 
     </footer>
     <!-- Footer -->
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 </body>
 
 </html>

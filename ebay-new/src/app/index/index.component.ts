@@ -4,6 +4,7 @@ import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
+// import {} from 'googlemaps';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -22,6 +23,9 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ModalDirective)
   modal: ModalDirective;
 
+  // @ViewChild('map') mapElement: any;
+  // map: google.maps.Map;
+
   modalBody: string;
 
   dtOptions: DataTables.Settings = {};
@@ -32,9 +36,16 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtTrigger: Subject<any> = new Subject();
 
+  lat: number;
+  lon: number;
+  zoom: number = 15;
+
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
+
+    this.lat = 0.0;
+    this.lon = 0.0;
     
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
       this.products = data;
@@ -89,6 +100,13 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
+    // const mapProperties = {
+    //   center: new google.maps.LatLng(35.2271, -80.8431),
+    //   zoom: 15,
+    //   mapTypeId: google.maps.MapTypeId.ROADMAP
+    // };
+    // this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
+
     this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
       dtInstance.draw();
     });
@@ -126,6 +144,8 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   format(data : string) {
     const p = data.split(',');
+    this.lat = parseFloat(p[15]);
+    this.lon = parseFloat(p[16]);
     if(p[8] == "") {
       return '<div class="container">'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'

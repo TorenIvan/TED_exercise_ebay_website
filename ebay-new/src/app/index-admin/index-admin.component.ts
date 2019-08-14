@@ -34,9 +34,16 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtTrigger: Subject<any> = new Subject();
 
+  lat: number;
+  lon: number;
+  zoom: number = 15;
+
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
+
+    this.lat = 0.0;
+    this.lon = 0.0;
 
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
       this.products = data;
@@ -149,6 +156,8 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
 format(data : string) {
   const p = data.split(',');
+  this.lat = parseFloat(p[15]);
+  this.lon = parseFloat(p[16]);
   if(p[8] == "") {
     return '<div class="container">'
             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'

@@ -44,9 +44,16 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   modals:any;
 
+  lat: number;
+  lon: number;
+  zoom: number = 15;
+
   constructor(private tableService: TableServiceService) { }
 
   ngOnInit() {
+
+    this.lat = 0.0;
+    this.lon = 0.0;
 
     this.idUser = 2;
 
@@ -147,6 +154,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   format(data : string) {
     const p = data.split(',');
+    this.lat = parseFloat(p[15]);
+    this.lon = parseFloat(p[16]);
     if(p[17] == this.idUser.toString()) {
       this.usersAuction = true;
     }

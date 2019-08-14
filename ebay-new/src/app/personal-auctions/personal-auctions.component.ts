@@ -65,6 +65,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   selected_count: number = 0;
   selected_categories: any;
 
+  lat: number;
+  lon: number;
+  zoom: number = 15;
+
   constructor(private tableService: TableServiceService) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
@@ -74,6 +78,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnInit() {
+
+    this.lat = 0.0;
+    this.lon = 0.0;
 
     // id xrhsth
     this.idUser=2;
@@ -180,6 +187,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   format(data : string) {
     const p = data.split(',');
+    this.lat = parseFloat(p[15]);
+    this.lon = parseFloat(p[16]);
     this.idAuction = p[0];
     if(p[8] == "") {
       return '<div class="container">'

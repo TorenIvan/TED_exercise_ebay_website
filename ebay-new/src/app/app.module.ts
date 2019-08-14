@@ -23,6 +23,7 @@ import { ApplicationsComponent } from './applications/applications.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './filter.pipe';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,9 @@ import { FilterPipe } from './filter.pipe';
     AppRoutingModule,
     HttpClientModule,
     DataTablesModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC9hKyE1edZ4iq75XsQHxIcFqZfRbO1k7I'
+    }),
     MDBBootstrapModule.forRoot()
   ],
   providers: [],
