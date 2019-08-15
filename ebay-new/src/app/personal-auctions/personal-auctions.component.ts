@@ -69,6 +69,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   lon: number;
   zoom: number = 15;
 
+  geocoder: any;
+
   constructor(private tableService: TableServiceService) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
@@ -89,10 +91,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       this.products = data;
       this.dtTrigger.next();
     });
-
-    // this.tableService.getAllCategories().subscribe((data: Category[]) => {
-    //   this.categories = data;
-    // });
 
     this.dtOptions = {
       retrieve: true,
@@ -155,6 +153,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   ngAfterViewInit() {
+    this.geocoder = new google.maps.Geocoder;
     this.modals = this.modal.toArray();
     this.dtTrigger.next();
     this.tableInstance = this.datatableElement;
@@ -228,8 +227,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const product = form.querySelector('#fp').value
     const description = form.querySelector('#fd').value
     const buy_price = form.querySelector('#fbp').value
-    const category = form.querySelector('#fca').value
-    // const category = this.selected_categories;
+    // const category = form.querySelector('#fca').value
+    var category = this.selected_categories;
     const country = form.querySelector('#fco').value
     const state = form.querySelector('#fs').value
     const town = form.querySelector('#ft').value
@@ -238,9 +237,28 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const start_date = form.querySelector('#fsd').value
     const end_date = form.querySelector('#fse').value
 
-    if(product.trim() && description.trim() && buy_price.trim() && category.trim() && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date.trim()) {
-      const latitude = 0;
-      const longitude = 0;
+    var location = address + " " + postcode + " " + town + " " + state + " " + country;
+    location = location.toString();
+
+    var latitude = 0;
+    var longitude = 0;
+
+    if(product.trim() && description.trim() && buy_price.trim() && category !== 'undefined' && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date.trim()) {
+      this.geocoder.geocode({address: location}, (
+        (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+          if(status === google.maps.GeocoderStatus.OK) {
+            console.log(results);
+            latitude = results[0].geometry.location.lat();
+            longitude = results[0].geometry.location.lng();
+            console.log(latitude);
+            console.log(longitude);
+          } else {
+            console.log('Geocoding service: geocoder failed due to: ' + status);
+          }
+        })
+      );
+      // const latitude = 0;
+      // const longitude = 0;
       this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
         console.log(data)
         this.hhh = data.toString();
