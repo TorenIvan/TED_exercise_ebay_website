@@ -4,6 +4,10 @@ require 'connect.php';
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
+function _clean(&$value) {
+  $value = htmlspecialchars($value);
+}
+
 if(isset($_POST) && !empty($_POST)) {
 
   //xss protection and of the user of post method(at the same time 2 things)
@@ -12,8 +16,8 @@ if(isset($_POST) && !empty($_POST)) {
   $currently = 0;
   $first_bid = 0;
   $number_of_bids = 0;
-  $start_date = htmlspecialchars($_POST['start_date']);
-  // $start_date = new DateTime('2019-07-01 12:30:11');
+//  $start_date = htmlspecialchars($_POST['start_date']);
+  $start_date = new DateTime('2019-07-01 12:30:11');
   $result_date = $start_date->format('Y-m-d H:i:s');
   $end_date = htmlspecialchars($_POST['end_date']);
   $pname = htmlspecialchars($_POST['product']);
@@ -25,6 +29,16 @@ if(isset($_POST) && !empty($_POST)) {
   $ppostcode = htmlspecialchars($_POST['postcode']);
   $platitude = htmlspecialchars($_POST['latitude']);
   $plongitude = htmlspecialchars($_POST['longitude']);
+  //$category = htmlspecialchars($_POST['category']);
+  $categories = $_POST['category'];
+  array_walk_recursive($categories, '_clean');
+  //var_dump($category);
+  $i = 0;
+  foreach ($categories as $category) {
+    $category_ids[$i] = $category['id'];
+    $i++;
+  }
+
 
   //example
   //// IDEA: pou 8a boi8isei i symela
@@ -123,6 +137,8 @@ if(isset($_POST) && !empty($_POST)) {
                   //print_r($productpid[0]);
                   //edo arizei to 2o insert
                   $sql = "INSERT INTO auction (user_id, product_id, buy_price, currently, first_bid, number_of_bids, start_date) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                  //$sqlpc = "INSERT INTO product_category (category) VALUES (?);";
+                  //$sqlpic = "INSERT INTO product_is_category (product_id, product_category_id) VALUES (?, ?);";
                   if($stmt = mysqli_prepare($con, $sql)) {
                     //print_r($sql);
                     #check for start_date
@@ -143,6 +159,22 @@ if(isset($_POST) && !empty($_POST)) {
                     mysqli_stmt_execute($stmt);  #ta balame sto auction
                     mysqli_stmt_close($stmt);
                     ////print_r($sql);
+
+                    //require product_category ;i apla grapse to
+                    $krata = count($category_ids);
+                    for ($i = 0; $i < $krata; $i++) {
+                      $sqlpic = "INSERT INTO product_is_category (product_id, product_category_id) VALUES ($param_product_id, $category_ids[$i]);";
+                      if($resultpic = mysqli_query($con,$sqlpic)){
+                        //OLA KALA
+                      }else {
+                        echo json_encode("Something is wrong with mysqli_query");
+                        //print_r("Something is wrong with mysqli_query");
+                        exit(100);
+                      }
+                    }
+
+
+
                   }else {
                     //print_r("Something is wrong with prepare\n");
                     echo json_encode("Something is wrong with prepare\n");

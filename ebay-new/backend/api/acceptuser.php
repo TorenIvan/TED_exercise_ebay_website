@@ -46,6 +46,26 @@ if(isset($_POST) && !empty($_POST)) {
           json_encode("Something is wrong with mysqli_query");
           //print_r("Something is wrong with mysqli_query");
         }
+      }elseif ($flag == 0) {
+        // to reject the user
+        $sqld = "DELETE from userlist where id = $lid;";
+        if($resultd = mysqli_query($con,$sqld)){
+          //print_r("Deleted from userlist\n");
+          json_encode("User rejected. He couldn't sigin, because administrator won't accept him");
+        }else {
+          json_encode("Something is wrong with the id, front_end send");
+        }
+      }elseif ($flag == 2) {
+        // accept all
+      }elseif ($flag == 3) {
+        //  reject all
+        $sqlt = "TRUNCATE TABLE userlist;";
+        if($resultd = mysqli_query($con,$sqlt)){
+          //print_r("Deleted from userlist\n");
+          json_encode("ALL users rejected.");
+        }else {
+          json_encode("Something is wrong with sqlt, front_end send");
+        }
       }else{
         //"aa";
         //print_r("aa");
