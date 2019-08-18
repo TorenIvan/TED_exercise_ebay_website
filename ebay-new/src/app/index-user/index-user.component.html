@@ -48,7 +48,7 @@
     <div class="container dTableCont">
         <div class="d-flex justify-content-center h-100">
 
-            <table #tableP datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
+            <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <tbody *ngIf="products?.length != 0">
                     <tr *ngFor="let product of products">
                         <td>{{product.id}}</td>
@@ -71,7 +71,7 @@
                         <td>{{product.id_creator}}</td>
                     </tr>
                 </tbody>
-                <tbody *ngIf="products   == null">
+                <tbody *ngIf="products == null">
                     <tr>
                         <td colspan="5" class="no-data-available">No availiable auctions!</td>
                     </tr>

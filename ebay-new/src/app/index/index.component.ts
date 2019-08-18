@@ -36,6 +36,8 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtTrigger: Subject<any> = new Subject();
 
+  tableInstance: any;
+
   lat: number;
   lon: number;
   zoom: number = 15;
@@ -53,6 +55,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       columns: [
         { title: 'id' },
@@ -99,17 +102,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         return row;
       }
     };
-
-    // const mapProperties = {
-    //   center: new google.maps.LatLng(35.2271, -80.8431),
-    //   zoom: 15,
-    //   mapTypeId: google.maps.MapTypeId.ROADMAP
-    // };
-    // this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
-
-    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-    });
   }
 
   ngOnDestroy() {
@@ -119,6 +111,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.dtTrigger.next();
+    this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -131,16 +124,17 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
+    this.rerender();
   }
 
-  // rerender(): void{
-  //   this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //     // Call the dtTrigger to rerender again
-  //     this.dtTrigger.next();
-  //   });
-  // }
+  rerender(): void{
+    this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
 
   format(data : string) {
     const p = data.split(',');

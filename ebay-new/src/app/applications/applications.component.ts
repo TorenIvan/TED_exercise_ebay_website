@@ -43,6 +43,14 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
+
+    this.tableService.getApplications().subscribe((data: User[]) => {
+      this.users = data;
+      this.dtTrigger.next();
+
+      this.rerender();
+    });
+
     this.dtOptions = {
       dom: 'Blfrtip',
       buttons: [
@@ -104,11 +112,6 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.tableService.getApplications().subscribe((data: User[]) => {
-        this.users = data;
-        this.dtTrigger.next();
-    });
-
     this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
       dtInstance.draw();
     });
@@ -134,6 +137,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
+    this.rerender();
   }
 
   rerender(): void{

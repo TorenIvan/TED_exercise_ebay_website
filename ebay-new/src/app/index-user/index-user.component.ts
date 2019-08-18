@@ -45,6 +45,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   modals:any;
 
+  tableInstance: any;
+
   lat: number;
   lon: number;
   zoom: number = 15;
@@ -68,6 +70,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
     this.bidAmount = 0;
 
     this.dtOptions = {
+      retrieve: true,
       pagingType: 'full_numbers',
       columns: [
         { title: 'id' },
@@ -119,9 +122,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
 
-    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-    });
+    // this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+    //   dtInstance.draw();
+    // });
   }
 
   ngOnDestroy() {
@@ -132,6 +135,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
     this.dtTrigger.next();
+    this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -144,10 +148,11 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
+    this.rerender();
   }
 
   rerender(): void{
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
         // Destroy the table first
         dtInstance.destroy();
         // Call the dtTrigger to rerender again

@@ -145,9 +145,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       }
     };
 
-    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-    });
+    // this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+    //   dtInstance.draw();
+    // });
   }
 
   ngOnDestroy() {
@@ -172,6 +172,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         });
       });
     });
+    this.rerender();
   }
 
   rerender(): void{
