@@ -246,7 +246,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     var latitude = 0;
     var longitude = 0;
 
-    if(product.trim() && description.trim() && buy_price.trim() && category !== 'undefined' && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date.trim()) {
+    if(product.trim() && description.trim() && buy_price.trim() && category !== 'undefined' && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date.trim() && end_date.trim()) {
       this.geocoder.geocode({address: location}, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if(status === google.maps.GeocoderStatus.OK) {
