@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private tableService: TableServiceService, private rooter: Router) { }
+  constructor(private tableService: TableServiceService, private rooter: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
         else if(data == 1){
           this.rooter.navigateByUrl('/indexadmin')
         }else if(data>1){
-          this.rooter.navigateByUrl('/indexuser/id=' + data)
+          this.rooter.navigateByUrl('/indexuser/' + data)
         }
       } else {
         window.alert(data)

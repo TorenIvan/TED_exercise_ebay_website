@@ -10,12 +10,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../filter.pipe';
+import {} from 'googlemaps';
 
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { ThrowStmt } from '@angular/compiler';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-personal-auctions',
@@ -71,7 +73,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   geocoder: any;
 
-  constructor(private tableService: TableServiceService) {
+  constructor(private tableService: TableServiceService, private route: ActivatedRoute) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
       this.categories = data;
@@ -81,11 +83,12 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnInit() {
 
+    // id xrhsth
+    this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
+    console.log(this.idUser);
+
     this.lat = 0.0;
     this.lon = 0.0;
-
-    // id xrhsth
-    this.idUser=2;
 
     this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
       this.products = data;

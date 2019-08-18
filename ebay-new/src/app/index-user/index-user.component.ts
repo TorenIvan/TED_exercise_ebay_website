@@ -4,6 +4,7 @@ import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
+import { ActivatedRoute } from '@angular/router';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -48,14 +49,16 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   lon: number;
   zoom: number = 15;
 
-  constructor(private tableService: TableServiceService) { }
+  constructor(private tableService: TableServiceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
     this.lat = 0.0;
     this.lon = 0.0;
 
-    this.idUser = 2;
+    // this.idUser = 2;
+    this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
+    console.log(this.idUser);
 
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
       this.products = data;

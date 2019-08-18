@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { User } from '../user';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-personal-info',
@@ -31,7 +32,7 @@ export class PersonalInfoComponent implements OnInit {
     ratingS: new FormControl({disabled: true})
   });
 
-  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder) {
+  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.newForm = this.formBuilder.group({
       id : {value: '', hidden: true},
       username: '',
@@ -51,7 +52,8 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.idUser = 2;
+    this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
+    console.log(this.idUser);
 
     this.tableService.getUserInfo(this.idUser).subscribe((data: User) => {
       // console.log(data);
