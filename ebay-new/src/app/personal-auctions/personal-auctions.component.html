@@ -111,7 +111,7 @@
     <!--Modal info-->
     <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
         <!--Dialog-->
-        <div class="modal-dialog modal-notify modal-info" role="document">
+        <div class="modal-dialog modal-notify modal-info modal-md" role="document">
             <!--Content-->
             <div class="modal-content">
                 <!--Header-->
@@ -126,7 +126,50 @@
 
                 <!--Body-->
                 <div class="modal-body">
-                    <div class="b" [innerHTML]="modalBody"></div>
+                    <!-- <div class="b" [innerHTML]="modalBody"></div> -->
+                    <div class="b">
+                        <div class="container">
+                            <form (submit)=saveAuctionChanges($event) [formGroup]="infoForm">
+                                <div class="form-group">
+                                    <div class="row formCol">
+                                        <span>Product: </span>
+                                        <input class="input-group" type="text" formControlName="prForm">
+                                    </div>
+                                    <div class="row formCol">
+                                        <span>Seller: </span>
+                                        <input class="input-group" type="text" formControlName="seForm">
+                                    </div>
+                                    <div class="row formCol">
+                                        <span>Description: </span>
+                                        <input class="input-group" formControlName="deForm" type="text">
+                                    </div>
+                                    <div class="row formCol">
+                                        <span>Address: </span>
+                                        <input class="input-group" formControlName="adForm" type="text">
+                                    </div>
+                                    <div class="row formCol">
+                                        <span>Buy Price: </span>
+                                        <input class="input-group" formControlName="bpForm" type="number">
+                                    </div>
+                                    <div class="row formCol">
+                                        <span>Currently: </span>
+                                        <input class="input-group" formControlName="cuForm" type="number">
+                                    </div>
+                                    <div class="row formCol">
+                                        <div class="col">
+                                            <span>Start Date: </span>
+                                            <input class="input-group" type="date" formControlName="sdForm">
+                                        </div>
+                                        <div class="col">
+                                            <span>End Date: </span>
+                                            <input class="input-group" type="date" formControlName="edForm">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lon">
                         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
                     </agm-map>

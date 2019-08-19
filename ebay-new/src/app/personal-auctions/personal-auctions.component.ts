@@ -18,6 +18,7 @@ import 'datatables.net-dt';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { ThrowStmt } from '@angular/compiler';
 import { ActivatedRoute } from '@angular/router';
+import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-personal-auctions',
@@ -62,6 +63,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   
   hhh: string;
 
+  infoForm = new FormGroup({
+    prForm : new FormControl(),
+    seForm: new FormControl(),
+    deForm: new FormControl(),
+    adForm: new FormControl(),
+    bpForm: new FormControl(),
+    cuForm: new FormControl(),
+    sdForm: new FormControl(),
+    edForm: new FormControl()
+  });
+
   name: string;
   searchText: string = "";
   selected_count: number = 0;
@@ -73,11 +85,21 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   geocoder: any;
 
-  constructor(private tableService: TableServiceService, private route: ActivatedRoute) {
+  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
       this.categories = data;
       this.getSelected();
+    });
+    this.infoForm = this.formBuilder.group({
+      prForm : '',
+      seForm: '',
+      deForm: '',
+      adForm: '',
+      bpForm: '',
+      cuForm: '',
+      sdForm: '',
+      edForm: ''
     });
   }
 
@@ -137,7 +159,20 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.modalBody = this.format(data.toString());
+          // this.modalBody = this.format(data.toString());
+          this.infoForm.patchValue({
+            prForm : data[2],
+            seForm: data[1],
+            deForm: data[9],
+            adForm: data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11],
+            bpForm: data[3],
+            cuForm: data[4],
+            sdForm: data[7],
+            edForm: data[8]
+          });
+          this.lat = parseFloat(data[15]);
+          this.lon = parseFloat(data[16]);
+          this.idAuction = data[0];
           this.ableToDeleteAuction = false;
           this.modal.first.show();
         });
@@ -145,9 +180,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       }
     };
 
-    // this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-    //   dtInstance.draw();
-    // });
+    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
   }
 
   ngOnDestroy() {
@@ -172,7 +207,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         });
       });
     });
-    this.rerender();
+    // this.rerender();
   }
 
   rerender(): void{
@@ -188,34 +223,22 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
-  format(data : string) {
-    const p = data.split(',');
-    this.lat = parseFloat(p[15]);
-    this.lon = parseFloat(p[16]);
-    this.idAuction = p[0];
-    if(p[8] == "") {
-      return '<div class="container">'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
-              + '<div class="col"></div><br>'
-            + '</div>';
-    }
-    return '<div class="container">'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><p>' + p[8] + '</p></div></div><br>'
-            + '</div>';
-  }
+  // format(data : string) {
+  //   const p = data.split(',');
+  //   this.lat = parseFloat(p[15]);
+  //   this.lon = parseFloat(p[16]);
+  //   this.idAuction = p[0];
+  //   return '<div class="container">'
+  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><input value="' + p[2] + '"></div>'
+  //             + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><input value="' + p[1] + '"></div></div><br>'
+  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><input value="' + p[9] + '"></div></div><br>'
+  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><input value="' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '"></div></div><br>'
+  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><input value="' + p[3] + '"></div>'
+  //             + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><input value="' + p[4] + '"></div></div><br>'
+  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><input value="' + p[7] + '"></div>'
+  //             + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><input value="' + p[8] + '"></div></div><br>'
+  //           + '</div>';
+  // }
 
   openFormForNewAuction() {
     this.modals[2].show();
