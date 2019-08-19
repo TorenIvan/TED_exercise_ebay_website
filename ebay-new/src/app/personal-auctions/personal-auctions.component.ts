@@ -63,6 +63,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   
   hhh: string;
 
+  saveButton: boolean;
+
   infoForm = new FormGroup({
     prForm : new FormControl(),
     seForm: new FormControl(),
@@ -111,6 +113,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
     this.lat = 0.0;
     this.lon = 0.0;
+
+    this.saveButton = false;
 
     this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
       this.products = data;
@@ -172,6 +176,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           });
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
+          this.saveButton = false;
           this.idAuction = data[0];
           this.ableToDeleteAuction = false;
           this.modal.first.show();
@@ -179,6 +184,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         return row;
       }
     };
+
+    this.onChanges();
 
     this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
       dtInstance.draw();
@@ -324,6 +331,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.modals[0].show();
     this.modals[1].hide();
     this.modals[2].hide();
+  }
+
+  onChanges() {
+    this.infoForm.valueChanges.subscribe(val => {
+      this.saveButton = true;
+    });
+  }
+
+  saveAuctionChanges(event) {
+    event.preventDefault();
+    console.log("edited and saved changes");
   }
 
   // Getting Selected Games and Count
