@@ -47,6 +47,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableInstance: any;
 
+  loading: boolean;
+
   lat: number;
   lon: number;
   zoom: number = 15;
@@ -55,8 +57,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
 
-    this.lat = 0.0;
-    this.lon = 0.0;
+    this.loading = true;
 
     // this.idUser = 2;
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
@@ -64,6 +65,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tableService.getAllAuctions().subscribe((data: Product[]) => {
       this.products = data;
+      this.loading = false;
       this.dtTrigger.next();
     });
 
@@ -90,7 +92,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { title: 'Postcode' },
         { title: 'Latitude' },
         { title: 'Longitude' },
-        { title: 'UserId' }
+        { title: 'UserId' },
+        { title: 'Category' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -98,10 +101,10 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
         { "searchable": false, "visible": false, "targets": 8 },
-        { "searchable": false, "visible": false, "targets": 9 },
-        { "searchable": false, "visible": false, "targets": 10 },
-        { "searchable": false, "visible": false, "targets": 11 },
-        { "searchable": false, "visible": false, "targets": 12 },
+        { "searchable": true, "visible": false, "targets": 9 },
+        { "searchable": true, "visible": false, "targets": 10 },
+        { "searchable": true, "visible": false, "targets": 11 },
+        { "searchable": true, "visible": false, "targets": 12 },
         { "searchable": false, "visible": false, "targets": 13 },
         { "searchable": false, "visible": false, "targets": 14 },
         { "searchable": false, "visible": false, "targets": 15 },
@@ -115,7 +118,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
           this.bidAmount = 0;
           this.usersAuction = false;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.modalBody = this.format(data.toString());
+          this.modalBody = this.format(data);
           this.modal.first.show();
         });
         return row;
@@ -160,8 +163,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  format(data : string) {
-    const p = data.split(',');
+  format(data : any) {
+    const p = data;
     this.lat = parseFloat(p[15]);
     this.lon = parseFloat(p[16]);
     if(p[17] == this.idUser.toString()) {
@@ -172,6 +175,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
               + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
+              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Category: </strong></h4><p>' + p[18] + '</p></div></div><br>'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
               + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
