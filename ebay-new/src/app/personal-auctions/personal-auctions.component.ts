@@ -19,6 +19,7 @@ import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { ThrowStmt } from '@angular/compiler';
 import { ActivatedRoute } from '@angular/router';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-personal-auctions',
@@ -72,6 +73,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     seForm: new FormControl(),
     deForm: new FormControl(),
     adForm: new FormControl(),
+    cdForm: new FormControl(),
     bpForm: new FormControl(),
     cuForm: new FormControl(),
     sdForm: new FormControl(),
@@ -100,6 +102,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       seForm: '',
       deForm: '',
       adForm: '',
+      cdForm: '',
       bpForm: '',
       cuForm: '',
       sdForm: '',
@@ -168,14 +171,15 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           // this.modalBody = this.format(data.toString());
           this.infoForm.patchValue({
-            prForm : data[2],
+            prForm: data[2],
             seForm: data[1],
             deForm: data[9],
             adForm: data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11],
+            cdForm: "------------------------------------------",
             bpForm: data[3],
             cuForm: data[4],
-            sdForm: data[7],
-            edForm: data[8]
+            sdForm: formatDate(data[7], 'yyyy-MM-dd', 'en'),
+            edForm: formatDate(data[8], 'yyyy-MM-dd', 'en')
           });
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
