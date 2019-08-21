@@ -65,6 +65,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   saveButton: boolean;
 
+  loading: boolean;
+
   infoForm = new FormGroup({
     prForm : new FormControl(),
     seForm: new FormControl(),
@@ -111,13 +113,13 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
 
-    this.lat = 0.0;
-    this.lon = 0.0;
+    this.loading = true;
 
     this.saveButton = false;
 
     this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
       this.products = data;
+      this.loading = false;
       this.dtTrigger.next();
     });
 
@@ -141,7 +143,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { title: 'Address' },
         { title: 'Postcode' },
         { title: 'Latitude' },
-        { title: 'Longitude' }
+        { title: 'Longitude' },
+        { title: 'Category' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -149,10 +152,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
         { "searchable": false, "visible": false, "targets": 8 },
-        { "searchable": false, "visible": false, "targets": 9 },
-        { "searchable": false, "visible": false, "targets": 10 },
-        { "searchable": false, "visible": false, "targets": 11 },
-        { "searchable": false, "visible": false, "targets": 12 },
+        { "searchable": true, "visible": false, "targets": 9 },
+        { "searchable": true, "visible": false, "targets": 10 },
+        { "searchable": true, "visible": false, "targets": 11 },
+        { "searchable": true, "visible": false, "targets": 12 },
         { "searchable": false, "visible": false, "targets": 13 },
         { "searchable": false, "visible": false, "targets": 14 },
         { "searchable": false, "visible": false, "targets": 15 },
@@ -214,38 +217,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         });
       });
     });
-    // this.rerender();
+    this.rerender();
   }
 
   rerender(): void{
     this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
-      // this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
-      //     this.products = data;
-      //     this.dtTrigger.next();
-      // });
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
   }
-
-  // format(data : string) {
-  //   const p = data.split(',');
-  //   this.lat = parseFloat(p[15]);
-  //   this.lon = parseFloat(p[16]);
-  //   this.idAuction = p[0];
-  //   return '<div class="container">'
-  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><input value="' + p[2] + '"></div>'
-  //             + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><input value="' + p[1] + '"></div></div><br>'
-  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><input value="' + p[9] + '"></div></div><br>'
-  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><input value="' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '"></div></div><br>'
-  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><input value="' + p[3] + '"></div>'
-  //             + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><input value="' + p[4] + '"></div></div><br>'
-  //             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><input value="' + p[7] + '"></div>'
-  //             + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><input value="' + p[8] + '"></div></div><br>'
-  //           + '</div>';
-  // }
 
   openFormForNewAuction() {
     this.modals[2].show();
@@ -291,8 +273,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           }
         })
       );
-      // const latitude = 0;
-      // const longitude = 0;
+
       this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
         console.log(data)
         this.hhh = data.toString();

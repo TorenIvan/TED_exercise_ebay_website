@@ -53,29 +53,34 @@
         <div class="d-flex justify-content-center h-100">
 
             <table id="tableP" #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
-                <tbody *ngIf="users?.length != 0">
-                    <tr *ngFor="let user of users">
-                        <td>{{user.id}}</td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.email}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.surname}}</td>
-                        <td>{{user.phone_number}}</td>
-                        <td>{{user.country}}</td>
-                        <td>{{user.state}}</td>
-                        <td>{{user.town}}</td>
-                        <td>{{user.address}}</td>
-                        <td>{{user.postcode}}</td>
-                        <td>{{user.afm}}</td>
-                        <td>{{user.latitude}}</td>
-                        <td>{{user.longitude}}</td>
-                    </tr>
-                </tbody>
-                <tbody *ngIf="users == null">
-                    <tr>
-                        <td colspan="5" class="no-data-available">No applications!</td>
-                    </tr>
-                </tbody>
+                <div *ngIf="loading else loaded">
+                    loading ...
+                </div>
+                <ng-template #loaded>
+                    <tbody *ngIf="users?.length != 0">
+                        <tr *ngFor="let user of users">
+                            <td>{{user.id}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.surname}}</td>
+                            <td>{{user.phone_number}}</td>
+                            <td>{{user.country}}</td>
+                            <td>{{user.state}}</td>
+                            <td>{{user.town}}</td>
+                            <td>{{user.address}}</td>
+                            <td>{{user.postcode}}</td>
+                            <td>{{user.afm}}</td>
+                            <td>{{user.latitude}}</td>
+                            <td>{{user.longitude}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="users == null">
+                        <tr>
+                            <td colspan="5" class="no-data-available">No applications!</td>
+                        </tr>
+                    </tbody>
+                </ng-template>
                 <tfoot>
                     <tr>
                         <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>

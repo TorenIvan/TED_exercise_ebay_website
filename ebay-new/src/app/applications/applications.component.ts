@@ -40,15 +40,20 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   modals: any;
 
+  loading: boolean;
+
   constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
 
+    this.loading = true;
+
     this.tableService.getApplications().subscribe((data: User[]) => {
       this.users = data;
+      this.loading = false;
       this.dtTrigger.next();
 
-      this.rerender();
+      // this.rerender();
     });
 
     this.dtOptions = {
@@ -144,10 +149,6 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
-      // this.tableService.getApplications().subscribe((data: User[]) => {
-      //     this.users = data;
-      //     this.dtTrigger.next();
-      // });
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });

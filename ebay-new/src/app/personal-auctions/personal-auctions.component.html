@@ -56,32 +56,38 @@
         <div class="d-flex justify-content-center h-100">
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
-                <tbody *ngIf="products?.length != 0">
-                    <tr *ngFor="let product of products">
-                        <td>{{product.id}}</td>
-                        <td>{{product.user_surname}}</td>
-                        <td>{{product.product_name}}</td>
-                        <td>{{product.buy_price}}</td>
-                        <td>{{product.currently}}</td>
-                        <td>{{product.first_bid}}</td>
-                        <td>{{product.number_of_bids}}</td>
-                        <td>{{product.start_date}}</td>
-                        <td>{{product.end_date}}</td>
-                        <td>{{product.description}}</td>
-                        <td>{{product.country}}</td>
-                        <td>{{product.state}}</td>
-                        <td>{{product.town}}</td>
-                        <td>{{product.address}}</td>
-                        <td>{{product.postcode}}</td>
-                        <td>{{product.latitude}}</td>
-                        <td>{{product.longitude}}</td>
-                    </tr>
-                </tbody>
-                <tbody *ngIf="products == null">
-                    <tr>
-                        <td colspan="5" class="no-data-available">You haven't started any auction yet!</td>
-                    </tr>
-                </tbody>
+                <div *ngIf="loading else loaded">
+                    loading ...
+                </div>
+                <ng-template #loaded>
+                    <tbody *ngIf="products?.length != 0">
+                        <tr *ngFor="let product of products">
+                            <td>{{product.id}}</td>
+                            <td>{{product.user_surname}}</td>
+                            <td>{{product.product_name}}</td>
+                            <td>{{product.buy_price}}</td>
+                            <td>{{product.currently}}</td>
+                            <td>{{product.first_bid}}</td>
+                            <td>{{product.number_of_bids}}</td>
+                            <td>{{product.start_date}}</td>
+                            <td>{{product.end_date}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.country}}</td>
+                            <td>{{product.state}}</td>
+                            <td>{{product.town}}</td>
+                            <td>{{product.address}}</td>
+                            <td>{{product.postcode}}</td>
+                            <td>{{product.latitude}}</td>
+                            <td>{{product.longitude}}</td>
+                            <td>{{product.categories}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="products == null">
+                        <tr>
+                            <td colspan="5" class="no-data-available">You haven't started any auction yet!</td>
+                        </tr>
+                    </tbody>
+                </ng-template>
                 <tfoot>
                     <tr>
                         <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
@@ -93,7 +99,7 @@
                         <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
                         <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
                         <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
-                        <th><input type="text" placeholder="description" name="description" /></th>
+                        <th><input type="text" placeholder="description" name="description" hidden disabled/></th>
                         <th><input type="text" placeholder="country" name="country" hidden disabled/></th>
                         <th><input type="text" placeholder="state" name="state" hidden disabled/></th>
                         <th><input type="text" placeholder="town" name="town" hidden disabled/></th>
@@ -101,6 +107,7 @@
                         <th><input type="text" placeholder="postcode" name="postcode" hidden disabled/></th>
                         <th><input type="text" placeholder="latitude" name="latitude" hidden disabled/></th>
                         <th><input type="text" placeholder="longitude" name="longitude" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search category" name="search-category" /></th>
                     </tr>
                 </tfoot>
             </table>
@@ -343,11 +350,6 @@
                                 </div>
                                 <div class="col newFormColumns">
                                     <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
-                                    <!-- <select id="fca" name="fca" [(ngModel)]="selectedCategory" class="form-control" *ngIf="categories?.length != 0">
-                                            <option *ngFor="let c of categories" [value]="c.id">
-                                                {{c.description}}
-                                            </option>
-                                        </select> -->
                                     <!-- Search Field -->
                                     <div>
                                         <div class="filter-wrap">

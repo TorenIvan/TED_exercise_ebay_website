@@ -39,12 +39,17 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   idUser: string;
 
+  loading: boolean;
+
   constructor(private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
 
+    this.loading = true;
+
     this.tableService.getAllUsers().subscribe((data: User[]) => {
       this.users = data;
+      this.loading = false;
       this.dtTrigger.next();
     });
 
@@ -117,16 +122,13 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
+    this.rerender();
   }
 
   rerender(): void{
     this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
-      // this.tableService.getAllUsers().subscribe((data: User[]) => {
-      //     this.users = data;
-      //     this.dtTrigger.next();
-      // });
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
