@@ -17,4 +17,5 @@ export interface Product{
     start_date: string;
     end_date: string;
     id_creator: number;
+    categories: string;
 }
