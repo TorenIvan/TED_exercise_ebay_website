@@ -205,7 +205,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   ngAfterViewInit() {
-    this.geocoder = new google.maps.Geocoder;
     this.modals = this.modal.toArray();
     this.dtTrigger.next();
     this.tableInstance = this.datatableElement;
@@ -215,12 +214,13 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         $('input', this.footer()).on('keyup change', function () {
           if (that.search() !== this['value']) {
             that
-              .search(this['value'])
-              .draw();
+            .search(this['value'])
+            .draw();
           }
         });
       });
     });
+    this.geocoder = new google.maps.Geocoder;
     this.rerender();
   }
 
@@ -243,19 +243,22 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   addAuction(event) {
     event.preventDefault();
-    const form = event.target
-    const product = form.querySelector('#fp').value
-    const description = form.querySelector('#fd').value
-    const buy_price = form.querySelector('#fbp').value
-    // const category = form.querySelector('#fca').value
+    const form = event.target;
+    const product = form.querySelector('#fp').value;
+    const description = form.querySelector('#fd').value;
+    const buy_price = form.querySelector('#fbp').value;
+    // const category = form.querySelector('#fca').value;
     var category = this.selected_categories;
-    const country = form.querySelector('#fco').value
-    const state = form.querySelector('#fs').value
-    const town = form.querySelector('#ft').value
-    const address = form.querySelector('#fa').value
-    const postcode = form.querySelector('#fpc').value
-    const start_date = form.querySelector('#fsd').value
-    const end_date = form.querySelector('#fse').value
+    const country = form.querySelector('#fco').value;
+    const state = form.querySelector('#fs').value;
+    const town = form.querySelector('#ft').value;
+    const address = form.querySelector('#fa').value;
+    const postcode = form.querySelector('#fpc').value;
+    const start_date = form.querySelector('#fsd').value;
+    const end_date = form.querySelector('#fse').value;
+
+    console.log(start_date);
+    console.log(end_date);
 
     var location = address + " " + postcode + " " + town + " " + state + " " + country;
     location = location.toString();
@@ -263,7 +266,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     var latitude = 0;
     var longitude = 0;
 
-    if(product.trim() && description.trim() && buy_price.trim() && category !== 'undefined' && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date.trim() && end_date.trim()) {
+    if(product.trim() && description.trim() && buy_price.trim() && category !== 'undefined' && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
       this.geocoder.geocode({address: location}, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if(status === google.maps.GeocoderStatus.OK) {
@@ -274,6 +277,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
             console.log(longitude);
           } else {
             console.log('Geocoding service: geocoder failed due to: ' + status);
+            latitude = 0;
+            longitude = 0;
           }
         })
       );

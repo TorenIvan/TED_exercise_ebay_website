@@ -43,6 +43,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   idUser:number;
 
+  idAuctionToBid: number;
+  buyPriceOfAuction: number;
+
   modals:any;
 
   tableInstance: any;
@@ -169,6 +172,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
     this.lon = parseFloat(p[16]);
     if(p[17] == this.idUser.toString()) {
       this.usersAuction = true;
+      this.idAuctionToBid = p[1];
+      this.buyPriceOfAuction = p[3];
     }
     return '<div class="container">'
               + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
@@ -199,6 +204,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addBid() {
     this.bidded = true;
+    this.tableService.addBid(this.idUser, this.idAuctionToBid, this.bidAmount, this.buyPriceOfAuction).subscribe(data => {
+      console.log(data);
+    });
     this.modals[1].hide();
   }
 

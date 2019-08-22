@@ -59,4 +59,8 @@ export class TableServiceService {
   getAllCategories() {
     return this.httpClient.post('/api/categories.php', {})
   }
+
+  addBid(id_user, id_auction, amount_of_money, buy_price) {
+    return this.httpClient.post('/api/updatebids.php', {id_user, id_auction, amount_of_money, buy_price})
+  }
 }
