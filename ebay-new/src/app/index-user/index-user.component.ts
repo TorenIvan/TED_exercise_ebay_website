@@ -4,7 +4,7 @@ import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from '@angular/router';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -56,7 +56,16 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   lon: number;
   zoom: number = 15;
 
-  constructor(private tableService: TableServiceService, private route: ActivatedRoute) { }
+  navigationSubscription;
+
+  constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) {
+    this.navigationSubscription = this.r.events.subscribe((e: any) =>
+    {
+      if(e instanceof NavigationStart) {
+        this.initialiseInvites();
+      }
+    });
+   }
 
   ngOnInit() {
 
@@ -135,6 +144,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
+    if(this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
   
 
@@ -164,6 +176,24 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         // Call the dtTrigger to rerender again
         this.dtTrigger.next();
       });
+  }
+
+  initialiseInvites() {
+    // this.loading = true;
+    this.bidded = false;
+    // this.idUser = 2;
+    this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
+    console.log(this.idUser);
+
+    this.tableService.getAllAuctions().subscribe((data: Product[]) => {
+      this.products = data;
+      // this.loading = false;
+      this.dtTrigger.next();
+      this.rerender();
+    });
+
+    this.bidAmount = 0;
+
   }
 
   format(data : any) {
@@ -204,10 +234,13 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addBid() {
     this.bidded = true;
-    this.tableService.addBid(this.idUser, this.idAuctionToBid, this.bidAmount, this.buyPriceOfAuction).subscribe(data => {
-      console.log(data);
-    });
     this.modals[1].hide();
+    this.modals[0].hide();
+    // this.tableService.addBid(this.idUser, this.idAuctionToBid, this.bidAmount, this.buyPriceOfAuction).subscribe(data => {
+    //   console.log(data);
+        //  this.r.navigateByUrl('/indexuser/+' + this.idUser);
+    // });
+    this.r.navigateByUrl('/indexuser/+' + this.idUser);
   }
 
   openEndModal() {

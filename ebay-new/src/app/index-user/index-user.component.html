@@ -50,7 +50,7 @@
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <div *ngIf="loading else loaded">
-                    loading ...
+                    Loading...
                 </div>
                 <ng-template #loaded>
                     <tbody *ngIf="products?.length != 0">

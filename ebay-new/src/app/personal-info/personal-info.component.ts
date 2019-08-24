@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { User } from '../user';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoComponent implements OnInit {
+export class PersonalInfoComponent implements OnInit, OnDestroy {
 
   user: User;
 
@@ -32,7 +32,9 @@ export class PersonalInfoComponent implements OnInit {
     ratingS: new FormControl({disabled: true})
   });
 
-  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  navigationSubscription;
+
+  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.newForm = this.formBuilder.group({
       id : {value: '', hidden: true},
       username: '',
@@ -48,6 +50,16 @@ export class PersonalInfoComponent implements OnInit {
       afm: '',
       ratingB: {value: '', disabled: true},
       ratingS: {value: '', disabled: true}
+    });
+
+    this.r.routeReuseStrategy.shouldReuseRoute = (future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean => {
+      return false;
+      };
+
+    this.navigationSubscription = this.r.events.subscribe((e: any) => {
+      if(e instanceof NavigationStart) {
+        this.initialiseInvites();
+      }
     });
   }
 
@@ -81,6 +93,42 @@ export class PersonalInfoComponent implements OnInit {
 
   saveProfileChanges(event) {
     event.preventDefault();
+
+    this.r.navigateByUrl('/personalinfo/+' + this.idUser);
+  }
+
+  initialiseInvites() {
+    this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
+    console.log(this.idUser);
+
+    this.tableService.getUserInfo(this.idUser).subscribe((data: User) => {
+      // console.log(data);
+      this.user = data;
+
+      this.newForm.patchValue({
+        id : this.user[0].id,
+        username: this.user[0].username,
+        name: this.user[0].name,
+        surname: this.user[0].surname,
+        email: this.user[0].email,
+        phone: this.user[0].phone_number,
+        country: this.user[0].country,
+        state: this.user[0].state,
+        town: this.user[0].town,
+        address: this.user[0].address,
+        postcode: this.user[0].postcode,
+        afm: this.user[0].afm,
+        ratingB: this.user[0].rating_bidder,
+        ratingS: this.user[0].rating_seller
+      });
+
+    });
+  }
+
+  ngOnDestroy() {
+    if(this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 }
