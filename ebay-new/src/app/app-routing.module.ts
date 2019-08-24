@@ -30,7 +30,7 @@ const routes: Routes = [
     path: 'index', component: IndexComponent, pathMatch: 'full'
   },
   {
-    path: 'indexuser/:id', component: IndexUserComponent, pathMatch: 'full', runGuardsAndResolvers: 'always'
+    path: 'indexuser/:id', component: IndexUserComponent, pathMatch: 'full'
   },
   {
     path: 'indexadmin', component: IndexAdminComponent, pathMatch: 'full'
@@ -42,16 +42,16 @@ const routes: Routes = [
     path: 'newpassword', component: NewPasswordComponent, pathMatch: 'full'
   },
   {
-    path: 'personalinfo/:id', component: PersonalInfoComponent, pathMatch: 'full', runGuardsAndResolvers: 'always'
+    path: 'personalinfo/:id', component: PersonalInfoComponent, pathMatch: 'full'
   },
   {
-    path: 'personalauctions/:id', component: PersonalAuctionsComponent, pathMatch: 'full', runGuardsAndResolvers: 'always'
+    path: 'personalauctions/:id', component: PersonalAuctionsComponent, pathMatch: 'full'
   },
   {
-    path: 'userslist', component: UsersListComponent, pathMatch: 'full', runGuardsAndResolvers: 'always'
+    path: 'userslist', component: UsersListComponent, pathMatch: 'full'
   },
   {
-    path: 'applications', component: ApplicationsComponent, pathMatch: 'full', runGuardsAndResolvers: 'always'
+    path: 'applications', component: ApplicationsComponent, pathMatch: 'full'
   }
 ];
 
