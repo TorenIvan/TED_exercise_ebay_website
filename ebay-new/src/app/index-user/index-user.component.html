@@ -50,10 +50,32 @@
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <div *ngIf="loading else loaded">
-                    loading ...
+                    <tbody>
+                        <tr>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                            <td>Loading...</td>
+                        </tr>
+                    </tbody>
                 </div>
                 <ng-template #loaded>
-                    <tbody *ngIf="products?.length != 0">
+                    <tbody *ngIf="products?.length != 0" [@listAnimation]="items.length">
                         <tr *ngFor="let product of products">
                             <td>{{product.id}}</td>
                             <td>{{product.user_surname}}</td>

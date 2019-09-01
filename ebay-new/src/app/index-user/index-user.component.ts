@@ -6,6 +6,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { ActivatedRoute } from '@angular/router';
 
+import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
+
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
@@ -13,7 +15,19 @@ import 'datatables.net-dt';
 @Component({
   selector: 'app-index-user',
   templateUrl: './index-user.component.html',
-  styleUrls: ['./index-user.component.scss']
+  styleUrls: ['./index-user.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(100, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ], {optional: true})
+      ])
+    ])
+  ]
 })
 export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -56,21 +70,37 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   lon: number;
   zoom: number = 15;
 
+  items = [];
+
   constructor(private tableService: TableServiceService, private route: ActivatedRoute) { }
+
+  apiCall(): Promise<Product[]> {
+    return new Promise((resolve, reject) => {
+      this.tableService.getAllAuctions().toPromise().then(
+        (res: Product[]) => {
+          this.products = res;
+          resolve();
+        }
+      );
+    });
+  }
 
   ngOnInit() {
 
     this.loading = true;
 
-    // this.idUser = 2;
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
 
-    this.tableService.getAllAuctions().subscribe((data: Product[]) => {
-      this.products = data;
+    this.apiCall().then( (data: Product[]) => {
       this.loading = false;
-      this.dtTrigger.next();
+      this.products.forEach((product, idx) => {
+        setTimeout(() => {
+          this.items.push(product);
+        }, 500 * (idx + 1));
+      });
     });
+    
 
     this.bidAmount = 0;
 
