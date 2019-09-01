@@ -49,9 +49,11 @@
         <div class="d-flex justify-content-center h-100">
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
-                <div *ngIf="loading else loaded">
+                <div *ngIf="loading else loaded" class="d-flex justify-content-center h-100">
                     <tbody>
                         <tr>
+                            <td colspan="19" class="no-data-available">Loading...</td>
+                            <!-- <td>Loading...</td>
                             <td>Loading...</td>
                             <td>Loading...</td>
                             <td>Loading...</td>
@@ -69,8 +71,7 @@
                             <td>Loading...</td>
                             <td>Loading...</td>
                             <td>Loading...</td>
-                            <td>Loading...</td>
-                            <td>Loading...</td>
+                            <td>Loading...</td> -->
                         </tr>
                     </tbody>
                 </div>
