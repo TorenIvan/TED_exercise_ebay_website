@@ -142,7 +142,7 @@
     <!--Modal info-->
     <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
         <!--Dialog-->
-        <div class="modal-dialog modal-notify modal-info modal-md" role="document">
+        <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
             <!--Content-->
             <div class="modal-content">
                 <!--Header-->
@@ -161,48 +161,52 @@
                     <div class="b">
                         <div class="container">
                             <form (submit)=saveAuctionChanges($event) [formGroup]="infoForm">
-                                <div class="form-group">
-                                    <div class="row formCol">
+                                <div class="row">
+                                    <div class="input-group form-group col">
                                         <span>Product: </span>
                                         <input class="input-group" type="text" formControlName="prForm">
                                     </div>
-                                    <div class="row formCol">
+                                    <div class="input-group form-group col">
                                         <span>Seller: </span>
                                         <input class="input-group" type="text" formControlName="seForm">
                                     </div>
-                                    <div class="row formCol">
-                                        <span>Description: </span>
-                                        <input class="input-group" formControlName="deForm" type="text">
-                                    </div>
-                                    <div class="row formCol">
-                                        <span>Address: </span>
-                                        <input class="input-group" formControlName="adForm" type="text">
-                                    </div>
-                                    <div class="row formCol">
+                                    <div class="input-group form-group col">
                                         <span>Category: </span>
                                         <input class="input-group" formControlName="cdForm" type="text">
                                     </div>
-                                    <div class="row formCol">
+                                </div>
+                                <div class="row">
+                                    <div class="input-group form-group col">
+                                        <span>Description: </span>
+                                        <input class="input-group" formControlName="deForm" type="text">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-group form-group col">
                                         <span>Buy Price: </span>
                                         <input class="input-group" formControlName="bpForm" type="number">
                                     </div>
-                                    <div class="row formCol">
+                                    <div class="input-group form-group col">
                                         <span>Currently: </span>
                                         <input class="input-group" formControlName="cuForm" type="number">
                                     </div>
-                                    <div class="row formCol">
-                                        <div class="col">
-                                            <span>Start Date: </span>
-                                            <input class="input-group" type="date" formControlName="sdForm">
-                                        </div>
-                                        <div class="col">
-                                            <span>End Date: </span>
-                                            <input class="input-group" type="date" formControlName="edForm">
-                                        </div>
+                                    <div class="input-group form-group col">
+                                        <span>Start Date: </span>
+                                        <input class="input-group" type="date" formControlName="sdForm">
                                     </div>
-                                    <br>
-                                    <button type="submit" class="btn btn-info" [hidden]="!saveButton">Save Changes</button>
+                                    <div class="input-group form-group col">
+                                        <span>End Date: </span>
+                                        <input class="input-group" type="date" formControlName="edForm">
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="input-group form-group col">
+                                        <span>Address: </span>
+                                        <input class="input-group" formControlName="adForm" type="text">
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-info" [hidden]="!saveButton">Save Changes</button>
                             </form>
                         </div>
                     </div>
