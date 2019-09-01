@@ -184,7 +184,7 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log(data);
       this.modal.first.hide();
       this.modal.last.hide();
-      this.rooter.navigateByUrl('/userslist');
+      this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
     });
   }
 

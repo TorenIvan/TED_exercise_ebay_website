@@ -15,24 +15,24 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(event) {
-    event.preventDefault()
-    const form = event.target
-    const username = form.querySelector('#uUser').value
-    const password = form.querySelector('#uPass').value
+    event.preventDefault();
+    const form = event.target;
+    const username = form.querySelector('#uUser').value;
+    const password = form.querySelector('#uPass').value;
 
     this.tableService.checkUser(username, password).subscribe(data => {
       if(data != null) {
-        console.log(data)
+        console.log(data);
         if(data == "0") {
-          this.rooter.navigateByUrl('/index')
+          this.rooter.navigateByUrl('/index');
         }
         else if(data == 1){
-          this.rooter.navigateByUrl('/indexadmin')
+          this.rooter.navigateByUrl('/indexadmin');
         }else if(data>1){
-          this.rooter.navigateByUrl('/indexuser/+' + data)
+          this.rooter.navigateByUrl('/indexuser/+' + data);
         }
       } else {
-        window.alert(data)
+        window.alert(data);
       }
     })
   }

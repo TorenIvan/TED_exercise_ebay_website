@@ -26,6 +26,7 @@ import { FilterPipe } from './filter.pipe';
 import { AgmCoreModule } from '@agm/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     IndexAdminComponent,
     UsersListComponent,
     ApplicationsComponent,
-    FilterPipe
+    FilterPipe,
+    RefreshDearComponent
   ],
   imports: [
     BrowserModule,

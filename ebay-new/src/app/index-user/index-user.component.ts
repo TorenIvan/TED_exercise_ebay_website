@@ -4,7 +4,7 @@ import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
 
@@ -72,7 +72,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   items = [];
 
-  constructor(private tableService: TableServiceService, private route: ActivatedRoute) { }
+  constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
 
   apiCall(): Promise<Product[]> {
     return new Promise((resolve, reject) => {
@@ -235,17 +235,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
     this.bidded = true;
     this.tableService.addBid(this.idUser, this.idAuctionToBid, this.bidAmount, this.buyPriceOfAuction).subscribe(data => {
       console.log(data);
+      this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 20);
     });
     this.modals[1].hide();
-  }
-
-  openEndModal() {
-    this.modal.last.show();
-  }
-
-  endAuction() {
-    this.modal.last.hide();
-    this.modal.first.hide();
   }
 
 }

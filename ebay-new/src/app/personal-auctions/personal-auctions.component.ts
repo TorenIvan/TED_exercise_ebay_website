@@ -16,7 +16,7 @@ import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import { formatDate } from '@angular/common';
 
@@ -106,7 +106,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   items = [];
 
-  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
       this.categories = data;
@@ -315,6 +315,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
         console.log(data)
         this.hhh = data.toString();
+        this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
       });
       console.log("New Auction YAY!");
       this.ableToSubmitAuction = false;
@@ -330,13 +331,14 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   deleteAuction() {
     this.ableToDeleteAuction = true;
     this.tableService.deleteAuction(this.idAuction).subscribe(data => {
-      console.log(data)
+      console.log(data);
+      this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
     });
     console.log("auction deleted with id: " + this.idAuction);
     this.modals[1].hide();
     this.modals[0].hide();
     this.modals[2].hide();
-    this.rerender();
+    // this.rerender();
   }
 
   openDeleteModal() {

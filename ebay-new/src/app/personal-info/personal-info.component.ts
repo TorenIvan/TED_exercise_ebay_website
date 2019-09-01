@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { User } from '../user';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-info',
@@ -32,7 +32,7 @@ export class PersonalInfoComponent implements OnInit {
     ratingS: new FormControl({disabled: true})
   });
 
-  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.newForm = this.formBuilder.group({
       id : {value: '', hidden: true},
       username: '',
@@ -81,6 +81,7 @@ export class PersonalInfoComponent implements OnInit {
 
   saveProfileChanges(event) {
     event.preventDefault();
+    this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 60);
   }
 
 }

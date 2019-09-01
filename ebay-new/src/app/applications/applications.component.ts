@@ -198,12 +198,12 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
   acceptUser() {
     this.tableService.acceptUser(this.idUser, 1).subscribe(data => {
         console.log(data);
+        this.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
     });
     console.log("user accepted with id: " + this.idUser);
     this.modal.first.hide();
     this.modals[1].hide();
     this.modal.last.hide();
-    this.rooter.navigateByUrl('/applications');
   }
 
   openAcceptModal() {
@@ -219,12 +219,12 @@ export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
   rejectUser() {
     this.tableService.acceptUser(this.idUser, 0).subscribe(data => {
         console.log(data);
+        this.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
     });
     console.log("user accepted with id: " + this.idUser);
     this.modal.first.hide();
     this.modal.last.hide();
     this.modals[1].hide();
-    this.rooter.navigateByUrl('/applications');
   }
 
   openRejectModal() {
