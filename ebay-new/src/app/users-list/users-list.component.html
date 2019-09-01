@@ -51,10 +51,28 @@
 
             <table id="tableP" #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <div *ngIf="loading else loaded">
-                    loading ...
+                    <tbody>
+                        <tr>
+                            <td colspan="14" class="no-data-available">Loading...</td>
+                            <!-- <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td>
+                                    <td>Loading...</td> -->
+                        </tr>
+                    </tbody>
                 </div>
                 <ng-template #loaded>
-                    <tbody *ngIf="users?.length != 0">
+                    <tbody *ngIf="users?.length != 0" [@listAnimation]="items.length">
                         <tr *ngFor="let user of users">
                             <td>{{user.id}}</td>
                             <td>{{user.username}}</td>

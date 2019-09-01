@@ -6,6 +6,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
 
+import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
+
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
@@ -13,7 +15,19 @@ import 'datatables.net-dt';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+  styleUrls: ['./users-list.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(100, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ], {optional: true})
+      ])
+    ])
+  ]
 })
 export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -41,16 +55,32 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loading: boolean;
 
+  items = [];
+
   constructor(private tableService: TableServiceService, private rooter: Router) { }
+
+  apiCall(): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this.tableService.getAllUsers().toPromise().then(
+        (res: User[]) => {
+          this.users = res;
+          resolve();
+        }
+      );
+    });
+  }
 
   ngOnInit() {
 
     this.loading = true;
 
-    this.tableService.getAllUsers().subscribe((data: User[]) => {
-      this.users = data;
+    this.apiCall().then( (data: User[]) => {
       this.loading = false;
-      this.dtTrigger.next();
+      this.users.forEach((user, idx) => {
+        setTimeout(() => {
+          this.items.push(user);
+        }, 500 * (idx + 1));
+      });
     });
 
     this.dtOptions = {
