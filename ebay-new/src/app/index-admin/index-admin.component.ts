@@ -12,6 +12,7 @@ import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
 import 'datatables.net-buttons';
+import { readFileSync } from 'fs';
 
 @Component({
   selector: 'app-index-admin',
@@ -101,7 +102,17 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
           text: 'XML',
           key: '2',
           action: function (e, dt, node, config) {
-            alert('Buttovn activated');
+            var data = dt.buttons.exportData();
+
+            var convert = require('xml-js');
+            var json = readFileSync(JSON.stringify(data), 'utf-8');
+            var options = {compact: true, ignoreComment: true, spaces: 4};
+            var result = convert.json2xml(json, options);
+            console.log(result);
+            // saveAs(
+            //     new Blob( [ JSON.stringify( data ) ] ),
+            //     'Export.json'
+            // );
           }
         }
       ],
