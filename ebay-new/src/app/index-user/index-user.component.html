@@ -165,7 +165,7 @@
                 </div>
 
                 <!-- Bidding form -->
-                <div id="biddingForm" class="biddingForm" [hidden]="!openform">
+                <div id="biddingForm" #bf class="biddingForm" [hidden]="!openform">
                     <form (submit)=openBidModal($event)>
                         <hr>
                         <div class="form-group">

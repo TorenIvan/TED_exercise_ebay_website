@@ -220,8 +220,14 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   openBiddingForm() {
     if(this.openform == true) {
       this.openform = false;
+      setTimeout(() => {
+        document.getElementById("frameModalTop").scrollTo({top:0, behavior: 'smooth'});
+      }, 1);
     } else {
       this.openform = true;
+      setTimeout(() => {
+        document.getElementById("biddingForm").scrollIntoView({behavior: 'smooth'});
+      }, 50);
     }
   }
 
