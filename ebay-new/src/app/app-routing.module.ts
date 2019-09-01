@@ -12,6 +12,7 @@ import { PersonalAuctionsComponent } from './personal-auctions/personal-auctions
 import { IndexAdminComponent } from './index-admin/index-admin.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ApplicationsComponent } from './applications/applications.component';
+import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,9 @@ const routes: Routes = [
   },
   {
     path: 'applications', component: ApplicationsComponent, pathMatch: 'full'
+  },
+  {
+    path: 'refresh/:id/:flag', component: RefreshDearComponent, pathMatch: 'full'
   }
 ];
 

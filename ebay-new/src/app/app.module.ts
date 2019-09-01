@@ -25,6 +25,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './filter.pipe';
 import { AgmCoreModule } from '@agm/core';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +43,8 @@ import { AgmCoreModule } from '@agm/core';
     IndexAdminComponent,
     UsersListComponent,
     ApplicationsComponent,
-    FilterPipe
+    FilterPipe,
+    RefreshDearComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,7 @@ import { AgmCoreModule } from '@agm/core';
     AppRoutingModule,
     HttpClientModule,
     DataTablesModule,
+    BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC9hKyE1edZ4iq75XsQHxIcFqZfRbO1k7I'
     }),

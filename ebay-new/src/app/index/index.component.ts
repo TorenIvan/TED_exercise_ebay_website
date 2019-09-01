@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 import { Cat } from '../category';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
-// import {} from 'googlemaps';
+
+import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
 
 import * as $ from 'jquery';
 import 'datatables.net';
@@ -14,7 +15,19 @@ import 'datatables.net-dt';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+  styleUrls: ['./index.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(100, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ], {optional: true})
+      ])
+    ])
+  ]
 })
 export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
 
@@ -23,9 +36,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
 
   @ViewChild(ModalDirective)
   modal: ModalDirective;
-
-  // @ViewChild('map') mapElement: any;
-  // map: google.maps.Map;
 
   modalBody: string;
 
@@ -45,16 +55,31 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
 
   loading: boolean;
 
+  items = [];
+
   constructor(private tableService: TableServiceService) {}
+
+  apiCall(): Promise<Product[]> {
+    return new Promise((resolve, reject) => {
+      this.tableService.getAllAuctions().toPromise().then(
+        (res: Product[]) => {
+          this.products = res;
+          resolve();
+        }
+      );
+    });
+  }
 
   ngOnInit() {
     this.loading = true;
     
-    this.tableService.getAllAuctions().subscribe((data: Product[]) => {
-      this.products = data;
+    this.apiCall().then( (data: Product[]) => {
       this.loading = false;
-      // console.log(this.loading);
-      this.dtTrigger.next();
+      this.products.forEach((product, idx) => {
+        setTimeout(() => {
+          this.items.push(product);
+        }, 500 * (idx + 1));
+      });
     });
 
     this.dtOptions = {

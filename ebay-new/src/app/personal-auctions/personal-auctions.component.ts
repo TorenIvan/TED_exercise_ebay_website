@@ -15,16 +15,29 @@ import {} from 'googlemaps';
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
-import { ThrowStmt } from '@angular/compiler';
-import { ActivatedRoute } from '@angular/router';
+
+import { ActivatedRoute, Router } from '@angular/router';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import { formatDate } from '@angular/common';
+
+import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-personal-auctions',
   templateUrl: './personal-auctions.component.html',
-  styleUrls: ['./personal-auctions.component.scss']
+  styleUrls: ['./personal-auctions.component.scss'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(100, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ], {optional: true})
+      ])
+    ])
+  ]
 })
 export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -91,7 +104,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   geocoder: any;
 
-  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  items = [];
+
+  constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
       this.categories = data;
@@ -110,6 +125,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
+  apiCall(): Promise<Product[]> {
+    return new Promise((resolve, reject) => {
+      this.tableService.getMyAuctions(this.idUser).toPromise().then(
+        (res: Product[]) => {
+          this.products = res;
+          resolve();
+        }
+      );
+    });
+  }
+
   ngOnInit() {
 
     // id xrhsth
@@ -120,10 +146,13 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
     this.saveButton = false;
 
-    this.tableService.getMyAuctions(this.idUser).subscribe((data: Product[]) => {
-      this.products = data;
+    this.apiCall().then( (data: Product[]) => {
       this.loading = false;
-      this.dtTrigger.next();
+      this.products.forEach((product, idx) => {
+        setTimeout(() => {
+          this.items.push(product);
+        }, 500 * (idx + 1));
+      });
     });
 
     this.dtOptions = {
@@ -286,6 +315,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
         console.log(data)
         this.hhh = data.toString();
+        this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
       });
       console.log("New Auction YAY!");
       this.ableToSubmitAuction = false;
@@ -301,13 +331,14 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   deleteAuction() {
     this.ableToDeleteAuction = true;
     this.tableService.deleteAuction(this.idAuction).subscribe(data => {
-      console.log(data)
+      console.log(data);
+      this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
     });
     console.log("auction deleted with id: " + this.idAuction);
     this.modals[1].hide();
     this.modals[0].hide();
     this.modals[2].hide();
-    this.rerender();
+    // this.rerender();
   }
 
   openDeleteModal() {

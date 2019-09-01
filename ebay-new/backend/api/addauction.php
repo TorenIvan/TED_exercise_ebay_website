@@ -83,14 +83,14 @@ if(isset($_POST) && !empty($_POST)) {
         //if he exists
         if ($auctiont) {
           //print_r($auctiont);
-          echo json_encode("Bre8ike idio product m8\n");
+          echo json_encode("Bre8ike idio product m8");
         }else {
-          echo json_encode("Den bre8ike idio product, alla exoume kapoio 8ema afou mpike edo\n");
+          echo json_encode("Den bre8ike idio product, alla exoume kapoio 8ema afou mpike edo");
           //print_r("Den bre8ike idio auction, alla exoume kapoio 8ema afou mpike edo");
         }
       }else {
-        //print_r("Ola kala\n");
-      //  echo json_encode("Ola kala\n");
+        //print_r("Ola kala");
+      //  echo json_encode("Ola kala");
         //PROXORAME sta INSERTS
         $sqlp = "INSERT INTO product (name, description, country, state, town, address, postcode, latitude, longitude) VALUES (?,?,?,?,?,?,?,?,?);";
         if ($stmtp = mysqli_prepare($con, $sqlp)) {
@@ -106,7 +106,7 @@ if(isset($_POST) && !empty($_POST)) {
           $param_longitude = $plongitude;
 
           mysqli_stmt_execute($stmtp);
-          //print_r("product executed\n");
+          //print_r("product executed");
 
           //select product with that name tou get the id
           $sqlpid = "SELECT id FROM product WHERE name = ? AND description =? ;";
@@ -133,7 +133,7 @@ if(isset($_POST) && !empty($_POST)) {
                 //print_r($productpid[0]);
 
                 //if he exists
-                echo $productpid[0];
+                // echo $productpid[0];
                 if ($productpid[0]) {
                   //print_r($productpid[0]);
                   //edo arizei to 2o insert
@@ -146,12 +146,12 @@ if(isset($_POST) && !empty($_POST)) {
                     echo $start_date;
                       echo $end_date;
                     if ((new DateTime())->format('Y-m-d') > $result_date) {
-                      echo json_encode("Datetime is wrong\n");
-                      echo 'ee';
-                      // exit("Datetime is wrong\n");
+                      echo json_encode("Datetime is wrong");
+                      // echo 'ee';
+                      // exit("Datetime is wrong");
                     } else {
-                      echo $start_date;
-                      echo $end_date;
+                      // echo $start_date;
+                      // echo $end_date;
                       mysqli_stmt_bind_param($stmt, "iidddiss" , $param_user_id, $param_product_id, $param_buy_price, $param_currently, $param_first_bid, $param_number_of_bids, $param_start_date, $param_end_date);
                       $param_user_id = $user_id;
                       $param_product_id = $productpid[0];
@@ -174,6 +174,7 @@ if(isset($_POST) && !empty($_POST)) {
                         $sqlpic = "INSERT INTO product_is_category (product_id, product_category_id) VALUES ($param_product_id, $category_ids[$i]);";
                         if($resultpic = mysqli_query($con,$sqlpic)){
                           //OLA KALA
+                          echo json_encode("1");
                         }else {
                           echo json_encode("Something is wrong with mysqli_query");
                           //print_r("Something is wrong with mysqli_query");
@@ -185,36 +186,36 @@ if(isset($_POST) && !empty($_POST)) {
 
 
                   }else {
-                    //print_r("Something is wrong with prepare\n");
-                    echo json_encode("Something is wrong with prepare\n");
+                    //print_r("Something is wrong with prepare");
+                    echo json_encode("Something is wrong with prepare");
                   }
 
                 }else {
-                  echo json_encode("Den bre8ike idio product_id, exoume kapoio 8ema afou mpike edo\n");
+                  echo json_encode("Den bre8ike idio product_id, exoume kapoio 8ema afou mpike edo");
                   //print_r("Den bre8ike idio product_id, exoume kapoio 8ema afou mpike edo");
                 }
               }else {
-                //print_r("Ola kala\n");
-                echo json_encode("Ola kala\n");
+                //print_r("Ola kala");
+                echo json_encode("Ola kala");
               }
             }
           }
 
         } else {
-          echo json_encode("Something is wrong with insert1 prepare\n");
-          //print_r("Something is wrong with insert1 prepare\n");
+          echo json_encode("Something is wrong with insert1 prepare");
+          //print_r("Something is wrong with insert1 prepare");
         }
 
 
       }
     }else {
-      //print_r("Something is off with the execution\n");
-      echo json_encode("Something is off with the execution\n");
+      //print_r("Something is off with the execution");
+      echo json_encode("Something is off with the execution");
     }
   }
 
 }else {
-  http_response_code("No one requested this!\n");
+  http_response_code("No one requested this!");
 }
 
 ?>
