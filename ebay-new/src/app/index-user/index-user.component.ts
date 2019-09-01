@@ -101,7 +101,6 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
     
-
     this.bidAmount = 0;
 
     this.dtOptions = {

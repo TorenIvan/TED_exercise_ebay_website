@@ -72,7 +72,7 @@
                     </tbody>
                 </div>
                 <ng-template #loaded>
-                    <tbody *ngIf="products?.length != 0">
+                    <tbody *ngIf="products?.length != 0" [@listAnimation]="items.length">
                         <tr *ngFor="let product of products">
                             <td>{{product.id}}</td>
                             <td>{{product.user_surname}}</td>
