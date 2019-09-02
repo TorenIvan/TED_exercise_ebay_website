@@ -44,8 +44,8 @@
     </div>
 
     <ng-template #loaded> -->
-    <div class="container dTableCont">
-        <div class="d-flex justify-content-center h-100">
+    <div class="dTableCont">
+        <div class="d-flex justify-content-center blueBox">
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <div *ngIf="loading else loaded" class="d-flex justify-content-center h-100">

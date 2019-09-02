@@ -57,6 +57,15 @@ p {
     height: 85%;
     align-content: center;
     padding-block-start: 5%;
+    width: inherit;
+}
+
+.blueBox {
+    background-color: #83b7d8b4;
+    height: fit-content;
+    padding: 2% 0 1.5% 0;
+    margin: 0 1%;
+    border-radius: 20px;
 }
 
 .dTable {
