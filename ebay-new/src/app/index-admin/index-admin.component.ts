@@ -104,15 +104,22 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
           action: function (e, dt, node, config) {
             var data = dt.buttons.exportData();
 
+            var p = {};
+
+            for(let i = 0; i<data['body'].length; i++) {
+              p[i] = {};
+              for(let j = 0, k = 0; j<data['header'].length, k<data['body'][i].length; j++, k++) {
+                p[i][data['header'][j]] = data['body'][i][k];
+              }
+            }
+
             var convert = require('xml-js');
-            var json = readFileSync(JSON.stringify(data), 'utf-8');
             var options = {compact: true, ignoreComment: true, spaces: 4};
-            var result = convert.json2xml(json, options);
-            console.log(result);
-            // saveAs(
-            //     new Blob( [ JSON.stringify( data ) ] ),
-            //     'Export.json'
-            // );
+            var result = convert.json2xml(p, options);
+            saveAs(
+                new Blob( [ JSON.stringify(p) ] ),
+                'Export.xml'
+            );
           }
         }
       ],
