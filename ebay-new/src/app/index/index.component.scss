@@ -10,7 +10,7 @@ body {
 
 .navbar {
     padding: 0 6%;
-    background: rgb(150, 203, 232);
+    background: #83b7d8b4;
 }
 
 .navbar-nav {
@@ -22,11 +22,13 @@ body {
 }
 
 .navbar-nav.ml-auto li a {
-    color: #111;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .navbar-nav.ml-auto li a:hover {
-    color: #111;
+    color: rgb(255, 255, 255);
     transform: scale(1.5);
     opacity: 1;
     transition: 0.5s;
@@ -56,6 +58,7 @@ body {
 .dTable {
     max-height: 70%;
     height: fit-content;
+    background: #ffffff;
 }
 
 .no-data-available {

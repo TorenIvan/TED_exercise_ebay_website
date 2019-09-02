@@ -37,129 +37,142 @@
 
     <br>
 
-    <div class="container profForm">
-        <form (submit)=saveProfileChanges($event) [formGroup]="newForm">
+    <div class="proForm">
+        <form (submit)=saveProfileChanges($event) [formGroup]="newForm" style="width: inherit">
             <div class="input-group form-group">
                 <input formControlName="id" class="hiddenItem" type="number" min="0">
             </div>
-            <div class="input-group form-group">
-                <div class="row">
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Username:</span>
+            <div class="form-group">
+                <!-- <div class="blueBoxFirst"> -->
+                <div class="blueBox">
+                    <div class="row">
+                        <div class="col formColFirst">
+                            <div class="row">
+                                <span style="margin-left: 8%">Username:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="username" type="text">
+                            </div>
                         </div>
-                        <div class="row">
-                            <input formControlName="username" type="text">
+                        <div class="col formColFirst">
+                            <div class="row">
+                                <span style="margin-left: 8%">Name:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="name" type="text">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Name:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="name" type="text">
-                        </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Surname:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="surname" type="text">
-                        </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Email:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="email" type="email">
+                        <div class="col formColFirst">
+                            <div class="row">
+                                <span style="margin-left: 8%">Surname:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="surname" type="text">
+                            </div>
                         </div>
                     </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Phone Number:</span>
+                    <hr>
+                    <!-- </div>
+                <div class="blueBoxSecond"> -->
+                    <div class="row">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Email:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="email" type="email">
+                            </div>
                         </div>
-                        <div class="row">
-                            <input formControlName="phone" type="text">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Phone Number:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="phone" type="text">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Country:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="country" type="text">
-                        </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>State:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="state" type="text">
-                        </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Town:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="town" type="text">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">TIN / ΑΦΜ:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="afm" type="number">
+                            </div>
                         </div>
                     </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Address:</span>
+                    <hr>
+                    <!-- </div>
+                <div class="blueBoxThird"> -->
+                    <div class="row">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Country:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="country" type="text">
+                            </div>
                         </div>
-                        <div class="row">
-                            <input formControlName="address" type="text">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">State:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="state" type="text">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Postcode:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="postcode" type="text">
-                        </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>TIN / ΑΦΜ:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="afm" type="number">
-                        </div>
-                    </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Bidder Rating:</span>
-                        </div>
-                        <div class="row">
-                            <input formControlName="ratingB" type="text">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Town:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="town" type="text">
+                            </div>
                         </div>
                     </div>
-                    <div class="col formCol">
-                        <div class="row">
-                            <span>Seller Rating:</span>
+                    <div class="row">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Address:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="address" type="text">
+                            </div>
                         </div>
-                        <div class="row">
-                            <input formControlName="ratingS" type="text">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Postcode:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="postcode" type="text">
+                            </div>
                         </div>
+                        <div class="col formCol"></div>
+                    </div>
+                    <hr>
+                    <!-- </div>
+                <div class="blueBoxLast"> -->
+                    <div class="row">
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Bidder Rating:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="ratingB" type="text">
+                            </div>
+                        </div>
+                        <div class="col formCol">
+                            <div class="row">
+                                <span style="margin-left: 8%">Seller Rating:</span>
+                            </div>
+                            <div class="row justify-content-center">
+                                <input style="width: 85%" formControlName="ratingS" type="text">
+                            </div>
+                        </div>
+                        <div class="col formCol"></div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3"></div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3"></div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                        <div class="d-flex justify-content-center">
-                            <input type="submit" value="Save" class="btn float-center save_btn">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3"></div>
+                <div class="d-flex justify-content-center" style="margin: 1% 0 0 0">
+                    <input type="submit" value="Save" class="btn float-center save_btn">
                 </div>
             </div>
 

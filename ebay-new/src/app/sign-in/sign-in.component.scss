@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 html,
 body {
-    // background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-    // background-size: cover;
-    // background-repeat: no-repeat;
+    background-image: url("../../assets/DivaExpressLogo2.png"), url('../../assets/b.png');
+    background-size: auto, auto;
+    background-repeat: no-repeat, repeat;
+    background-position: top center, center;
     height: 100vh;
     font-family: 'Numans', sans-serif;
 }
