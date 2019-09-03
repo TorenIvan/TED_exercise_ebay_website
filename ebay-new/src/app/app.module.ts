@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './filter.pipe';
 import { AgmCoreModule } from '@agm/core';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
@@ -54,6 +55,7 @@ import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
     HttpClientModule,
     DataTablesModule,
     BrowserAnimationsModule,
+    SlideshowModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC9hKyE1edZ4iq75XsQHxIcFqZfRbO1k7I'
     }),

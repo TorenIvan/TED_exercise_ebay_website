@@ -157,10 +157,11 @@
 
                 <!--Body-->
                 <div class="modal-body">
-                    <!-- <div class="b" [innerHTML]="modalBody"></div> -->
                     <div class="b">
                         <div class="container">
                             <form (submit)=saveAuctionChanges($event) [formGroup]="infoForm">
+                                <slideshow [imageUrls]="images" [minHeight]="'300px'" [backgroundSize]="auto" [backgroundPosition]="'center center'" [autoPlay]="true" [showArrows]="true" [lazyLoad]="images?.length > 1" [autoPlayWaitForLazyLoad]="true" [hideOnNoSlides]="true"></slideshow>
+                                <br>
                                 <div class="row">
                                     <div class="input-group form-group col">
                                         <span>Product: </span>
