@@ -323,6 +323,7 @@
                                         <input value="" type="number" min="1" id="fbp">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Country:</span>
@@ -347,6 +348,7 @@
                                         <input value="" type="text" id="ft">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Address:</span>
@@ -363,7 +365,16 @@
                                         <input value="" type="text" id="fpc">
                                     </div>
                                 </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span>Select one or more images: </span>
+                                    </div>
+                                    <div class="row">
+                                        <input type="file" name="img" multiple>
+                                    </div>
+                                </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
@@ -411,7 +422,6 @@
                                 </div>
                                 <br>
                             </div>
-                            <br>
                             <span style="color: rgb(199, 0, 0)">All fields with * are required</span>
                             <hr>
                             <div class="justify-content-center row" [hidden]="resultFlag">
