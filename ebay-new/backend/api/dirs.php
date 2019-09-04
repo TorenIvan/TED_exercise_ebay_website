@@ -1,7 +1,7 @@
 <?php
 
 //$images = "Images";
-//$idltlt = 4;
+$idltlt = date('Format String', time());
 $e = "/";
 
 $get_path = realpath('../../src/assets').PHP_EOL;
@@ -11,7 +11,7 @@ $folder = $get_path.$e.$idltlt;
 
 $foldy = preg_replace('/\s/', '', $folder);
 
-echo $foldy;
+//echo $foldy;
 if (!is_dir($foldy)) {
   mkdir($foldy, 0777, true);
 }
