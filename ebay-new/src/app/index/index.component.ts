@@ -37,8 +37,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
   @ViewChild(ModalDirective)
   modal: ModalDirective;
 
-  // modalBody: string;
-
   categoryList: Cat[];
 
   dtOptions: DataTables.Settings = {};
@@ -131,7 +129,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          // this.modalBody = this.format(data);
           this.data = data;
           this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
           this.lat = parseFloat(data[15]);
@@ -158,7 +155,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
   ngAfterViewInit() {
     this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      console.log(dtInstance.columns());
+      // console.log(dtInstance.columns());
       dtInstance.columns().every(function () {
         const that = this;
         $('input', this.footer()).on('keyup change', function () {
