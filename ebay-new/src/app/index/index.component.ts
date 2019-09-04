@@ -37,8 +37,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
   @ViewChild(ModalDirective)
   modal: ModalDirective;
 
-  modalBody: string;
-
   categoryList: Cat[];
 
   dtOptions: DataTables.Settings = {};
@@ -56,6 +54,12 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
   loading: boolean;
 
   items = [];
+
+  data: any = [];
+
+  dataAddress: string = "";
+
+  images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
 
   constructor(private tableService: TableServiceService) {}
 
@@ -125,7 +129,10 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.modalBody = this.format(data);
+          this.data = data;
+          this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
+          this.lat = parseFloat(data[15]);
+          this.lon = parseFloat(data[16]);
           this.modal.show();
         });
         return row;
@@ -148,7 +155,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
   ngAfterViewInit() {
     this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      console.log(dtInstance.columns());
+      // console.log(dtInstance.columns());
       dtInstance.columns().every(function () {
         const that = this;
         $('input', this.footer()).on('keyup change', function () {
@@ -170,23 +177,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
-  }
-
-  format(data : any) {
-    const p = data;
-    this.lat = parseFloat(p[15]);
-    this.lon = parseFloat(p[16]);
-    return '<div class="container">'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Category: </strong></h4><p>' + p[17] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><p>' + p[8] + '</p></div></div><br>'
-            + '</div>';
   }
 
 }

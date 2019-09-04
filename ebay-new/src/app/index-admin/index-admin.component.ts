@@ -12,6 +12,7 @@ import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
 import 'datatables.net-buttons';
+import { readFileSync } from 'fs';
 
 @Component({
   selector: 'app-index-admin',
@@ -38,8 +39,6 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ModalDirective)
   modal: ModalDirective;
 
-  modalBody: string;
-
   dtOptions: DataTables.Settings = {};
 
   products: Product[];
@@ -55,6 +54,12 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
   zoom: number = 15;
 
   items = [];
+
+  data: any = [];
+
+  dataAddress: string = "";
+
+  images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
 
   constructor(private tableService: TableServiceService) { }
 
@@ -91,8 +96,17 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
           action: function ( e, dt, button, config ) {
             var data = dt.buttons.exportData();
 
+            var p = {};
+
+            for(let i = 0; i<data['body'].length; i++) {
+              p[i] = {};
+              for(let j = 0, k = 0; j<data['header'].length, k<data['body'][i].length; j++, k++) {
+                p[i][data['header'][j]] = data['body'][i][k];
+              }
+            }
+
             saveAs(
-                new Blob( [ JSON.stringify( data ) ] ),
+                new Blob( [ JSON.stringify( p ) ] ),
                 'Export.json'
             );
         }
@@ -101,7 +115,26 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
           text: 'XML',
           key: '2',
           action: function (e, dt, node, config) {
-            alert('Buttovn activated');
+            var data = dt.buttons.exportData();
+
+            var p = {};
+
+            for(let i = 0; i<data['body'].length; i++) {
+              p[i] = {};
+              for(let j = 0, k = 0; j<data['header'].length, k<data['body'][i].length; j++, k++) {
+                p[i][data['header'][j]] = data['body'][i][k];
+              }
+            }
+
+            var convert = require('xml-js');
+            var options = {compact: true, ignoreComment: true, spaces: 4};
+            var result = convert.json2xml(p, options);
+
+            console.log(result);
+            saveAs(
+                new Blob( [ JSON.stringify(result) ] ),
+                'Export.xml'
+            );
           }
         }
       ],
@@ -146,7 +179,10 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.modalBody = this.format(data);
+          this.data = data;
+          this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
+          this.lat = parseFloat(data[15]);
+          this.lon = parseFloat(data[16]);
           this.modal.show();
         });
         return row;
@@ -186,23 +222,6 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
-}
-
-format(data : any) {
-  const p = data;
-  this.lat = parseFloat(p[15]);
-  this.lon = parseFloat(p[16]);
-  return '<div class="container">'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
-            + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Category: </strong></h4><p>' + p[17] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
-            + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
-            + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><p>' + p[8] + '</p></div></div><br>'
-          + '</div>';
 }
 
 }

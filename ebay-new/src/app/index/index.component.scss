@@ -9,8 +9,8 @@ body {
 }
 
 .navbar {
-    padding: 1% 6%;
-    background: rgb(150, 203, 232);
+    padding: 0 6%;
+    background: #83b7d8b4;
 }
 
 .navbar-nav {
@@ -22,11 +22,13 @@ body {
 }
 
 .navbar-nav.ml-auto li a {
-    color: #111;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .navbar-nav.ml-auto li a:hover {
-    color: #111;
+    color: rgb(255, 255, 255);
     transform: scale(1.5);
     opacity: 1;
     transition: 0.5s;
@@ -51,6 +53,15 @@ body {
     height: 85%;
     align-content: center;
     padding-block-start: 5%;
+    width: inherit;
+}
+
+.blueBox {
+    background-color: #83b7d8b4;
+    height: fit-content;
+    padding: 2% 0 1.5% 0;
+    margin: 0 1%;
+    border-radius: 20px;
 }
 
 .dTable {

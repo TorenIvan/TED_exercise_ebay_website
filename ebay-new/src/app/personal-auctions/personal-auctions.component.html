@@ -29,7 +29,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark">
 
         <div class="navbar-brand" routerLink="#">
-            <a class="navbar-item"><img src="../../assets/DivaExpressLogo1.png" style="height:90px; width: 90px;"></a>
+            <a class="navbar-item"><img src="../../assets/DivaExpressLogo2.png" style="height:110px; width: 110px;"></a>
         </div>
 
         <!-- Links -->
@@ -54,8 +54,8 @@
 
     <hr>
 
-    <div class="container dTableCont">
-        <div class="d-flex justify-content-center h-100">
+    <div class="dTableCont">
+        <div class="d-flex justify-content-center blueBox">
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <div *ngIf="loading else loaded">
@@ -142,7 +142,7 @@
     <!--Modal info-->
     <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
         <!--Dialog-->
-        <div class="modal-dialog modal-notify modal-info modal-md" role="document">
+        <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
             <!--Content-->
             <div class="modal-content">
                 <!--Header-->
@@ -157,52 +157,57 @@
 
                 <!--Body-->
                 <div class="modal-body">
-                    <!-- <div class="b" [innerHTML]="modalBody"></div> -->
                     <div class="b">
                         <div class="container">
                             <form (submit)=saveAuctionChanges($event) [formGroup]="infoForm">
-                                <div class="form-group">
-                                    <div class="row formCol">
+                                <slideshow [imageUrls]="images" [minHeight]="'300px'" [backgroundSize]="auto" [backgroundPosition]="'center center'" [autoPlay]="true" [showArrows]="true" [lazyLoad]="images?.length > 1" [autoPlayWaitForLazyLoad]="true" [hideOnNoSlides]="true"></slideshow>
+                                <br>
+                                <div class="row">
+                                    <div class="input-group form-group col">
                                         <span>Product: </span>
                                         <input class="input-group" type="text" formControlName="prForm">
                                     </div>
-                                    <div class="row formCol">
+                                    <div class="input-group form-group col">
                                         <span>Seller: </span>
                                         <input class="input-group" type="text" formControlName="seForm">
                                     </div>
-                                    <div class="row formCol">
-                                        <span>Description: </span>
-                                        <input class="input-group" formControlName="deForm" type="text">
-                                    </div>
-                                    <div class="row formCol">
-                                        <span>Address: </span>
-                                        <input class="input-group" formControlName="adForm" type="text">
-                                    </div>
-                                    <div class="row formCol">
+                                    <div class="input-group form-group col">
                                         <span>Category: </span>
                                         <input class="input-group" formControlName="cdForm" type="text">
                                     </div>
-                                    <div class="row formCol">
+                                </div>
+                                <div class="row">
+                                    <div class="input-group form-group col">
+                                        <span>Description: </span>
+                                        <input class="input-group" formControlName="deForm" type="text">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-group form-group col">
                                         <span>Buy Price: </span>
                                         <input class="input-group" formControlName="bpForm" type="number">
                                     </div>
-                                    <div class="row formCol">
+                                    <div class="input-group form-group col">
                                         <span>Currently: </span>
                                         <input class="input-group" formControlName="cuForm" type="number">
                                     </div>
-                                    <div class="row formCol">
-                                        <div class="col">
-                                            <span>Start Date: </span>
-                                            <input class="input-group" type="date" formControlName="sdForm">
-                                        </div>
-                                        <div class="col">
-                                            <span>End Date: </span>
-                                            <input class="input-group" type="date" formControlName="edForm">
-                                        </div>
+                                    <div class="input-group form-group col">
+                                        <span>Start Date: </span>
+                                        <input class="input-group" type="date" formControlName="sdForm">
                                     </div>
-                                    <br>
-                                    <button type="submit" class="btn btn-info" [hidden]="!saveButton">Save Changes</button>
+                                    <div class="input-group form-group col">
+                                        <span>End Date: </span>
+                                        <input class="input-group" type="date" formControlName="edForm">
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="input-group form-group col">
+                                        <span>Address: </span>
+                                        <input class="input-group" formControlName="adForm" type="text">
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-info" [hidden]="!saveButton">Save Changes</button>
                             </form>
                         </div>
                     </div>
@@ -318,6 +323,7 @@
                                         <input value="" type="number" min="1" id="fbp">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Country:</span>
@@ -342,6 +348,7 @@
                                         <input value="" type="text" id="ft">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
                                         <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Address:</span>
@@ -358,7 +365,16 @@
                                         <input value="" type="text" id="fpc">
                                     </div>
                                 </div>
+                                <div class="col-xl-4 newFormColumns">
+                                    <div class="row">
+                                        <span>Select one or more images: </span>
+                                    </div>
+                                    <div class="row">
+                                        <input type="file" name="img" multiple>
+                                    </div>
+                                </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
@@ -406,7 +422,6 @@
                                 </div>
                                 <br>
                             </div>
-                            <br>
                             <span style="color: rgb(199, 0, 0)">All fields with * are required</span>
                             <hr>
                             <div class="justify-content-center row" [hidden]="resultFlag">

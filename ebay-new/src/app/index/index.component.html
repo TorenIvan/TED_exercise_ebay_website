@@ -27,7 +27,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark">
 
         <div class="navbar-brand" routerLink="#">
-            <a class="navbar-item"><img src="../../assets/DivaExpressLogo1.png" style="height:90px; width: 90px;"></a>
+            <a class="navbar-item"><img src="../../assets/DivaExpressLogo2.png" style="height:110px; width: 110px;"></a>
         </div>
 
         <!-- Links -->
@@ -44,8 +44,8 @@
     </div>
 
     <ng-template #loaded> -->
-    <div class="container dTableCont">
-        <div class="d-flex justify-content-center h-100">
+    <div class="dTableCont">
+        <div class="d-flex justify-content-center blueBox">
 
             <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
                 <div *ngIf="loading else loaded" class="d-flex justify-content-center h-100">
@@ -133,7 +133,7 @@
     <!--Modal-->
     <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
         <!--Dialog-->
-        <div class="modal-dialog modal-notify modal-info" role="document">
+        <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
             <!--Content-->
             <div class="modal-content">
                 <!--Header-->
@@ -148,7 +148,57 @@
 
                 <!--Body-->
                 <div class="modal-body">
-                    <div class="b" [innerHTML]="modalBody"></div>
+                    <div class="container">
+                        <slideshow [imageUrls]="images" [minHeight]="'300px'" [backgroundSize]="auto" [backgroundPosition]="'center center'" [autoPlay]="true" [showArrows]="true" [lazyLoad]="images?.length > 1" [autoPlayWaitForLazyLoad]="true" [hideOnNoSlides]="true"></slideshow>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Product: </strong></h4>
+                                <p>{{data[2]}}</p>
+                            </div>
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Seller: </strong></h4>
+                                <p>{{data[1]}}</p>
+                            </div>
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Category: </strong></h4>
+                                <p>{{data[17]}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Description: </strong></h4>
+                                <p>{{data[9]}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Buy Price: </strong></h4>
+                                <p>{{data[3]}}</p>
+                            </div>
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Currently: </strong></h4>
+                                <p>{{data[4]}}</p>
+                            </div>
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Start Date: </strong></h4>
+                                <p>{{data[7]}}</p>
+                            </div>
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>End Date: </strong></h4>
+                                <p>{{data[8]}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="h4-responsive"><strong>Address: </strong></h4>
+                                <p>{{dataAddress}}</p>
+                            </div>
+                        </div>
+                    </div>
                     <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lon">
                         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
                     </agm-map>

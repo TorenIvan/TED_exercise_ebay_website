@@ -106,6 +106,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   items = [];
 
+  images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
+
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {

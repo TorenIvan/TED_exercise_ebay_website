@@ -72,6 +72,12 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   items = [];
 
+  data: any = [];
+
+  dataAddress: string = "";
+
+  images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
+
   constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
 
   apiCall(): Promise<Product[]> {
@@ -150,7 +156,15 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
           this.bidAmount = 0;
           this.usersAuction = false;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.modalBody = this.format(data);
+          this.data = data;
+          this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
+          this.lat = parseFloat(data[15]);
+          this.lon = parseFloat(data[16]);
+          if(data[17] == this.idUser.toString()) {
+            this.usersAuction = true;
+            this.idAuctionToBid = data[1];
+            this.buyPriceOfAuction = data[3];
+          }
           this.modal.first.show();
         });
         return row;
@@ -195,33 +209,18 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  format(data : any) {
-    const p = data;
-    this.lat = parseFloat(p[15]);
-    this.lon = parseFloat(p[16]);
-    if(p[17] == this.idUser.toString()) {
-      this.usersAuction = true;
-      this.idAuctionToBid = p[1];
-      this.buyPriceOfAuction = p[3];
-    }
-    return '<div class="container">'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Product: </strong></h4><p>' + p[2] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Seller: </strong></h4><p>' + p[1] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Description: </strong></h4><p>' + p[9] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[10] + ", " + p[12] + ", " + p[13] + ", " + p[14] + " " + p[11] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Category: </strong></h4><p>' + p[18] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Buy Price: </strong></h4><p>' + p[3] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>Currently: </strong></h4><p>' + p[4] + '</p></div></div><br>'
-              + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Start Date: </strong></h4><p>' + p[7] + '</p></div>'
-              + '<div class="col"><h4 class="h4-responsive"><strong>End Date: </strong></h4><p>' + p[8] + '</p></div></div><br>'
-            + '</div>';
-  }
-
   openBiddingForm() {
-    if(this.openform == true)
+    if(this.openform == true) {
       this.openform = false;
-    else
+      setTimeout(() => {
+        document.getElementById("frameModalTop").scrollTo({top:0, behavior: 'smooth'});
+      }, 1);
+    } else {
       this.openform = true;
+      setTimeout(() => {
+        document.getElementById("biddingForm").scrollIntoView({behavior: 'smooth'});
+      }, 50);
+    }
   }
 
   openBidModal(event) {
