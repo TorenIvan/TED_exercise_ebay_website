@@ -152,22 +152,29 @@ if(isset($_POST) && !empty($_POST)) {
                     } else {
                       // echo $start_date;
                       // echo $end_date;
-                      mysqli_stmt_bind_param($stmt, "iidddiss" , $param_user_id, $param_product_id, $param_buy_price, $param_currently, $param_first_bid, $param_number_of_bids, $param_start_date, $param_end_date);
+                      require 'dirs.php';
+                      mysqli_stmt_bind_param($stmt, "iidddisss" , $param_user_id, $param_product_id, $param_buy_price, $param_currently, $param_first_bid, $param_number_of_bids, $param_start_date, $param_end_date, $fold);
                       $param_user_id = $user_id;
                       $param_product_id = $productpid[0];
                       $param_buy_price = $buy_price;
                       $param_currently = $currently;
                       $param_first_bid = $first_bid;
                       $param_number_of_bids = $number_of_bids;
-                      
+
                       $param_start_date = $start_date;
                       $param_end_date = $end_date;
-                      
+                      $fold = $foldy;
+
                       //print_r($result_date);
                       mysqli_stmt_execute($stmt);  #ta balame sto auction
                       mysqli_stmt_close($stmt);
                       ////print_r($sql);
-                      
+                      // $sqltlt = "SELECT id from auction WHERE user_id = $param_user_id AND product_id = $param_product_id;";
+                      // $resultlt = mysqli_query($con, $sqltlt);
+                      // $rowltlt = mysql_fetch_assoc($resultlt);
+                      // $idltlt = $rowltlt['id'];
+                      // require 'dirs.php';
+                      //SELECT HERE THE ID AND REQUIRE DIRS.PHP
                       //require product_category ;i apla grapse to
                       $krata = count($category_ids);
                       for ($i = 0; $i < $krata; $i++) {
