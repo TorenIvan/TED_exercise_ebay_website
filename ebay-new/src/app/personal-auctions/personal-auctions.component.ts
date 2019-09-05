@@ -278,7 +278,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const product = form.querySelector('#fp').value;
     const description = form.querySelector('#fd').value;
     const buy_price = form.querySelector('#fbp').value;
-    // const category = form.querySelector('#fca').value;
+    const images = form.querySelector('#fimg').files;
     var category = this.selected_categories;
     const country = form.querySelector('#fco').value;
     const state = form.querySelector('#fs').value;
@@ -288,8 +288,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const start_date = form.querySelector('#fsd').value;
     const end_date = form.querySelector('#fse').value;
 
-    console.log(start_date);
-    console.log(end_date);
+    // console.log(images);
 
     var location = address + " " + postcode + " " + town + " " + state + " " + country;
     location = location.toString();
@@ -340,7 +339,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.modals[1].hide();
     this.modals[0].hide();
     this.modals[2].hide();
-    // this.rerender();
   }
 
   openDeleteModal() {
