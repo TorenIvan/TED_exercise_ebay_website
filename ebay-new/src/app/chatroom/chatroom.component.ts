@@ -31,6 +31,7 @@ export class ChatroomComponent implements OnInit {
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
 
+    // take the username of the user and after you get the answer do the addUser() function
     this.addUser();
   }
 
@@ -125,7 +126,7 @@ export class ChatroomComponent implements OnInit {
           url: 'http://localhost:5200/authenticate'
         });
         const chatManager = new Chatkit.ChatManager({
-          instanceLocator: 'v1:us1:020c85fe-75ea-4b24-a651-dc6586a3cfca',
+          instanceLocator: 'v1:us1:96bfb058-06f9-4459-9b76-a704d77b89e5',
           userId,
           tokenProvider
         });
@@ -138,7 +139,7 @@ export class ChatroomComponent implements OnInit {
           })
           .then(currentUser => {
             this.currentUser = currentUser;
-            this.connectToRoom('032ba791-f6a9-4b00-85db-4c8d0cbdb90c');
+            this.connectToRoom('6fe29cee-64ef-4156-b04f-87cdcb0125b5');
             this.getJoinableRooms();
           });
       })
