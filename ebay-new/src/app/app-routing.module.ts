@@ -13,6 +13,7 @@ import { IndexAdminComponent } from './index-admin/index-admin.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
+import { ChatroomComponent } from './chatroom/chatroom.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,9 @@ const routes: Routes = [
   },
   {
     path: 'refresh/:id/:flag', component: RefreshDearComponent, pathMatch: 'full'
+  },
+  {
+    path: 'chat/:id', component: ChatroomComponent, pathMatch: 'full'
   }
 ];
 

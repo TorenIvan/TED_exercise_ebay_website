@@ -3,7 +3,6 @@
 
 <head>
     <title>Index</title>
-    <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -15,12 +14,6 @@
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <!--
-    <script>
-        $(document).ready(function() {
-            $('#tableP').Datatable();
-        })
-    </script> -->
 </head>
 
 <body>
@@ -39,6 +32,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/personalauctions/+{{idUser}}">My Auctions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/chat/+{{idUser}}">Chat Rooms</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/signin">Logout</a>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat</title>
+
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" routerLink="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- A grey horizontal navbar that becomes vertical on small screens -->
+    <nav class="navbar navbar-expand-sm navbar-dark">
+
+        <div class="navbar-brand" routerLink="#">
+            <a class="navbar-item"><img src="../../assets/DivaExpressLogo2.png" style="height:110px; width: 110px;"></a>
+        </div>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/personalinfo/+{{idUser}}">My Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/personalauctions/+{{idUser}}">My Auctions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/indexuser/+{{idUser}}">Auctions List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/signin">Logout</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="App">
+        <aside class="sidebar left-sidebar">
+            <section *ngIf="!currentUser.id" class="join-chat">
+                <h4>Joining Chat...</h4>
+            </section>
+            <section *ngIf="currentUser.id" class="room-members">
+                <h4>Room Users</h4>
+                <ul class="user-list">
+                    <li *ngFor="let user of roomUsers">
+                        <span class="presence {{ user.presence.state }}"></span>
+                        <span>{{ user.name }}</span>
+                    </li>
+                </ul>
+            </section>
+            <form *ngIf="currentRoom.isPrivate" (ngSubmit)="addUserToRoom()">
+                <label for="user-name">Add user to {{ currentRoom.name }}</label>
+                <input type="text" class="newUser-input" [(ngModel)]="newUser" name="user-name" id="user-name" placeholder="Enter username">
+            </form>
+        </aside>
+
+        <main class="chat-window">
+            <header class="chat-header">
+                <h4 *ngIf="!currentRoom.name; else roomName">Chat</h4>
+                <ng-template #roomName>
+                    <h4>{{ currentRoom.name }}</h4>
+                </ng-template>
+                <span class="participants"></span>
+            </header>
+            <section class="chat-session">
+                <ul class="message-list">
+                    <li class="user-message" *ngFor="let message of messages">
+                        <span class="user-id">{{ message.senderId }}</span>
+                        <span>{{ message.text }}</span>
+                    </li>
+                </ul>
+            </section>
+            <footer *ngIf="currentUser.id" class="chat-footer">
+                <form class="message-form" (ngSubmit)='sendMessage()'>
+                    <input class="message-input" placeholder="Type a message. Hit Enter to send" type="text" name="message" [(ngModel)]="newMessage" />
+                </form>
+            </footer>
+        </main>
+
+        <aside class="sidebar right-sidebar">
+            <section class="room-section">
+                <section *ngIf="currentUser.id" class="user-rooms">
+                    <h4>Rooms</h4>
+                    <ul class="room-list">
+                        <li *ngFor="let room of userRooms">
+                            <div [class.active]="room.id==currentRoom.id" (click)="connectToRoom(room.id)" class="room">
+                                <span class="room-status" *ngIf="room.isPrivate; else publicRoom">🔒</span>
+                                <ng-template #publicRoom>
+                                    <span>🌐</span>
+                                </ng-template>
+                                <span class="room-name">{{ room.name }}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+                <section *ngIf="joinableRooms.length > 0" class="joinable-rooms">
+                    <h4>Joinable rooms</h4>
+                    <ul class="room-list">
+                        <li *ngFor="let room of joinableRooms">
+                            <div class="room" (click)="joinRoom(room.id)">
+                                <span class="room-status" *ngIf="room.isPrivate; else publicRoom">🔒</span>
+                                <ng-template #publicRoom>
+                                    <span>🌐</span>
+                                </ng-template>
+                                <span class="room-name">{{ room.name }}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section *ngIf="currentUser.id" class="create-room">
+                <form (ngSubmit)="createRoom()">
+                    <input type="text" [(ngModel)]="newRoom.name" name="room-name" id="room-name" placeholder="Create a room">
+                    <label for="is-private">
+              <input type="checkbox" [(ngModel)]="newRoom.isPrivate" name="is-private" id="is-private">
+              <span>Is this room private?</span>
+          </label>
+                </form>
+            </section>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small pt-4">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a routerLink=""> Diva.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</body>
+
+</html>

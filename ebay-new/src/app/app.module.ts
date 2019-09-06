@@ -28,6 +28,7 @@ import { SlideshowModule } from 'ng-simple-slideshow';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
+import { ChatroomComponent } from './chatroom/chatroom.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
     UsersListComponent,
     ApplicationsComponent,
     FilterPipe,
-    RefreshDearComponent
+    RefreshDearComponent,
+    ChatroomComponent
   ],
   imports: [
     BrowserModule,
