@@ -17,10 +17,8 @@ if(isset($_POST) && !empty($_POST)) {
   $first_bid = 0;
   $number_of_bids = 0;
   $start_date = htmlspecialchars($_POST['start_date']);
-  //$start_date = new DateTime('2019-07-01 12:30:11');
   $result_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
   $end_date = htmlspecialchars($_POST['end_date']);
-  // $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
   $pname = htmlspecialchars($_POST['product']);
   $pdescription = htmlspecialchars($_POST['description']);
   $ptown = htmlspecialchars($_POST['town']);
@@ -30,10 +28,8 @@ if(isset($_POST) && !empty($_POST)) {
   $ppostcode = htmlspecialchars($_POST['postcode']);
   $platitude = htmlspecialchars($_POST['latitude']);
   $plongitude = htmlspecialchars($_POST['longitude']);
-  //$category = htmlspecialchars($_POST['category']);
   $categories = $_POST['category'];
   array_walk_recursive($categories, '_clean');
-  //var_dump($category);
   $i = 0;
   foreach ($categories as $category) {
     $category_ids[$i] = $category['id'];
@@ -61,7 +57,7 @@ if(isset($_POST) && !empty($_POST)) {
   // $ppostcode = 'mouahaha';
   // $platitude = 0;
   // $plongitude = 1;
-  //edo prepei na mas balei to end_date. An den mas to balei pernoume to torino gia ton elegxo kai bazoume NULL sti basi
+  //edo prepei na mas balei to end_date. An den mas to balei pernoume to torino gia ton elegxo kai to vazoume sth bash
   //to product_id den allazei, ;i mallon den mporei na to allaksei
 
   $sql_check = "SELECT * FROM product WHERE name = ? AND description = ? LIMIT 1;";
