@@ -140,7 +140,7 @@ export class ChatroomComponent implements OnInit {
           url: 'http://localhost:5200/authenticate'
         });
         const chatManager = new Chatkit.ChatManager({
-          instanceLocator: 'v1:us1:96bfb058-06f9-4459-9b76-a704d77b89e5',
+          instanceLocator: 'v1:us1:51098f41-e0d6-48d9-8021-06896735bceb',
           userId,
           tokenProvider
         });
@@ -153,7 +153,7 @@ export class ChatroomComponent implements OnInit {
           })
           .then(currentUser => {
             this.currentUser = currentUser;
-            this.connectToRoom('6fe29cee-64ef-4156-b04f-87cdcb0125b5');
+            this.connectToRoom('560e768e-ff6c-4150-a205-21b67c28a708');
             this.getJoinableRooms();
           });
       })
