@@ -18,24 +18,34 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/delete', (req, res) => {
 
-    const idU = req.body.userId;
+    const userId = req.body.userId;
+
+    console.log(userId);
 
     chatkit
         .asyncDeleteUser({
-            userId: idU
+            userId: userId
         })
         .then(() => {
-            console.log("User deleted successfully")
+            chatkit.getUser({
+                    userId: userId,
+                })
+                .then(user => {
+                    console.error("User was not deleted!");
+                    console.log('got a user', user);
+                })
+                .catch(err => {
+                    if (err.error === 'services/chatkit/not_found/user_not_found') {
+                        console.log("User deleted successfully");
+                        res.sendStatus(200);
+                    } else {
+                        res.status.apply(err.status).json(err);
+                    }
+                });
         })
         .catch(err => {
-            console.error(err)
+            console.error(err);
         });
-
-    chatkit.getUser({
-            id: idU,
-        })
-        .then(user => console.log('got a user', user))
-        .catch(err => console.error(err))
 });
 
 app.post('/users', (req, res) => {

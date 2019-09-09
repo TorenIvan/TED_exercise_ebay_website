@@ -124,6 +124,7 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.modalBody = this.format(data.toString());
+          this.usernameUser = data[1];
           this.ableToDeleteUser = false;
           this.modal.first.show();
         });
@@ -170,7 +171,6 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   format(data : string) {
     const p = data.split(',');
     this.idUser = p[0];
-    this.usernameUser = p[1];
     return '<div class="container">'
             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Username: </strong></h4><p>' + p[1] + '</p></div>'
             + '<div class="col"><h4 class="h4-responsive"><strong>Email: </strong></h4><p>' + p[2] + '</p></div></div><br>'
@@ -184,18 +184,19 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   deleteUser() {
     this.ableToDeleteUser = true;
     console.log("user deleted with id: " + this.idUser);
-    this.tableService.deleteUser(this.idUser).subscribe(data => {
-      console.log(data);
-      const userId = JSON.stringify(this.usernameUser);
-      axios.post('http://localhost:5200/delete', {userId})
+    // this.tableService.deleteUser(this.idUser).subscribe(data => {
+    //   console.log(data);
+      const id = this.usernameUser;
+      console.log({userId: id});
+      axios.post('http://localhost:5200/delete', {userId: id})
         .then(() => {
           console.log("Successful!");
         })
         .catch(error => console.error(error));
       this.modal.first.hide();
       this.modal.last.hide();
-      this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
-    });
+    //   this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
+    // });
   }
 
   openDeleteModal() {
