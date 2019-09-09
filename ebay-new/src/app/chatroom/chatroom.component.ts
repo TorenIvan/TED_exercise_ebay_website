@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Chatkit from '@pusher/chatkit-client';
 import axios from 'axios';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TableServiceService } from '../table-service.service';
 
 @Component({
   selector: 'app-chatroom',
@@ -9,8 +10,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./chatroom.component.scss']
 })
 export class ChatroomComponent implements OnInit {
-
+  usernameUser = '';
   idUser: number;
+
   userId = '';
   currentUser = <any>{};
   messages = [];
@@ -25,14 +27,30 @@ export class ChatroomComponent implements OnInit {
   joinableRooms = [];
   newUser = '';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private tableService: TableServiceService, private rooter: Router) { }
 
   ngOnInit() {
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
 
-    // take the username of the user and after you get the answer do the addUser() function
-    this.addUser();
+    new Promise((resolve, reject) => {
+      this.tableService.getUserUsername(this.idUser).toPromise().then(
+        (res: string) => {
+          console.log(res);
+          switch(res) {
+            case "No user with that id":
+            case "problem while executing query":
+            case "problem while preparing query": reject(res); break;
+            default: resolve(res);
+          }
+        }
+      );
+    }).then((res: string)=>{
+      this.usernameUser = res;
+      this.addUser();
+    }, (res: string)=> {
+      this.rooter.navigateByUrl('/signin');
+    });
   }
 
   createRoom() {
@@ -115,11 +133,7 @@ export class ChatroomComponent implements OnInit {
   }
 
   addUser() {
-    const userId = this.idUser.toString();
-    // const name = 'bomba';
-    // const userName = JSON.stringify(name);
-    // axios.post('http://localhost:5200/users', {userId, userName})
-    console.log({userId});
+    const userId = this.usernameUser;
     axios.post('http://localhost:5200/users', {userId})
       .then(() => {
         const tokenProvider = new Chatkit.TokenProvider({
@@ -143,7 +157,7 @@ export class ChatroomComponent implements OnInit {
             this.getJoinableRooms();
           });
       })
-        .catch(error => console.error(error))
+        .catch(error => console.error(error));
   }
 
   addUserToRoom() {

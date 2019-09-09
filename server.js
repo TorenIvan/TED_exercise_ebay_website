@@ -16,18 +16,34 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.post('/delete', (req, res) => {
+
+    const idU = req.body.userId;
+
+    chatkit
+        .asyncDeleteUser({
+            userId: idU
+        })
+        .then(() => {
+            console.log("User deleted successfully")
+        })
+        .catch(err => {
+            console.error(err)
+        });
+
+    chatkit.getUser({
+            id: idU,
+        })
+        .then(user => console.log('got a user', user))
+        .catch(err => console.error(err))
+});
+
 app.post('/users', (req, res) => {
 
-    // const userId = req.body.userId;
-    // const userName = req.body.userName;
     const { userId } = req.body;
-    // console.log({ userId });
-    // console.log({ userName });
 
     chatkit
         .createUser({
-            // id: userId,
-            // name: userName,
             id: userId,
             name: userId,
         })

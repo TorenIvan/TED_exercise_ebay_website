@@ -63,4 +63,8 @@ export class TableServiceService {
   addBid(id_user, id_auction, amount_of_money, buy_price) {
     return this.httpClient.post('/api/updatebids.php', {id_user, id_auction, amount_of_money, buy_price})
   }
+
+  getUserUsername(id) {
+    return this.httpClient.post('/api/getusername.php', {id})
+  }
 }

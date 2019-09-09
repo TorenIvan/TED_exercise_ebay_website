@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
+import Chatkit from '@pusher/chatkit-client';
+import axios from 'axios';
 
 import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
 
@@ -52,6 +54,7 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   tableInstance: any;
 
   idUser: string;
+  usernameUser: string;
 
   loading: boolean;
 
@@ -167,6 +170,7 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
   format(data : string) {
     const p = data.split(',');
     this.idUser = p[0];
+    this.usernameUser = p[1];
     return '<div class="container">'
             + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Username: </strong></h4><p>' + p[1] + '</p></div>'
             + '<div class="col"><h4 class="h4-responsive"><strong>Email: </strong></h4><p>' + p[2] + '</p></div></div><br>'
@@ -182,6 +186,12 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log("user deleted with id: " + this.idUser);
     this.tableService.deleteUser(this.idUser).subscribe(data => {
       console.log(data);
+      const userId = JSON.stringify(this.usernameUser);
+      axios.post('http://localhost:5200/delete', {userId})
+        .then(() => {
+          console.log("Successful!");
+        })
+        .catch(error => console.error(error));
       this.modal.first.hide();
       this.modal.last.hide();
       this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
