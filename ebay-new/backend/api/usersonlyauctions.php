@@ -7,6 +7,7 @@
   $auctions = [];
   $nextAuction = false;
   $pc = 0;
+  $files = [];
 
   $_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -37,6 +38,21 @@
         $auctions[$cr]['number_of_bids'] = $row['number_of_bids'];
         $auctions[$cr]['start_date'] = $row['start_date'];
         $auctions[$cr]['end_date'] = $row['end_date'];
+        $ic = 0;
+        if($row['path'] != null) {
+          foreach(array_filter(glob($row['path'].'/*.*')) as $file) {
+            if(is_file($file) == true) {
+              $files[$ic] = $file;
+              $ic++;
+            }
+          }
+          // echo $row['path'];
+          // echo "\n\n";
+          // print_r($files);
+          $auctions[$cr]['images'] = $files;
+        } else {
+          $auctions[$cr]['images'] = [];
+        }
         while($nextAuction == false && $pc<count($products)) {
           if($row['product_id'] == $products[$pc]['id']) {
             $nextAuction = true;

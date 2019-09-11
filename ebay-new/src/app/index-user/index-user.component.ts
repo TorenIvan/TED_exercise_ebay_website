@@ -131,7 +131,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { title: 'Latitude' },
         { title: 'Longitude' },
         { title: 'UserId' },
-        { title: 'Category' }
+        { title: 'Category' },
+        { title: 'Path' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -147,7 +148,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 14 },
         { "searchable": false, "visible": false, "targets": 15 },
         { "searchable": false, "visible": false, "targets": 16 },
-        { "searchable": false, "visible": false, "targets": 17 }
+        { "searchable": false, "visible": false, "targets": 17 },
+        { "searchable": false, "visible": false, "targets": 19 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
@@ -160,6 +162,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
           this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
+          this.images = data[19];
           if(data[17] == this.idUser.toString()) {
             this.usersAuction = true;
             this.idAuctionToBid = data[1];

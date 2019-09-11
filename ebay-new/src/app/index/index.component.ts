@@ -107,7 +107,8 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
         { title: 'Postcode' },
         { title: 'Latitude' },
         { title: 'Longitude' },
-        { title: 'Category' }
+        { title: 'Category' },
+        { title: 'Path' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -122,7 +123,8 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
         { "targets": [ 13 ], "visible": false, "searchable": false },
         { "targets": [ 14 ], "visible": false, "searchable": false },
         { "targets": [ 15 ], "visible": false, "searchable": false },
-        { "targets": [ 16 ], "visible": false, "searchable": false }
+        { "targets": [ 16 ], "visible": false, "searchable": false },
+        { "targets": [ 18 ], "visible": false, "searchable": false }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
@@ -133,6 +135,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
           this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
+          this.images = data[18];
           this.modal.show();
         });
         return row;

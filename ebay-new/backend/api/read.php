@@ -4,6 +4,7 @@ require 'connect.php';
 require 'read_product.php';
 
 $auctions = [];
+$files = [];
 // $sql = "SELECT * FROM auction";
 $sql = "select a.id, u.surname, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.user_id, a.path
 from auction as a
@@ -34,6 +35,21 @@ if($result = mysqli_query($con,$sql))
     $auctions[$cr]['start_date'] = $row['start_date'];
     $auctions[$cr]['end_date'] = $row['end_date'];
     $auctions[$cr]['id_creator'] = $row['user_id'];
+    $ic = 0;
+    if($row['path'] != null) {
+      foreach(array_filter(glob($row['path'].'/*.*')) as $file) {
+        if(is_file($file) == true) {
+          $files[$ic] = $file;
+          $ic++;
+        }
+      }
+      // echo $row['path'];
+      // echo "\n\n";
+      // print_r($files);
+      $auctions[$cr]['images'] = $files;
+    } else {
+      $auctions[$cr]['images'] = [];
+    }
     $c = null;
     foreach($products[$cr]['categories'] as $i) {
       if($c == null) {

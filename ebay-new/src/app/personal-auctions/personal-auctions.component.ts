@@ -197,7 +197,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { "searchable": false, "visible": false, "targets": 14 },
         { "searchable": false, "visible": false, "targets": 15 },
         { "searchable": false, "visible": false, "targets": 16 },
-        { "searchable": false, "visible": false, "targets": 17 }
+        { "searchable": false, "visible": false, "targets": 18 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
@@ -220,6 +220,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           this.lon = parseFloat(data[16]);
           this.saveButton = false;
           this.idAuction = data[0];
+          this.images = data[18];
           this.ableToDeleteAuction = false;
           this.modal.first.show();
         });

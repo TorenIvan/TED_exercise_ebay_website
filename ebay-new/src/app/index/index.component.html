@@ -38,7 +38,7 @@
                 <div *ngIf="loading else loaded" class="d-flex justify-content-center h-100">
                     <tbody>
                         <tr>
-                            <td colspan="18" class="no-data-available">Loading...</td>
+                            <td colspan="19" class="no-data-available">Loading...</td>
                             <!-- <td>Loading...</td>
                                     <td>Loading...</td>
                                     <td>Loading...</td>
@@ -81,6 +81,7 @@
                             <td>{{product.latitude}}</td>
                             <td>{{product.longitude}}</td>
                             <td>{{product.categories}}</td>
+                            <td>{{product.images}}</td>
                         </tr>
                     </tbody>
                     <tbody *ngIf="products == null">
@@ -109,6 +110,7 @@
                         <th><input type="text" placeholder="latitude" name="latitude" hidden disabled/></th>
                         <th><input type="text" placeholder="longitude" name="longitude" hidden disabled/></th>
                         <th><input type="text" placeholder="Search category" name="search-category" /></th>
+                        <th><input type="text" placeholder="" name="search-images" hidden disabled/></th>
                     </tr>
                 </tfoot>
             </table>

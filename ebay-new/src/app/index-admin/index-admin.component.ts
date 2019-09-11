@@ -157,7 +157,8 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
         { title: 'Postcode' },
         { title: 'Latitude' },
         { title: 'Longitude' },
-        { title: 'Category' }
+        { title: 'Category' },
+        { title: 'Path' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -172,7 +173,8 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
         { "searchable": false, "visible": false, "targets": [13] },
         { "searchable": false, "visible": false, "targets": [14] },
         { "searchable": false, "visible": false, "targets": [15] },
-        { "searchable": false, "visible": false, "targets": [16] }
+        { "searchable": false, "visible": false, "targets": [16] },
+        { "searchable": false, "visible": false, "targets": [18] }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
@@ -183,6 +185,7 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
           this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
+          this.images = data[18];
           this.modal.show();
         });
         return row;
