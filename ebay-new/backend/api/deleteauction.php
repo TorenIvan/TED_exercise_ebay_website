@@ -10,7 +10,7 @@ if(isset($_POST) && !empty($_POST)) {
 
   $sqltlt = "SELECT path from auction WHERE id = $idd;";
   $resultlt = mysqli_query($con, $sqltlt);
-  $rowltlt = mysql_fetch_assoc($resultlt);
+  $rowltlt = mysqli_fetch_assoc($resultlt);
   $idltlt = $rowltlt['path'];
 
   $sql="DELETE c FROM product_is_category AS c WHERE c.product_id = (SELECT a.product_id FROM product AS p INNER JOIN auction AS a ON p.id=a.product_id WHERE a.id = $idd);";
@@ -28,6 +28,9 @@ if(isset($_POST) && !empty($_POST)) {
     // print_r("Something is wrong with mysqli_query");
   }
   require 'deldirs.php';
+
+  mysqli_free_result($resultlt);
+  mysqli_close($con);
 
 }else {
   http_response_code("No one requested this!");

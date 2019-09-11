@@ -106,6 +106,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   items = [];
 
+  uploadIm: string[] = [];
+
   images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
 
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
@@ -178,7 +180,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { title: 'Postcode' },
         { title: 'Latitude' },
         { title: 'Longitude' },
-        { title: 'Category' }
+        { title: 'Category' },
+        { title: 'Path' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -193,7 +196,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { "searchable": false, "visible": false, "targets": 13 },
         { "searchable": false, "visible": false, "targets": 14 },
         { "searchable": false, "visible": false, "targets": 15 },
-        { "searchable": false, "visible": false, "targets": 16 }
+        { "searchable": false, "visible": false, "targets": 16 },
+        { "searchable": false, "visible": false, "targets": 17 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
@@ -272,13 +276,21 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.resultFlag = true;
   }
 
+  onFileSelect(event) {
+    this.uploadIm = [];
+    if (event.target.files.length > 0) {
+      for(let i=0; i<event.target.files.length; i++) {
+        this.uploadIm.push(event.target.files[i]);
+      }
+    }
+  }
+
   addAuction(event) {
     event.preventDefault();
     const form = event.target;
     const product = form.querySelector('#fp').value;
     const description = form.querySelector('#fd').value;
     const buy_price = form.querySelector('#fbp').value;
-    const images = form.querySelector('#fimg').files;
     var category = this.selected_categories;
     const country = form.querySelector('#fco').value;
     const state = form.querySelector('#fs').value;
@@ -288,7 +300,14 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     const start_date = form.querySelector('#fsd').value;
     const end_date = form.querySelector('#fse').value;
 
-    // console.log(images);
+    let imageToUpload = new FormData();
+    imageToUpload.append("name", product);
+    imageToUpload.append("id", this.idUser.toString());
+    for(let i=0; i < form.querySelector('#fimg').files.length; i++) {
+      imageToUpload.append("imageToUpload[]", form.querySelector('#fimg').files[i], form.querySelector('#fimg').files[i]['name']);
+    }
+
+    console.log(form.querySelector('#fimg').files);
 
     var location = address + " " + postcode + " " + town + " " + state + " " + country;
     location = location.toString();
@@ -313,15 +332,32 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         })
       );
 
-      this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
-        console.log(data)
-        this.hhh = data.toString();
-        this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
-      });
-      console.log("New Auction YAY!");
-      this.ableToSubmitAuction = false;
-      this.resultFlag = false;
-      this.modals[2].hide();
+      var ajaxHandler = new XMLHttpRequest();
+      ajaxHandler.open("POST", "/api/dirs.php", false);
+      let flag = 0;
+      ajaxHandler.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            flag = 1;
+            console.log("File created!");
+        }
+      }
+      ajaxHandler.send(imageToUpload);
+
+      if(flag == 1) {
+        this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
+          console.log(data)
+          this.hhh = data.toString();
+          this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
+        });
+        console.log("New Auction YAY!");
+        this.ableToSubmitAuction = false;
+        this.resultFlag = false;
+        this.modals[2].hide();
+      } else {
+        console.log("Problem with creating pictures file");
+        this.ableToSubmitAuction = false;
+        this.hhh = "There was a problem adding the new auction. Please try again later.";
+      }
     } else {
       // alert not all necessary fields are filled
       this.hhh = "Some necessary fields are empty!";

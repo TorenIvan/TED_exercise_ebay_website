@@ -13,7 +13,7 @@
   if(isset($_POST) && !empty($_POST)) {
       $id = $_POST['id'];
 
-    $sql="select a.id, u.surname, p.id as product_id, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date from auction as a inner join user as u on a.user_id = u.id and a.user_id = $id inner join product as p on a.product_id = p.id order by p.id;";
+    $sql="select a.id, u.surname, p.id as product_id, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.path from auction as a inner join user as u on a.user_id = u.id and a.user_id = $id inner join product as p on a.product_id = p.id order by p.id;";
 
     if($result = mysqli_query($con,$sql))
     {

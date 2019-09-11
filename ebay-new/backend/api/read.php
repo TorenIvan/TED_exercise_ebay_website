@@ -5,7 +5,7 @@ require 'read_product.php';
 
 $auctions = [];
 // $sql = "SELECT * FROM auction";
-$sql = "select a.id, u.surname, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.user_id
+$sql = "select a.id, u.surname, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.user_id, a.path
 from auction as a
 inner join user as u on a.user_id = u.id
 inner join product as p on a.product_id = p.id

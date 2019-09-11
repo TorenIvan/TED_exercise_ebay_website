@@ -18,4 +18,5 @@ export interface Product{
     end_date: string;
     id_creator: number;
     categories: string;
+    images: string[];
 }

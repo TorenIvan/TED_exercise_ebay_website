@@ -293,7 +293,7 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div class="container">
-                        <form (submit)="addAuction($event)">
+                        <form (ngSubmit)="addAuction($event)">
                             <div class="row">
                                 <div class="col-xl-4 newFormColumns">
                                     <div class="row">
@@ -366,7 +366,7 @@
                                         <span>Select one or more images: </span>
                                     </div>
                                     <div class="row">
-                                        <input type="file" name="img" id="fimg" accept="image/*" multiple>
+                                        <input type="file" name="imageToUpload[]" id="fimg" accept="image/*" multiple (change)="onFileSelect($event)">
                                     </div>
                                 </div>
                             </div>

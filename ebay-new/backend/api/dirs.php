@@ -1,19 +1,39 @@
 <?php
 
-//$images = "Images";
-$idltlt = date('Format String', time());
-$e = "/";
+$_POST = json_decode(file_get_contents('php://input'), true);
 
-$get_path = realpath('../../src/assets').PHP_EOL;
+$postVariable = filter_input_array($_POST);
 
-//$folder = $get_path.$e.$images.$id;
-$folder = $get_path.$e.$idltlt;
+if(isset($postVariable) && !empty($postVariable)) {
 
-$foldy = preg_replace('/\s/', '', $folder);
+  $pname = htmlspecialchars($postVariable['name']);
+  $user_id = htmlspecialchars($postVariable['id']);
 
-//echo $foldy;
-if (!is_dir($foldy)) {
-  mkdir($foldy, 0777, true);
+  $idltlt = date('D-d-m-Y_', time());
+  $e = "/";
+
+  // $get_path = '../../../images';
+  $get_path = '../../src/assets';
+
+  $folder = $get_path.$e.$idltlt.$pname."_".$user_id;
+
+  $foldy = preg_replace('/\s/', '', $folder);
+
+  if (!is_dir($foldy)) {
+    mkdir($foldy, 0777, true);
+  } else {
+    chmod($foldy, 0777);
+  }
+  echo $foldy;
+
+  for($i = 0; $i < count($_FILES['imageToUpload']['tmp_name']); $i++) {
+    $name = $_FILES['imageToUpload']['name'][$i];
+    $tmp = $_FILES['imageToUpload']['tmp_name'][$i];
+    move_uploaded_file($tmp, $foldy."/".$name);
+  }
+
+  http_response_code(200);
+} else {
+  http_response_code(404);
 }
-
 ?>

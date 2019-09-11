@@ -9,7 +9,7 @@ function _clean(&$value) {
 }
 
 if(isset($_POST) && !empty($_POST)) {
-
+  
   //xss protection and of the user of post method(at the same time 2 things)
   $user_id = htmlspecialchars($_POST['user_id']);
   $buy_price = htmlspecialchars($_POST['buy_price']);
@@ -29,6 +29,8 @@ if(isset($_POST) && !empty($_POST)) {
   $platitude = htmlspecialchars($_POST['latitude']);
   $plongitude = htmlspecialchars($_POST['longitude']);
   $categories = $_POST['category'];
+
+  
   array_walk_recursive($categories, '_clean');
   $i = 0;
   foreach ($categories as $category) {
@@ -133,14 +135,14 @@ if(isset($_POST) && !empty($_POST)) {
                 if ($productpid[0]) {
                   //print_r($productpid[0]);
                   //edo arizei to 2o insert
-                  $sql = "INSERT INTO auction (user_id, product_id, buy_price, currently, first_bid, number_of_bids, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                  $sql = "INSERT INTO auction (user_id, product_id, buy_price, currently, first_bid, number_of_bids, start_date, end_date, path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
                   //$sqlpc = "INSERT INTO product_category (category) VALUES (?);";
                   //$sqlpic = "INSERT INTO product_is_category (product_id, product_category_id) VALUES (?, ?);";
                   if($stmt = mysqli_prepare($con, $sql)) {
                     //print_r($sql);
                     #check for start_date
-                    echo $start_date;
-                      echo $end_date;
+                    // echo $start_date;
+                    //   echo $end_date;
                     if ((new DateTime())->format('Y-m-d') > $result_date) {
                       echo json_encode("Datetime is wrong");
                       // echo 'ee';
@@ -148,7 +150,18 @@ if(isset($_POST) && !empty($_POST)) {
                     } else {
                       // echo $start_date;
                       // echo $end_date;
-                      require 'dirs.php';
+
+
+                      
+                      // require 'dirs.php';
+                      $idltlt = date('D-d-m-Y_', time());
+                      $e = "/";
+                      $get_path = realpath('../../src/assets').PHP_EOL;
+                      $folder = $get_path.$e.$idltlt.$pname."_".$user_id;
+                      $foldy = preg_replace('/\s/', '', $folder);
+
+
+
                       mysqli_stmt_bind_param($stmt, "iidddisss" , $param_user_id, $param_product_id, $param_buy_price, $param_currently, $param_first_bid, $param_number_of_bids, $param_start_date, $param_end_date, $fold);
                       $param_user_id = $user_id;
                       $param_product_id = $productpid[0];
