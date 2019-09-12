@@ -155,7 +155,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
-          this.images = data[19].split(",");
+          this.images = data[19];
           this.bidAmount = 0;
           this.usersAuction = false;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);

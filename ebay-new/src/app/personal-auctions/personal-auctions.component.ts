@@ -109,7 +109,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   uploadIm: string[] = [];
 
   images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
-
+  
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
@@ -204,8 +204,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          // this.modalBody = this.format(data.toString());
-          this.images = data[18].split(",");
+          this.images = data[18];
           this.infoForm.patchValue({
             prForm: data[2],
             seForm: data[1],

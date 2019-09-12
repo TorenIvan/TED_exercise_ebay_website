@@ -132,7 +132,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterCo
         $('td', row).bind('click', () => {
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.data = data;
-          this.images = data[18].split(",");
+          this.images = data[18];
           this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);

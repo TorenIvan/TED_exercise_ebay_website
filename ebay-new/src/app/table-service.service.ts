@@ -67,4 +67,8 @@ export class TableServiceService {
   getUserUsername(id) {
     return this.httpClient.post('/api/getusername.php', {id})
   }
+
+  setNewPass(email, pass) {
+    return this.httpClient.post('/api/newpassword.php', {email, pass})
+  }
 }
