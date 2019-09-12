@@ -9,8 +9,13 @@
 
 //8a doume pote
 Ti allo 8eloume? Let's find out:
-  8.  Insert auction (symela gives me username, pairno ta upoloipa apo ta post methods)
-  9.  Show all auctions
-  10. Map
-  11. Messaging
-  12  LSH
+  A) LSH
+  B) Apostolh email meta thn eggrush apo ton xrhsth (isws kai meta to sign up)
+  C) Apostolh email gia na kanei retrieve to password!
+  D) Na ftiaxoume to kommati me ta bids kai to bidding
+  E) Na ftiaxoume to edit user
+  F) Na ftiaxoume to edit auction
+  G) Na valoume ta xml sthn vash
+         (na doume tis hmeromhnies, giati sto xml einai tupou Datetime, ki emeis sth vash ta allaxame se Date)
+  H) Na ftiaxw ta categories sto front-end (T_T)
+  I) Na allazei to password!!!
