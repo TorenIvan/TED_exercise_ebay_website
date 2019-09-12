@@ -8,11 +8,9 @@ $count = 0;
 $sql = "SELECT * FROM userlist";
 if($result=mysqli_query($con,$sql)){
   // Process all rows
-  //echo "a";
   while($row = mysqli_fetch_assoc($result))
   {
     //echo "mpikes";
-    #print_r($row);
     $users[$count]['id'] = $row['id'];
     $users[$count]['username'] = $row['username'];
     $users[$count]['password'] = $row['password'];
@@ -26,7 +24,6 @@ if($result=mysqli_query($con,$sql)){
     $users[$count]['address'] = $row['address'];
     $users[$count]['postcode'] = $row['postcode'];
     $users[$count]['afm'] = $row['afm'];
-    //$count--;
     $count++;
   }
   echo json_encode($users);
@@ -36,6 +33,5 @@ if($result=mysqli_query($con,$sql)){
   http_response_code(404);
 
 }
-// echo($result);
 
- ?>
+?>

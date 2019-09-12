@@ -3,7 +3,7 @@
 require 'connect.php';
 
 $categories = [];
-// $sql = "SELECT * FROM auction";
+
 $sql = "select * from product_category;";
 
 if($result = mysqli_query($con,$sql))

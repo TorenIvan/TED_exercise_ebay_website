@@ -8,8 +8,6 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 
 if(isset($_POST) && !empty($_POST)) {
     $idd = $_POST['id'];
-//kapos prepei na pairno to user.id edo
-//esto oti einai to 11
 // $idd = 11; //einai tou user, min mperdeuteis me to deleteauction
 
 $sqll = "SELECT auction.id from auction inner join user ON user.id = auction.user_id and user.id = $idd;";
@@ -44,12 +42,10 @@ if($resultl = mysqli_query($con,$sqll)){
 
     if($result=mysqli_query($con,$sql)){
       // Process all rows
-      // echo "a";
       $count=0;
       while($row = mysqli_fetch_assoc($result))
       {
         // echo "mpikes";
-        #//print_r($row);
         $users[$count]['id'] = $row['id'];
         // $users[$count]['user_category_id'] = $row['user_category_id'];
         $users[$count]['username'] = $row['username'];
@@ -71,7 +67,6 @@ if($resultl = mysqli_query($con,$sqll)){
       echo json_encode($users);
       // //print_r($users);
     }else{
-      // "aa";
       http_response_code(404);
 
     }

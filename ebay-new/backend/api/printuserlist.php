@@ -2,25 +2,13 @@
 
 $users = [];
 
-//an 8es na ektupononatai anapoda
-// $sqlc = "SELECT count(*) from userlist;";
-// if ($resultc = mysqli_query($con,$sqlc)) {
-//   while($row = mysqli_fetch_assoc($resultc)){
-//     $count = $row['count(*)'];
-//   }
-// }
-// $count--;
-// print_r("COUNT =  ");
-// print_r($count);
 $count = 0;
 $sql = "SELECT * FROM userlist";
 if($result=mysqli_query($con,$sql)){
   // Process all rows
-  //echo "a";
   while($row = mysqli_fetch_assoc($result))
   {
     //echo "mpikes";
-    #print_r($row);
     $users[$count]['id'] = $row['id'];
     $users[$count]['username'] = $row['username'];
     $users[$count]['password'] = $row['password'];
@@ -34,16 +22,13 @@ if($result=mysqli_query($con,$sql)){
     $users[$count]['address'] = $row['address'];
     $users[$count]['postcode'] = $row['postcode'];
     $users[$count]['afm'] = $row['afm'];
-    //$count--;
     $count++;
   }
   echo json_encode($users);
   // print_r($users);
 }else{
-  "aa";
   http_response_code(404);
 
 }
-// echo($result);
 
- ?>
+?>

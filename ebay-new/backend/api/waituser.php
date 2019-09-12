@@ -1,6 +1,5 @@
 <?php
 
-#//print_r("Mpikes acceptuser");
 require 'signup.php';
 
 $sqluserlist = "INSERT INTO userlist (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";

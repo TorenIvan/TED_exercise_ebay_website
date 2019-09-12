@@ -46,9 +46,6 @@
               $ic++;
             }
           }
-          // echo $row['path'];
-          // echo "\n\n";
-          // print_r($files);
           $auctions[$cr]['images'] = $files;
         } else {
           $auctions[$cr]['images'] = [];

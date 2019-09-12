@@ -19,8 +19,6 @@ if(isset($_POST) && !empty($_POST)) {
         exit;
     }
 
-    // echo $username;
-    // echo $password;
     $user = [];
 
     $sql1 = "SELECT password FROM user WHERE username=?;";
@@ -30,24 +28,21 @@ if(isset($_POST) && !empty($_POST)) {
         $param_username = $username;
 
         if(mysqli_stmt_execute($stmt1)) {
-            // echo $username;
 
             mysqli_stmt_bind_result($stmt1, $data_password);
 
             if(mysqli_stmt_fetch($stmt1) == 1) {
-                // echo $username;
 
                 if(password_verify($password, $data_password)) {
 
                     mysqli_stmt_close($stmt1);
 
                     $sql = "SELECT id, user_category_id, name, surname, phone_number, email, country, state, town, address, postcode, afm, rating_bidder, rating_seller FROM user WHERE username=\"".$param_username."\";";
-                    // echo $username;
-
+                    
                     $result = mysqli_query($con, $sql);
-                    // echo $username;
+                    
                     if(mysqli_num_rows($result) > 0) {
-                        // echo $username;
+                        
                         $row = mysqli_fetch_assoc($result);
                         if ($row['user_category_id'] == 1) {
                           echo json_encode(1);

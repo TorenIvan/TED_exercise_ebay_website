@@ -13,16 +13,12 @@ if(isset($_POST) && !empty($_POST)) {
 
   if($result=mysqli_query($con,$sql)){
     // Process all rows
-    // echo "a";
     $count=0;
     while($row = mysqli_fetch_assoc($result))
     {
       // echo "mpikes";
-      #print_r($row);
       $user[$count]['id'] = $row['id'];
-      // $user[$count]['user_category_id'] = $row['user_category_id'];
       $user[$count]['username'] = $row['username'];
-      // $user[$count]['password'] = $row['password'];
       $user[$count]['name'] = $row['name'];
       $user[$count]['surname'] = $row['surname'];
       $user[$count]['email'] = $row['email'];
@@ -47,5 +43,5 @@ if(isset($_POST) && !empty($_POST)) {
     // http_response_code("NO ONE REQUESTED THIS! WHY DO YOU ASK FOR IT?!");
     http_response_code(404);
 }
-// echo($result);
+
 ?>

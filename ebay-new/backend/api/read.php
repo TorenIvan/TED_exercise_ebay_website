@@ -5,7 +5,7 @@ require 'read_product.php';
 
 $auctions = [];
 $files = [];
-// $sql = "SELECT * FROM auction";
+
 $sql = "select a.id, u.surname, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.user_id, a.path
 from auction as a
 inner join user as u on a.user_id = u.id
@@ -43,9 +43,6 @@ if($result = mysqli_query($con,$sql))
           $ic++;
         }
       }
-      // echo $row['path'];
-      // echo "\n\n";
-      // print_r($files);
       $auctions[$cr]['images'] = $files;
     } else {
       $auctions[$cr]['images'] = [];
