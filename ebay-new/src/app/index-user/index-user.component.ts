@@ -76,7 +76,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dataAddress: string = "";
 
-  images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
+  images = ['../../assets/b.png'];
 
   constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
 
@@ -155,6 +155,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
+          this.images = data[19].split(",");
           this.bidAmount = 0;
           this.usersAuction = false;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
@@ -162,7 +163,6 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
           this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
-          this.images = data[19];
           if(data[17] == this.idUser.toString()) {
             this.usersAuction = true;
             this.idAuctionToBid = data[1];

@@ -40,9 +40,9 @@
         $auctions[$cr]['end_date'] = $row['end_date'];
         $ic = 0;
         if($row['path'] != null) {
-          foreach(array_filter(glob($row['path'].'/*.*')) as $file) {
+          foreach(array_filter(glob('../../src/assets'.$row['path'].'/*.*')) as $file) {
             if(is_file($file) == true) {
-              $files[$ic] = $file;
+              $files[$ic] = str_replace("/src", "", $file);
               $ic++;
             }
           }

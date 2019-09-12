@@ -80,14 +80,11 @@ if(isset($_POST) && !empty($_POST)) {
 
         //if he exists
         if ($auctiont) {
-          //print_r($auctiont);
           echo json_encode("Bre8ike idio product m8");
         }else {
           echo json_encode("Den bre8ike idio product, alla exoume kapoio 8ema afou mpike edo");
-          //print_r("Den bre8ike idio auction, alla exoume kapoio 8ema afou mpike edo");
         }
       }else {
-        //print_r("Ola kala");
       //  echo json_encode("Ola kala");
         //PROXORAME sta INSERTS
         $sqlp = "INSERT INTO product (name, description, country, state, town, address, postcode, latitude, longitude) VALUES (?,?,?,?,?,?,?,?,?);";
@@ -128,38 +125,28 @@ if(isset($_POST) && !empty($_POST)) {
                   $productpid[$c] = $row['id'];
                   $c++;
                 }
-                //print_r($productpid[0]);
 
                 //if he exists
                 // echo $productpid[0];
                 if ($productpid[0]) {
-                  //print_r($productpid[0]);
+
                   //edo arizei to 2o insert
                   $sql = "INSERT INTO auction (user_id, product_id, buy_price, currently, first_bid, number_of_bids, start_date, end_date, path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                  //$sqlpc = "INSERT INTO product_category (category) VALUES (?);";
-                  //$sqlpic = "INSERT INTO product_is_category (product_id, product_category_id) VALUES (?, ?);";
+
                   if($stmt = mysqli_prepare($con, $sql)) {
-                    //print_r($sql);
+
                     #check for start_date
-                    // echo $start_date;
-                    //   echo $end_date;
                     if ((new DateTime())->format('Y-m-d') > $result_date) {
                       echo json_encode("Datetime is wrong");
-                      // echo 'ee';
-                      // exit("Datetime is wrong");
                     } else {
-                      // echo $start_date;
-                      // echo $end_date;
-
-
                       
                       // require 'dirs.php';
                       $idltlt = date('D-d-m-Y_', time());
                       $e = "/";
-                      $get_path = realpath('../../src/assets').PHP_EOL;
-                      $folder = $get_path.$e.$idltlt.$pname."_".$user_id;
+                      // $get_path = '../../src/assets';
+                      // $get_path = realpath('../../src/assets').PHP_EOL;
+                      $folder = $e.$idltlt.$pname."_".$user_id;
                       $foldy = preg_replace('/\s/', '', $folder);
-
 
 
                       mysqli_stmt_bind_param($stmt, "iidddisss" , $param_user_id, $param_product_id, $param_buy_price, $param_currently, $param_first_bid, $param_number_of_bids, $param_start_date, $param_end_date, $fold);
@@ -177,13 +164,7 @@ if(isset($_POST) && !empty($_POST)) {
                       //print_r($result_date);
                       mysqli_stmt_execute($stmt);  #ta balame sto auction
                       mysqli_stmt_close($stmt);
-                      ////print_r($sql);
-                      // $sqltlt = "SELECT id from auction WHERE user_id = $param_user_id AND product_id = $param_product_id;";
-                      // $resultlt = mysqli_query($con, $sqltlt);
-                      // $rowltlt = mysql_fetch_assoc($resultlt);
-                      // $idltlt = $rowltlt['id'];
-                      // require 'dirs.php';
-                      //SELECT HERE THE ID AND REQUIRE DIRS.PHP
+
                       //require product_category ;i apla grapse to
                       $krata = count($category_ids);
                       for ($i = 0; $i < $krata; $i++) {
