@@ -9,9 +9,7 @@ if(isset($_POST) && !empty($_POST)) {
   $email = htmlspecialchars($_POST['email']);
   $pass = htmlspecialchars($_POST['pass']);
 
-  $sql = "UPDATE user
-  SET password = ?
-  WHERE email = ?;";
+  $sql = "UPDATE user SET password = ? WHERE email = ?;";
 
   if($stmt = mysqli_prepare($con, $sql)) {
     mysqli_stmt_bind_param($stmt, "ss", $param_pass, $param_email);

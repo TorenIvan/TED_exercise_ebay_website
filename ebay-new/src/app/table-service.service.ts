@@ -71,4 +71,8 @@ export class TableServiceService {
   setNewPass(email, pass) {
     return this.httpClient.post('/api/newpassword.php', {email, pass})
   }
+
+  saveProfile(id, username, name, surname, email, phone, country, state, town, address, postcode, afm) {
+    return this.httpClient.post('/api/edituser.php', {id, username, name, surname, email, phone, country, state, town, address, postcode, afm})
+  }
 }

@@ -81,7 +81,33 @@ export class PersonalInfoComponent implements OnInit {
 
   saveProfileChanges(event) {
     event.preventDefault();
-    this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 60);
+    const id = this.newForm.get('id').value;
+    const username = this.newForm.get('username').value;
+    const name = this.newForm.get('name').value;
+    const surname = this.newForm.get('surname').value;
+    const email = this.newForm.get('email').value;
+    const phone = this.newForm.get('phone').value;
+    const country = this.newForm.get('country').value;
+    const state = this.newForm.get('state').value;
+    const town = this.newForm.get('town').value;
+    const address = this.newForm.get('address').value;
+    const postcode = this.newForm.get('postcode').value;
+    const afm = this.newForm.get('afm').value;
+
+    if(username != null && name != null && surname != null && email != null && phone != null && country != null && state != null && town != null && address != null && postcode != null && afm != null) {
+
+      this.tableService.saveProfile(id, username, name, surname, email, phone, country, state, town, address, postcode, afm).subscribe(data => {
+        if(data == "1") {
+          this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 60);
+        } else {
+          event.target.querySelector('#result').style.color = "yellow"
+          event.target.querySelector('#result').innerHTML = "Something went wrong. Please try again later."
+        }
+      })    
+    } else {
+      event.target.querySelector('#result').style.color = "rgb(165, 0, 0)"
+      event.target.querySelector('#result').innerHTML = "All input fields must be filled."
+    }
   }
 
 }
