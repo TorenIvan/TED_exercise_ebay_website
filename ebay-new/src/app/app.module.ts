@@ -30,7 +30,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
 import { ChatroomComponent } from './chatroom/chatroom.component';
 
-import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,6 @@ import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
     AppRoutingModule,
     HttpClientModule,
     DataTablesModule,
-    NgMaterialMultilevelMenuModule,
     BrowserAnimationsModule,
     SlideshowModule,
     AgmCoreModule.forRoot({
