@@ -31,7 +31,7 @@ import 'datatables.net-dt';
 })
 export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
 
   @ViewChildren(ModalDirective)

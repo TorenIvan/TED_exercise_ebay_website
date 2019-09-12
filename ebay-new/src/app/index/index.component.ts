@@ -31,10 +31,10 @@ import 'datatables.net-dt';
 })
 export class IndexComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
 
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
 
-  @ViewChild(ModalDirective)
+  @ViewChild(ModalDirective, null)
   modal: ModalDirective;
 
   categoryList: Cat[];

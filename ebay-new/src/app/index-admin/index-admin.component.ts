@@ -33,10 +33,10 @@ import { readFileSync } from 'fs';
 })
 export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
 
-  @ViewChild(ModalDirective)
+  @ViewChild(ModalDirective, null)
   modal: ModalDirective;
 
   dtOptions: DataTables.Settings = {};

@@ -32,7 +32,7 @@ import 'datatables.net-buttons';
 })
 export class ApplicationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
 
   @ViewChildren(ModalDirective)

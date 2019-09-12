@@ -41,7 +41,7 @@ import { trigger, style, query, stagger, animate, transition } from '@angular/an
 })
 export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
 
   @ViewChildren(ModalDirective)
@@ -114,7 +114,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.name = `Angular! v${VERSION.full}`;
     this.tableService.getAllCategories().subscribe((data: Category[]) => {
       this.categories = data;
-      this.getSelected();
+      // this.getSelected();
     });
     this.infoForm = this.formBuilder.group({
       prForm : '',
@@ -401,46 +401,46 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     console.log("edited and saved changes");
   }
 
-  // Getting Selected Games and Count
-  getSelected() {
-    this.selected_categories = this.categories.filter(s => {
-      return s.selected;
-    });
-    this.selected_count = this.selected_categories.length;
-    //alert(this.selected_games);    
-  }
+//   // Getting Selected Games and Count
+//   getSelected() {
+//     this.selected_categories = this.categories.filter(s => {
+//       return s.selected;
+//     });
+//     this.selected_count = this.selected_categories.length;
+//     //alert(this.selected_games);    
+//   }
  
-  // Clearing All Selections
-  clearSelection() {
-    this.searchText = "";
-    this.categories = this.categories.filter(g => {
-      g.selected = false;
-      return true;
-    });
-    this.getSelected();
-  }
+//   // Clearing All Selections
+//   clearSelection() {
+//     this.searchText = "";
+//     this.categories = this.categories.filter(g => {
+//       g.selected = false;
+//       return true;
+//     });
+//     this.getSelected();
+//   }
  
-  //Delete Single Listed Game Tag
-  deleteCategory(id: number) {
-    this.searchText = "";
-    this.categories = this.categories.filter(g => {
-      if (g.id == id)
-        g.selected = false;
+//   //Delete Single Listed Game Tag
+//   deleteCategory(id: number) {
+//     this.searchText = "";
+//     this.categories = this.categories.filter(g => {
+//       if (g.id == id)
+//         g.selected = false;
  
-      return true;
-    });
-    this.getSelected();
-  }
+//       return true;
+//     });
+//     this.getSelected();
+//   }
  
-  //Clear term types by user
-  clearFilter() {
-    this.searchText = "";
-  }
+//   //Clear term types by user
+//   clearFilter() {
+//     this.searchText = "";
+//   }
+// }
 }
-
-@NgModule({
-  imports: [BrowserModule, FormsModule],
-  declarations: [PersonalAuctionsComponent, FilterPipe],
-  bootstrap: [PersonalAuctionsComponent]
-})
-export class AppModule { }
+// @NgModule({
+//   imports: [BrowserModule, FormsModule],
+//   declarations: [PersonalAuctionsComponent, FilterPipe],
+//   bootstrap: [PersonalAuctionsComponent]
+// })
+// export class AppModule { }

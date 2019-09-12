@@ -33,7 +33,7 @@ import 'datatables.net-dt';
 })
 export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(DataTableDirective)
+  @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
 
   @ViewChildren(ModalDirective)
