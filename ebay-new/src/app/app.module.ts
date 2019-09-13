@@ -30,6 +30,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RefreshDearComponent } from './refresh-dear/refresh-dear.component';
 import { ChatroomComponent } from './chatroom/chatroom.component';
 
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
+import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
 
 @NgModule({
   declarations: [
@@ -58,7 +63,11 @@ import { ChatroomComponent } from './chatroom/chatroom.component';
     HttpClientModule,
     DataTablesModule,
     BrowserAnimationsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatCheckboxModule,
     SlideshowModule,
+    NgMaterialMultilevelMenuModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC9hKyE1edZ4iq75XsQHxIcFqZfRbO1k7I'
     }),

@@ -47,9 +47,7 @@
                             "node_modules/datatables.net-buttons/js/buttons.colVis.js",
                             "node_modules/datatables.net-buttons/js/buttons.flash.js",
                             "node_modules/datatables.net-buttons/js/buttons.html5.js",
-                            "node_modules/datatables.net-buttons/js/buttons.print.js",
-                            "assets/bootstrap.bundle.min.js",
-                            "assets/popper.min.js"
+                            "node_modules/datatables.net-buttons/js/buttons.print.js"
                         ],
                         "es5BrowserSupport": true
                     },

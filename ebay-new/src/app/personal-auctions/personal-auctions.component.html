@@ -394,37 +394,59 @@
                                         <input value="" type="date" id="fse">
                                     </div>
                                 </div>
-                                <div class="col newFormColumns">
-                                    <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
+                            </div>
+                            <br>
+                            <div class="row" style="width: inherit">
 
-                                    <!-- Search Field -->
-                                    <!-- <div>
+                                <div style="width: 100%">
+                                    <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
+                                    <!-- <ul *ngIf="categories?.length != 0" class="horizontal">
+                                        <li *ngFor="let category of categories" class="dropdown">
+                                            <button class="dropdown-toggle" data-toggle="dropdown" type="button">{{category.description}}</button>
+                                            <ul class="dropdown-menu">
+                                                <li><a>HTML</a></li>
+                                                <li><a>CSS</a></li>
+                                                <li><a>JavaScript</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul> -->
+                                    <!-- <mat-form-field *ngIf="categories?.length != 0">
+                                        <mat-label>Category:</mat-label>
+                                        <mat-select>
+                                            <mat-option *ngFor="let category of categories" [value]="category.id">
+                                                {{category.description}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+
+                                </div>
+                                <!-- Search Field -->
+                                <!-- <div>
                                         <div class="filter-wrap">
                                             <input [(ngModel)]="searchText" placeholder="Filter Categories" class="filter-input" name="dwd">
                                             <span class="filter-clear" *ngIf="searchText.length>0" (click)="clearFilter()">X</span>
                                         </div>
                                     </div> -->
-                                    <!-- Clear Link -->
-                                    <!-- <div class="clear-selection" title="Click to Clear Selections" (click)="clearSelection()" *ngIf="selected_count">Clear Selection</div>
+                                <!-- Clear Link -->
+                                <!-- <div class="clear-selection" title="Click to Clear Selections" (click)="clearSelection()" *ngIf="selected_count">Clear Selection</div>
 
                                     <div class="w"> -->
-                                    <!-- Game List -->
-                                    <!-- <ul class="categories-list">
+                                <!-- Game List -->
+                                <!-- <ul class="categories-list">
                                             <li *ngFor="let c of categories | filter: searchText" class="category-item">
                                                 <input (change)="getSelected()" type="checkbox" value="{{c.id}}" [(ngModel)]="c.selected" name="categories" />
                                                 <span class="category-text">{{c.description}}</span>
                                             </li>
                                         </ul>
                                     </div> -->
-                                    <!-- Selected Games-->
-                                    <!-- <div class="selected-categories-wrap">
+                                <!-- Selected Games-->
+                                <!-- <div class="selected-categories-wrap">
                                         <div class="selected-category" *ngFor="let s of selected_categories">
                                             <span>{{s.description}} <span class="delete-category" (click)="deleteCategory(s.id)" title="Click to delete">X</span></span>
                                         </div>
                                     </div> -->
-                                </div>
-                                <br>
                             </div>
+                            <br>
                             <span style="color: rgb(199, 0, 0)">All fields with * are required</span>
                             <hr>
                             <div class="justify-content-center row" [hidden]="resultFlag">
