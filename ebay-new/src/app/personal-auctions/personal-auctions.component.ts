@@ -109,13 +109,19 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   uploadIm: string[] = [];
 
   images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
+
+  config = {
+    paddingAtStart: true,
+    classname: 'categories-arcodion',
+    listBackgroundColor: 'white',
+    fontColor: 'rgb(8, 54, 71)',
+    backgroundColor: 'white',
+    selectedListFontColor: 'rgb(8, 54, 71)',
+    highlightOnSelect: true
+  };
   
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.name = `Angular! v${VERSION.full}`;
-    this.tableService.getAllCategories().subscribe((data: Category[]) => {
-      this.categories = data;
-      // this.getSelected();
-    });
     this.infoForm = this.formBuilder.group({
       prForm : '',
       seForm: '',
@@ -142,6 +148,11 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnInit() {
 
+    this.tableService.getAllCategories().subscribe((data: Category[]) => {
+      this.categories = data;
+      // this.getSelected();
+    });
+    
     // id xrhsth
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
@@ -401,46 +412,4 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     console.log("edited and saved changes");
   }
 
-//   // Getting Selected Games and Count
-//   getSelected() {
-//     this.selected_categories = this.categories.filter(s => {
-//       return s.selected;
-//     });
-//     this.selected_count = this.selected_categories.length;
-//     //alert(this.selected_games);    
-//   }
- 
-//   // Clearing All Selections
-//   clearSelection() {
-//     this.searchText = "";
-//     this.categories = this.categories.filter(g => {
-//       g.selected = false;
-//       return true;
-//     });
-//     this.getSelected();
-//   }
- 
-//   //Delete Single Listed Game Tag
-//   deleteCategory(id: number) {
-//     this.searchText = "";
-//     this.categories = this.categories.filter(g => {
-//       if (g.id == id)
-//         g.selected = false;
- 
-//       return true;
-//     });
-//     this.getSelected();
-//   }
- 
-//   //Clear term types by user
-//   clearFilter() {
-//     this.searchText = "";
-//   }
-// }
 }
-// @NgModule({
-//   imports: [BrowserModule, FormsModule],
-//   declarations: [PersonalAuctionsComponent, FilterPipe],
-//   bootstrap: [PersonalAuctionsComponent]
-// })
-// export class AppModule { }
