@@ -49,7 +49,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   modalBody: string;
 
-  categories: Category[];
+  categories: any[];
 
   selectedCategory: Category;
 
@@ -93,10 +93,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     edForm: new FormControl()
   });
 
-  name: string;
-  searchText: string = "";
-  selected_count: number = 0;
-  selected_categories: any;
+  selected_categories: any[] = [];
 
   lat: number;
   lon: number;
@@ -116,12 +113,12 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     listBackgroundColor: 'white',
     fontColor: 'rgb(8, 54, 71)',
     backgroundColor: 'white',
-    selectedListFontColor: 'rgb(8, 54, 71)',
-    highlightOnSelect: true
+    selectedListFontColor: 'rgb(0, 135, 209)',
+    highlightOnSelect: true,
+    collapseOnSelect: true,
   };
   
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
-    this.name = `Angular! v${VERSION.full}`;
     this.infoForm = this.formBuilder.group({
       prForm : '',
       seForm: '',
@@ -148,7 +145,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnInit() {
 
-    this.tableService.getAllCategories().subscribe((data: Category[]) => {
+    this.tableService.getAllCategories().subscribe((data: any[]) => {
       this.categories = data;
       // this.getSelected();
     });
@@ -318,7 +315,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       imageToUpload.append("imageToUpload[]", form.querySelector('#fimg').files[i], form.querySelector('#fimg').files[i]['name']);
     }
 
-    console.log(form.querySelector('#fimg').files);
+    // console.log(form.querySelector('#fimg').files);
 
     var location = address + " " + postcode + " " + town + " " + state + " " + country;
     location = location.toString();
@@ -326,7 +323,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     var latitude = 0;
     var longitude = 0;
 
-    if(product.trim() && description.trim() && buy_price.trim() && category !== 'undefined' && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
+    // console.log(this.selected_categories);
+
+    if(product.trim() && description.trim() && buy_price.trim() && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
       this.geocoder.geocode({address: location}, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if(status === google.maps.GeocoderStatus.OK) {
@@ -410,6 +409,21 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   saveAuctionChanges(event) {
     event.preventDefault();
     console.log("edited and saved changes");
+  }
+
+  selectedItem(event) {
+    const level = event.context.split(' ');
+    this.selected_categories[level[1]] = [];
+    this.selected_categories[level[1]]['id'] = level[0];
+    this.selected_categories[level[1]]['description'] = event.label;
+  }
+
+  selectedLabel(event) {
+    const level = event.context.split(' ');
+    this.selected_categories[level[1]] = [];
+    this.selected_categories[level[1]]['id'] = level[0];
+    this.selected_categories[level[1]]['description'] = event.label;
+    this.selected_categories.splice(level[1]+1);
   }
 
 }
