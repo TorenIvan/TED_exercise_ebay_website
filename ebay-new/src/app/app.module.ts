@@ -35,6 +35,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
     MatCheckboxModule,
     SlideshowModule,
     NgMaterialMultilevelMenuModule,
+    NgbModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC9hKyE1edZ4iq75XsQHxIcFqZfRbO1k7I'
     }),

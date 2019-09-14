@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^7.2.15",
     "@angular/router": "^7.2.15",
     "@fortawesome/fontawesome-free": "^5.8.2",
+    "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "@pusher/chatkit-client": "^1.12.1",
     "@types/chart.js": "^2.7.52",
     "@types/googlemaps": "^3.37.4",

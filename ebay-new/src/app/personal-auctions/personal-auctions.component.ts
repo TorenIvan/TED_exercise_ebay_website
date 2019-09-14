@@ -114,7 +114,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     collapseOnSelect: true,
   };
 
-  isCollapsed: boolean = false;
+  isCollapsed: boolean = true;
   
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.infoForm = this.formBuilder.group({
@@ -208,7 +208,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
-          this.selected_categories = null;
+          this.selected_categories = [];
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.images = data[18];
           this.infoForm.patchValue({
@@ -275,7 +275,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   openFormForNewAuction() {
-    this.selected_categories = null;
+    this.selected_categories = [];
     this.modals[2].show();
     this.modals[0].hide();
     this.modals[1].hide();
@@ -423,6 +423,36 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.selected_categories[level[1]]['id'] = level[0];
     this.selected_categories[level[1]]['description'] = event.label;
     this.selected_categories.splice(level[1]+1);
+  }
+
+  newItem(event) {
+    const level = event.context.split(' ');
+    this.selected_categories[level[1]] = new Cat();
+    this.selected_categories[level[1]]['id'] = level[0];
+    this.selected_categories[level[1]]['description'] = event.label;
+    var desc = this.selected_categories[0]['description'];
+    for(let i = 1; i < this.selected_categories.length; i++) {
+      desc += ', ' + this.selected_categories[i]['description'];
+    }
+    this.infoForm.patchValue({cdForm: desc});
+  }
+
+  newLabel(event) {
+    const level = event.context.split(' ');
+    this.selected_categories[level[1]] = new Cat();
+    this.selected_categories[level[1]]['id'] = level[0];
+    this.selected_categories[level[1]]['description'] = event.label;
+    this.selected_categories.splice(level[1]+1);
+    var desc = this.selected_categories[0]['description'];
+    for(let i = 1; i < this.selected_categories.length; i++) {
+      desc += ', ' + this.selected_categories[i]['description'];
+    }
+    this.infoForm.patchValue({cdForm: desc});
+  }
+
+  closeInfoModal() {
+    this.modals[0].hide();
+    this.isCollapsed = true;
   }
 
 }

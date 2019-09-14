@@ -143,7 +143,7 @@
 
 
     <!--Modal info-->
-    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
             <!--Content-->
@@ -153,7 +153,7 @@
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">
                         Details
                     </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeInfoModal()">
                         <span aria-hidden="true" class="white-text">&times;</span>
                         </button>
                 </div>
@@ -183,7 +183,10 @@
                                         <div class="row" style="width: 100%">
                                             <input class="input-group" formControlName="cdForm" type="text" style="width: 60%">
                                             <button type="button" class="btn btn-info" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="allCat" style="width: 20%; margin: auto; font-weight: bold">Edit</button>
-                                            <div id="allCat" [ngbCollapse]="isCollapsed" style="width: 100%; background-color: blue; height: 30px;"></div>
+                                            <div id="allCat" [ngbCollapse]="isCollapsed" style="width: 80%; background-color: gainsboro; margin: auto; padding: 5px">
+                                                <ng-material-multilevel-menu [configuration]='config' [items]='categories' (selectedItem)="newItem($event)" (selectedLabel)="newLabel($event)">
+                                                </ng-material-multilevel-menu>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +236,7 @@
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="closeInfoModal()" mdbWavesEffect>
                         Close
                         </button>
                 </div>
