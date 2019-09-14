@@ -6,9 +6,6 @@
 
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!--Fontawesome CDN-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,6 +14,9 @@
     <!--DataTables CDN && js file-->
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 </head>
@@ -174,9 +174,17 @@
                                         <span>Seller: </span>
                                         <input class="input-group" type="text" formControlName="seForm">
                                     </div>
-                                    <div class="input-group form-group col">
-                                        <span>Category: </span>
-                                        <input class="input-group" formControlName="cdForm" type="text">
+                                </div>
+                                <div class="row">
+                                    <div class="input-group form-group col" style="width: inherit; margin-left: 15px; height: fit-content">
+                                        <div class="row">
+                                            <span>Category: </span>
+                                        </div>
+                                        <div class="row" style="width: 100%">
+                                            <input class="input-group" formControlName="cdForm" type="text" style="width: 60%">
+                                            <button type="button" class="btn btn-info" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="allCat" style="width: 20%; margin: auto; font-weight: bold">Edit</button>
+                                            <div id="allCat" [ngbCollapse]="isCollapsed" style="width: 100%; background-color: blue; height: 30px;"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">

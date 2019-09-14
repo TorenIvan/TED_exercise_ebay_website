@@ -1,15 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, VERSION, NgModule } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
-import { Category } from '../category';
+import { Category, Cat } from '../category';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { Pipe, PipeTransform } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { FilterPipe } from '../filter.pipe';
 import {} from 'googlemaps';
 
 import * as $ from 'jquery';
@@ -49,7 +45,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   modalBody: string;
 
-  categories: any[];
+  categories: any[] = [];
 
   selectedCategory: Category;
 
@@ -117,6 +113,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     highlightOnSelect: true,
     collapseOnSelect: true,
   };
+
+  isCollapsed: boolean = false;
   
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.infoForm = this.formBuilder.group({
@@ -133,7 +131,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   apiCall(): Promise<Product[]> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.tableService.getMyAuctions(this.idUser).toPromise().then(
         (res: Product[]) => {
           this.products = res;
@@ -158,7 +156,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
     this.saveButton = false;
 
-    this.apiCall().then( (data: Product[]) => {
+    this.apiCall().then( () => {
       this.loading = false;
       this.products.forEach((product, idx) => {
         setTimeout(() => {
@@ -208,9 +206,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { "searchable": false, "visible": false, "targets": 18 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
-        const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
+          this.selected_categories = null;
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.images = data[18];
           this.infoForm.patchValue({
@@ -218,7 +216,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
             seForm: data[1],
             deForm: data[9],
             adForm: data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11],
-            cdForm: "------------------------------------------",
+            cdForm: data[17],
             bpForm: data[3],
             cuForm: data[4],
             sdForm: formatDate(data[7], 'yyyy-MM-dd', 'en'),
@@ -277,6 +275,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   openFormForNewAuction() {
+    this.selected_categories = null;
     this.modals[2].show();
     this.modals[0].hide();
     this.modals[1].hide();
@@ -323,7 +322,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     var latitude = 0;
     var longitude = 0;
 
-    // console.log(this.selected_categories);
+    // console.log(category);
 
     if(product.trim() && description.trim() && buy_price.trim() && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
       this.geocoder.geocode({address: location}, (
@@ -401,7 +400,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onChanges() {
-    this.infoForm.valueChanges.subscribe(val => {
+    this.infoForm.valueChanges.subscribe(() => {
       this.saveButton = true;
     });
   }
@@ -413,14 +412,14 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   selectedItem(event) {
     const level = event.context.split(' ');
-    this.selected_categories[level[1]] = [];
+    this.selected_categories[level[1]] = new Cat();
     this.selected_categories[level[1]]['id'] = level[0];
     this.selected_categories[level[1]]['description'] = event.label;
   }
 
   selectedLabel(event) {
     const level = event.context.split(' ');
-    this.selected_categories[level[1]] = [];
+    this.selected_categories[level[1]] = new Cat();
     this.selected_categories[level[1]]['id'] = level[0];
     this.selected_categories[level[1]]['description'] = event.label;
     this.selected_categories.splice(level[1]+1);
