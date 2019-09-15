@@ -2,6 +2,10 @@
 
 require 'connect.php';
 
+function _clean(&$value) {
+  $value = htmlspecialchars($value);
+}
+
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 if(isset($_POST) && !empty($_POST)) {
