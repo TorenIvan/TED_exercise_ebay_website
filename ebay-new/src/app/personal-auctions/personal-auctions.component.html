@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="input-group form-group col">
                                         <span>Seller: </span>
-                                        <input class="input-group" type="text" formControlName="seForm">
+                                        <input class="input-group disabled_input" type="text" formControlName="seForm" disabled>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -203,7 +203,7 @@
                                     </div>
                                     <div class="input-group form-group col">
                                         <span>Currently: </span>
-                                        <input class="input-group" formControlName="cuForm" type="number">
+                                        <input class="input-group disabled_input" formControlName="cuForm" disabled>
                                     </div>
                                     <div class="input-group form-group col">
                                         <span>Start Date: </span>
@@ -221,6 +221,9 @@
                                     </div>
                                 </div>
                                 <br>
+                                <div class="justify-content-center row" [hidden]="resFlag">
+                                    <h5 style="color: rgb(196, 127, 0)">{{res}}</h5>
+                                </div>
                                 <button type="submit" class="btn btn-info" [hidden]="!saveButton">Save Changes</button>
                             </form>
                         </div>

@@ -19,6 +19,7 @@ if(isset($_POST) && !empty($_POST)) {
   $start_date = htmlspecialchars($_POST['start_date']);
   $result_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
   $end_date = htmlspecialchars($_POST['end_date']);
+  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
   $pname = htmlspecialchars($_POST['product']);
   $pdescription = htmlspecialchars($_POST['description']);
   $ptown = htmlspecialchars($_POST['town']);

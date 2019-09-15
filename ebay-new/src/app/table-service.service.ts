@@ -75,4 +75,8 @@ export class TableServiceService {
   saveProfile(id, username, name, surname, email, phone, country, state, town, address, postcode, afm) {
     return this.httpClient.post('/api/edituser.php', {id, username, name, surname, email, phone, country, state, town, address, postcode, afm})
   }
+
+  saveAuctionChanges(id, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude) {
+    return this.httpClient.post('/api/editauction.php', {id, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude})
+  }
 }

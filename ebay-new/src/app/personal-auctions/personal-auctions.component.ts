@@ -63,9 +63,13 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   resultFlag: boolean;
 
+  resFlag: boolean;
+
   idUser: number;
 
   idAuction: string;
+
+  auctionAddress: string;
 
   tableInstance: any;
 
@@ -73,18 +77,20 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   
   hhh: string;
 
+  res: string;
+
   saveButton: boolean;
 
   loading: boolean;
 
   infoForm = new FormGroup({
     prForm : new FormControl(),
-    seForm: new FormControl(),
+    seForm: new FormControl({disabled: true}),
     deForm: new FormControl(),
     adForm: new FormControl(),
     cdForm: new FormControl(),
     bpForm: new FormControl(),
-    cuForm: new FormControl(),
+    cuForm: new FormControl({disabled: true}),
     sdForm: new FormControl(),
     edForm: new FormControl()
   });
@@ -225,8 +231,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           this.lat = parseFloat(data[15]);
           this.lon = parseFloat(data[16]);
           this.saveButton = false;
+          this.auctionAddress = data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11];
           this.idAuction = data[0];
           this.ableToDeleteAuction = false;
+          this.resFlag = true;
           this.modal.first.show();
         });
         return row;
@@ -407,7 +415,76 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   saveAuctionChanges(event) {
     event.preventDefault();
-    console.log("edited and saved changes");
+    var product = this.infoForm.get('prForm').value;
+    product =  product.trim();
+    var category;
+    if(this.selected_categories.length == 0) {
+      category = [];
+    } else {
+      category = this.selected_categories;
+    }
+    var description = this.infoForm.get('deForm').value;
+    description = description.trim();
+    var buy_price = this.infoForm.get('bpForm').value;
+    var start_date = this.infoForm.get('sdForm').value;
+    var end_date = this.infoForm.get('edForm').value;
+    var country;
+    var state;
+    var town;
+    var address;
+    var postcode;
+    var latitude = 0;
+    var longitude = 0;
+    if(this.auctionAddress === this.infoForm.get('adForm').value.trim()) {
+      country = '';
+      state = '';
+      town = '';
+      address = '';
+      postcode = '';
+    } else {
+      const h = this.infoForm.get('adForm').value.split(',');
+      country = h[0].trim();
+      state = h[4].trim();
+      town = h[1].trim();
+      address = h[2].trim();
+      postcode = h[3].trim();
+      var location = address + " " + postcode + " " + town + " " + state + " " + country;
+      location = location.toString();
+
+      this.geocoder.geocode({address: location}, (
+        (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
+          if(status === google.maps.GeocoderStatus.OK) {
+            console.log(results);
+            latitude = results[0].geometry.location.lat();
+            longitude = results[0].geometry.location.lng();
+            console.log(latitude);
+            console.log(longitude);
+          } else {
+            console.log('Geocoding service: geocoder failed due to: ' + status);
+            latitude = 0;
+            longitude = 0;
+          }
+        })
+      );
+
+    }
+
+    if(product != '' && this.infoForm.get('cdForm').value.trim() != '' && description != '' && buy_price > 0 && start_date != null && end_date != null && this.infoForm.get('adForm').value.trim() != '') {
+      this.tableService.saveAuctionChanges(this.idAuction, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude).subscribe(data => {
+        console.log(data);
+        if(data == '1') {
+          console.log("edited and saved changes");
+          this.modals[0].hide();
+          this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
+        } else {
+          this.res = "There was a problem saving the changes, please try again later.";
+          this.resFlag = false;
+        }
+      })
+    } else {
+      this.res = "All fields must be filled.";
+      this.resFlag = false;
+    }
   }
 
   selectedItem(event) {
@@ -453,6 +530,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   closeInfoModal() {
     this.modals[0].hide();
     this.isCollapsed = true;
+    this.resFlag = true;
+    this.res = '';
   }
 
 }

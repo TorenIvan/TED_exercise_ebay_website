@@ -8,6 +8,7 @@
   $nextAuction = false;
   $pc = 0;
   $files = [];
+  $idcount = 0;
 
   $_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -52,14 +53,17 @@
           $auctions[$cr]['images'] = [];
         }
         $c = null;
-        foreach($products[$cr]['categories'] as $i) {
-          if($c == null) {
-            $c = $c . $i->description;
-          } else {
-            $c = $c . ", " . $i->description;
+        while($row['product_id']>$ids[$idcount]) $idcount++;
+        if($row['product_id'] == $ids[$idcount]) {
+          foreach($products[$idcount]['categories'] as $i) {
+            if($c == null) {
+              $c = $c . $i->description;
+            } else {
+              $c = $c . ", " . $i->description;
+            }
           }
+          $auctions[$cr]['categories'] = $c;
         }
-        $auctions[$cr]['categories'] = $c;
         $cr++;
       }
 
