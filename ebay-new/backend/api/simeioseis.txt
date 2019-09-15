@@ -13,7 +13,5 @@ Ti allo 8eloume? Let's find out:
   B) Apostolh email meta thn eggrush apo ton xrhsth (isws kai meta to sign up)
   C) Apostolh email gia na kanei retrieve to password!
   D) Na ftiaxoume to kommati me ta bids kai to bidding
-  E) Na ftiaxoume to edit auction
-  F) Na ftiaxw ta categories sto front-end (T_T)
-  G) Na valoume ta xml sthn vash
+  Ε) Na valoume ta xml sthn vash
          (na doume tis hmeromhnies, giati sto xml einai tupou Datetime, ki emeis sth vash ta allaxame se Date)
