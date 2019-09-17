@@ -1,19 +1,9 @@
-(for) 8adoumen{
-  connections of php files:
-    all require connect.php
-    to signup.php 8a stelnei ton xristi sto  6. userwait.php. Ara to signup requires userwait.php. Giati omos na ton stelnei ekei? pame na doume apo kato...
-    prepei na ginei to userwait.php sto opoio o user 8a perimenei mexri na ginei eggrisi. Otan ginetai eggrisi, 8a stelnei kapoio flag sti symela oti egine, kai 8a ton pigaini sto signin.php. Alla pos ginetai auti i egkrisi? Pame apo kato...
-    to userwait.php requires  7. acceptuser.php. To teleutaio 8a exei mia lista me users pou perimenoun na eggrafoun. 8a epistrefei ti lista sto frontend kai 8a lambanei minimata apodoxis apo to front end gia kapoio user(basei username), 8a ton bgazei apo ti lista kai 8a epistrefei sto waituser.php opou 8a kanei json_encode (flag diladi kati) ston front end oti bgike apo ti lista, pigaine ton sto signin
-    Ara,      signup -> waituser -> acceptuser -> waituser -> signin
-}
-
 //8a doume pote
 Ti allo 8eloume? Let's find out:
   A) LSH
   B) Apostolh email meta thn eggrush apo ton xrhsth (isws kai meta to sign up)
   C) Apostolh email gia na kanei retrieve to password!
   D) Na ftiaxoume to kommati me ta bids kai to bidding
-  E) Na ftiaxoume to edit auction
-  F) Na ftiaxw ta categories sto front-end (T_T)
-  G) Na valoume ta xml sthn vash
+  E) Na valoume ta xml sthn vash
          (na doume tis hmeromhnies, giati sto xml einai tupou Datetime, ki emeis sth vash ta allaxame se Date)
+  F) HTTPS 

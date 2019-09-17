@@ -106,7 +106,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         }, 500 * (idx + 1));
       });
     });
-    
+
     this.bidAmount = 0;
 
     this.dtOptions = {
@@ -165,8 +165,13 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
           this.lon = parseFloat(data[16]);
           if(data[17] == this.idUser.toString()) {
             this.usersAuction = true;
-            this.idAuctionToBid = data[1];
-            this.buyPriceOfAuction = data[3];
+          } else {
+            this.idAuctionToBid = data[0];
+            if(data[3].trim() == '') {
+              this.buyPriceOfAuction = 0;
+            } else {
+              this.buyPriceOfAuction = data[3];
+            }
           }
           this.modal.first.show();
         });
@@ -182,7 +187,7 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
   }
-  
+
 
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
@@ -235,7 +240,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addBid() {
     this.bidded = true;
-    this.tableService.addBid(this.idUser, this.idAuctionToBid, this.bidAmount, this.buyPriceOfAuction).subscribe(data => {
+    const aid = this.idAuctionToBid;
+    const bp = this.buyPriceOfAuction;
+    this.tableService.addBid(this.idUser, aid, this.bidAmount, bp).subscribe(data => {
       console.log(data);
       this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 20);
     });

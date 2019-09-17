@@ -4,7 +4,7 @@ require 'connect.php';
 
 $categories = [];
 
-$sql = "select * from product_category;";
+$sql = "select * from product_is_category;";
 
 if($result = mysqli_query($con,$sql))
 {
