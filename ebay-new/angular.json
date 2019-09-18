@@ -38,7 +38,7 @@
                             "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css"
                         ],
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.js",
+                            "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/datatables.net/js/jquery.dataTables.js",
                             "node_modules/chart.js/dist/Chart.js",
                             "node_modules/hammerjs/hammer.min.js",
@@ -47,7 +47,9 @@
                             "node_modules/datatables.net-buttons/js/buttons.colVis.js",
                             "node_modules/datatables.net-buttons/js/buttons.flash.js",
                             "node_modules/datatables.net-buttons/js/buttons.html5.js",
-                            "node_modules/datatables.net-buttons/js/buttons.print.js"
+                            "node_modules/datatables.net-buttons/js/buttons.print.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/assets/popper.min.js"
                         ],
                         "es5BrowserSupport": true
                     },

@@ -8,6 +8,7 @@
   $nextAuction = false;
   $pc = 0;
   $files = [];
+  $idcount = 0;
 
   $_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -40,6 +41,7 @@
         $auctions[$cr]['end_date'] = $row['end_date'];
         $ic = 0;
         if($row['path'] != null) {
+          $files = [];
           foreach(array_filter(glob('../../src/assets'.$row['path'].'/*.*')) as $file) {
             if(is_file($file) == true) {
               $files[$ic] = str_replace("/src", "", $file);
@@ -50,17 +52,19 @@
         } else {
           $auctions[$cr]['images'] = [];
         }
-        while($nextAuction == false && $pc<count($products)) {
-          if($row['product_id'] == $products[$pc]['id']) {
-            $nextAuction = true;
-            $auctions[$cr]['categories'] = $products[$pc]['categories'];
-          } else {
-            $pc++;
+        $c = null;
+        while($row['product_id']>$ids[$idcount]) $idcount++;
+        if($row['product_id'] == $ids[$idcount]) {
+          foreach($products[$idcount]['categories'] as $i) {
+            if($c == null) {
+              $c = $c . $i->description;
+            } else {
+              $c = $c . ", " . $i->description;
+            }
           }
+          $auctions[$cr]['categories'] = $c;
         }
-        $nextAuction = false;
         $cr++;
-        $pc++;
       }
 
       echo json_encode($auctions);

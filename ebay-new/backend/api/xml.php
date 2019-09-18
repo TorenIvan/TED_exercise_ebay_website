@@ -30,10 +30,13 @@ foreach ($xml->children() as $row) {
     echo "\n";
     echo "statetown = ";
     echo $product_statetown = (string )$Location;
+    $product_statetown = mysqli_real_escape_string($product_statetown);
     echo "\n";
   }
   foreach ($row->Name as $product_name) {
     echo $product_name = (string) $product_name;
+    $product_name = mysqli_real_escape_string($con,$product_name);
+    $product_name = addslashes($product_name);
     echo "\n";
   }
   foreach ($row->Currently as $currently) {
@@ -50,7 +53,7 @@ foreach ($xml->children() as $row) {
   }
   foreach ($row->First_Bid as $first_bid) {
     echo "first_bid = ";
-    echo $first_bid = (double)str_replace('$', '', $currently);
+    echo $first_bid = (double)str_replace('$', '', $first_bid);
     echo "\n";
   }
   foreach ($row->Number_of_Bids as $number_of_bids) {
@@ -58,7 +61,8 @@ foreach ($xml->children() as $row) {
     echo "\n";
   }
   foreach ($row->Country as $country) {
-    echo $country = (string) $country;
+    echo $country = (string) mysqli_real_escape_string($country);
+
     echo "\n";
   }
   foreach ($row->Started as $started) {
@@ -70,12 +74,16 @@ foreach ($xml->children() as $row) {
   }
   foreach ($row->Seller as $Seller) {
     $seller_rating = (string) $Seller['Rating'];
+    $seller_rating = (string) mysqli_real_escape_string($con, $seller_rating);
     echo "\n";
     $seller_name = (string) $Seller['UserID'];
+    $seller_name = mysqli_real_escape_string($con,$seller_name);
+    $seller_name = str_replace('"','', $seller_name);
     echo "\n";
   }
   foreach ($row->Description as $description) {
     $description = mysqli_real_escape_string($con,$description);
+    $description = addslashes($description);
     echo "\n";
   }
   //Add product
@@ -88,11 +96,13 @@ foreach ($xml->children() as $row) {
     echo "eeeeeeee";
   }else {
     echo "aaaaaaaaaaa";
-    echo("Error description : " . mysqli_error($con));
+    echo("Error : " . mysqli_error($con));
+    exit();
   }
   //Add category product_is_category and subcategories
   $i=0; //for categories and subcategories
   foreach ($row->Category as $category) {
+    $category = mysqli_real_escape_string($con, $category);
     //if $i==0, check if category exists on product category, if not put it there and take the id. Put to product_is_category the item_id(see above), the id,  and 0
     if ($i==0) {
       echo "mpike";
@@ -137,7 +147,7 @@ foreach ($xml->children() as $row) {
       $i++;
     } else {  //an eisai se kapoia upokatigoria
       echo "kai edo";
-      //for every other i, create a table if not exists, category-i, and/or then put it there, with its fathers id, and keep his(child) id for the next one. Put to product_is_category the item_id(see above), the id,  and father's id
+      //for every other i, create a table if not exists, category-i, and/or then put it there if id father not the same, with its fathers id, and keep his(child) id for the next one. Put to product_is_category the item_id(see above), the id,  and father's id
     //  echo $category;
 
       $string_i = (string) ($i);
@@ -145,28 +155,43 @@ foreach ($xml->children() as $row) {
       $table_name =  $base_string.$string_i;
       echo "\n";
       //create table
-      $sqlcreate = "CREATE TABLE IF NOT EXISTS $table_name (id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, id_Father INT(10) UNSIGNED NOT NULL, Product_id INT(10) UNSIGNED NOT NULL, description varchar(200) NOT NULL)";
+      $sqlcreate = "CREATE TABLE IF NOT EXISTS $table_name (id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, id_Father INT(10) UNSIGNED NOT NULL, description varchar(200) NOT NULL)";
       if($result = mysqli_query($con, $sqlcreate)){
         echo 'sqlcreate good';
+        echo ' i = ' . $i;
       }else {
         echo ('sqlcreate not good : '. mysqli_error($con));
       }
-      //put category
-      $sqlputit = "INSERT INTO $table_name (id_Father, Product_id, description) VALUES ($product_category_id, $item, '$category');";
-      if($result = mysqli_query($con, $sqlputit)){
-        echo 'sqlputit good';
-      }else {
-        echo ('sqlputit not good : ' . mysqli_error($con));
+      //put category or not
+      //an yparxei category me idio id patera min to baleis. An einai me allo bale ton
+      $sqlfind = "SELECT * from $table_name where id_Father = $product_category_id AND description = '".$category."' LIMIT 1;";
+      if($result = mysqli_query($con,$sqlfind)){
+        echo " sql find good ";
+      }else{
+        echo " sql find not good " . mysqli_error($con);
         exit();
+      }
+      $find = mysqli_fetch_assoc($result);
+      if ($find) {  //does nothing here
+        // id_Father already exists in this table
+      } else {
+        // we must insert this value
+        $sqlputit = "INSERT INTO $table_name (id_Father, description) VALUES ($product_category_id, '$category');";
+        if($result = mysqli_query($con, $sqlputit)){
+          echo 'sqlputit good';
+        }else {
+          echo ('sqlputit not good : ' . mysqli_error($con));
+          exit();
+        }
       }
       //keep the id
       echo $category;
       echo $product_category_id;
-      $sqlcat = "SELECT * from $table_name WHERE description = '".$category."' AND Product_id = '".$item."' LIMIT 1;";
+      $sqlcat = "SELECT * from $table_name WHERE description = '".$category."' AND id_Father = '".$product_category_id."' LIMIT 1;";
       if($result = mysqli_query($con, $sqlcat)){
         echo 'sqlcat select2 good';
         while($pr = mysqli_fetch_assoc($result)){
-          $product_category_id = $pr['id'];
+          $product_category_id = $pr['id']; //new product_category_id, cause we have a new father xD!!!!
         }
         echo ('pr = ' . $pr);
 
@@ -177,7 +202,8 @@ foreach ($xml->children() as $row) {
       }
       echo $item;
       echo $i;
-      //put it in product is category
+
+      //put it in product_is_category
       $sqlinsert = "INSERT INTO product_is_category (product_id, product_category_id, category_list) VALUES ($item, $product_category_id, $i);";
       if($result = mysqli_query($con, $sqlinsert)){
         echo 'sqlinsert2 good';
@@ -207,7 +233,8 @@ foreach ($xml->children() as $row) {
     $email = "i@mail.com";
     $phone_number = 6999999999;
     $afm = 192837465;
-    $sqluser = "INSERT INTO user (username, password , name , surname, email, phone_number, country, state, town, address, postcode, afm, rating_seller) VALUES ('$seller_name', '$password', '$name', '$surname', '$email', $phone_number, '$country', '$Location', '$Location', '$Location', '$Location', $afm, $seller_rating);";
+    $sqluser = "INSERT INTO user (username, password , name , surname, email, phone_number, country, state, town, address, postcode, afm, rating_seller)
+    VALUES ('$seller_name', '$password', '$name', '$surname', '$email', $phone_number, '$country', '$town', '$town', '$town', '$town', $afm, $seller_rating);";
   }
   if($result = mysqli_query($con, $sqluser)){
     echo 'sqluser good';
@@ -233,9 +260,10 @@ foreach ($xml->children() as $row) {
     $sqlauction = "INSERT INTO auction (user_id, product_id, buy_price, currently, first_bid, number_of_bids, start_date, end_date) VALUES ($user_id, $item, $buy_price, $currently, $first_bid, $number_of_bids, '$started', '$ends');";
   }
   if($result = mysqli_query($con, $sqlauction)){
-    echo 'sqlauction good';
+    echo ' sqlauction good';
   }else {
-    echo ('sql auction not good : ' . mysqli_error($con));
+    echo (' sql auction not good : ' . mysqli_error($con));
+    exit();
   }
   $sqltake = "SELECT * FROM auction where product_id = '".$item."' LIMIT 1;";
   if($result = mysqli_query($con, $sqltake)){
@@ -263,17 +291,24 @@ foreach ($xml->children() as $row) {
   $pr = mysqli_fetch_assoc($result);
   $bids_id = $pr['id'];
   //Add bid
+  $n_bids = 0;
   foreach ($row->Bids->Bid as $bid) {
+    $n_bid++;
     echo $bid_time = $bid->Time;
-    echo $bid_amount = $bid->Amount;
+    foreach ($bid->Amount as $bid_amounts) {
+      echo $bid_amount = (double)str_replace('$','' , $bid_amounts);
+    }
     foreach ($bid->Bidder as $bidder) {
       echo $bidder_rating = $bidder['Rating'];
       echo "\n";
       echo $bidder_name = $bidder['UserID'];
+      $bidder_name = mysqli_real_escape_string($con,$bidder_name);
       echo "\n";
       echo $bidder_location = $bidder->Location;
+      $bidder_location = mysqli_real_escape_string($con,$bidder_location);
       echo "\n";
       echo $bidder_country = $bidder->Country;
+      $bidder_country = mysqli_real_escape_string($con,$bidder_country);
       echo "\n";
       //Update or add user of bid
       $sqlexist = "SELECT * FROM user WHERE username = '".$bidder_name."';";
@@ -286,13 +321,16 @@ foreach ($xml->children() as $row) {
       $ex = mysqli_fetch_assoc($result);
       if ($ex) {
         $sqluser = "UPDATE user SET rating_bidder = '".$bidder_rating."' WHERE username = '".$bidder_name."';";
+        echo ' Updating... ';
       } else {
         $password = "215be75c49eba06a0b711c687024449c";
         $name = "o";
         $surname = "i";
         $email = "i@mail.com";
         $phone_number = 6999999999;
-        $sqluser = "INSERT INTO user (user_category_id, username, password , name , surname, email, phone_number, country, state, afm, rating_bidder) VALUES (2, '$bidder_name', '$name', '$surname', '$email', $phone_number, '$bidder_country', '$bidder_location', 192837465, $bidder_rating);";
+        $sqluser = "INSERT INTO user (username, password , name , surname, email, phone_number, country, state, town, address, postcode, afm, rating_bidder)
+        VALUES ('$bidder_name', '$password', '$name', '$surname', '$email', $phone_number, '$bidder_country', '$bidder_location', '$town', '$town', '$town', 192837465, $bidder_rating);";
+        echo ' Inserting... ';
       }
       if($result = mysqli_query($con, $sqluser)){
         echo 'sqluser good';
@@ -310,6 +348,7 @@ foreach ($xml->children() as $row) {
       }
       $pr = mysqli_fetch_assoc($result);
       $new_user_id = $pr['id'];
+      //$bid_amount = (double) $bid_amount;
       //continue
 
       //Add bid
@@ -317,14 +356,18 @@ foreach ($xml->children() as $row) {
       if($result = mysqli_query($con, $sqlbid)){
         echo 'sqlbid good';
       }else {
-        echo ('sql bid not good : ' . mysqli_error($con));
+        echo (' sql bid not good : ' . mysqli_error($con));
         exit();
       }
     }
   }
+  if ($n_bids == 0) {
+    $sqldelete = "DELETE FROM bids where id = $bids_id;";
+    $result = mysqli_query($con, $sqldelete);
+  }
 
-  // $d++;
-  // if ($d==2) {
+  $d++;
+  // if ($d==5) {
   //   break;
   // }
 }

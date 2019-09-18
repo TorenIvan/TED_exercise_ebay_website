@@ -6,16 +6,17 @@
 
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" routerLink="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!--Fontawesome CDN-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" routerLink="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--DataTables CDN && js file-->
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 </head>
@@ -142,7 +143,7 @@
 
 
     <!--Modal info-->
-    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto">
+    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
         <!--Dialog-->
         <div class="modal-dialog modal-notify modal-info modal-lg" role="document">
             <!--Content-->
@@ -152,7 +153,7 @@
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">
                         Details
                     </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeInfoModal()">
                         <span aria-hidden="true" class="white-text">&times;</span>
                         </button>
                 </div>
@@ -171,11 +172,22 @@
                                     </div>
                                     <div class="input-group form-group col">
                                         <span>Seller: </span>
-                                        <input class="input-group" type="text" formControlName="seForm">
+                                        <input class="input-group disabled_input" type="text" formControlName="seForm" disabled>
                                     </div>
-                                    <div class="input-group form-group col">
-                                        <span>Category: </span>
-                                        <input class="input-group" formControlName="cdForm" type="text">
+                                </div>
+                                <div class="row">
+                                    <div class="input-group form-group col" style="width: inherit; margin-left: 15px; height: fit-content">
+                                        <div class="row">
+                                            <span>Category: </span>
+                                        </div>
+                                        <div class="row" style="width: 100%">
+                                            <input class="input-group" formControlName="cdForm" type="text" style="width: 60%">
+                                            <button type="button" class="btn btn-info" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="allCat" style="width: 20%; margin: auto; font-weight: bold">Edit</button>
+                                            <div id="allCat" [ngbCollapse]="isCollapsed" style="width: 80%; background-color: gainsboro; margin: auto; padding: 5px">
+                                                <ng-material-multilevel-menu [configuration]='config' [items]='categories' (selectedItem)="newItem($event)" (selectedLabel)="newLabel($event)">
+                                                </ng-material-multilevel-menu>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -191,7 +203,7 @@
                                     </div>
                                     <div class="input-group form-group col">
                                         <span>Currently: </span>
-                                        <input class="input-group" formControlName="cuForm" type="number">
+                                        <input class="input-group disabled_input" formControlName="cuForm" disabled>
                                     </div>
                                     <div class="input-group form-group col">
                                         <span>Start Date: </span>
@@ -209,6 +221,9 @@
                                     </div>
                                 </div>
                                 <br>
+                                <div class="justify-content-center row" [hidden]="resFlag">
+                                    <h5 style="color: rgb(196, 127, 0)">{{res}}</h5>
+                                </div>
                                 <button type="submit" class="btn btn-info" [hidden]="!saveButton">Save Changes</button>
                             </form>
                         </div>
@@ -224,7 +239,7 @@
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="frame.hide()" mdbWavesEffect>
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="closeInfoModal()" mdbWavesEffect>
                         Close
                         </button>
                 </div>
@@ -396,55 +411,13 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row" style="width: inherit">
-
-                                <div style="width: 100%">
+                            <div class="row">
+                                <div class="col-xl-6 newFormColumns" style="width: 90%; margin: auto" *ngIf="categories.length > 0">
                                     <span><p style="color: rgb(199, 0, 0); display: inline">*</p>Category:</span>
-                                    <!-- <ul *ngIf="categories?.length != 0" class="horizontal">
-                                        <li *ngFor="let category of categories" class="dropdown">
-                                            <button class="dropdown-toggle" data-toggle="dropdown" type="button">{{category.description}}</button>
-                                            <ul class="dropdown-menu">
-                                                <li><a>HTML</a></li>
-                                                <li><a>CSS</a></li>
-                                                <li><a>JavaScript</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul> -->
-                                    <!-- <mat-form-field *ngIf="categories?.length != 0">
-                                        <mat-label>Category:</mat-label>
-                                        <mat-select>
-                                            <mat-option *ngFor="let category of categories" [value]="category.id">
-                                                {{category.description}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field> -->
-
+                                    <ng-material-multilevel-menu [configuration]='config' [items]='categories' (selectedItem)="selectedItem($event)" (selectedLabel)="selectedLabel($event)">
+                                    </ng-material-multilevel-menu>
                                 </div>
-                                <!-- Search Field -->
-                                <!-- <div>
-                                        <div class="filter-wrap">
-                                            <input [(ngModel)]="searchText" placeholder="Filter Categories" class="filter-input" name="dwd">
-                                            <span class="filter-clear" *ngIf="searchText.length>0" (click)="clearFilter()">X</span>
-                                        </div>
-                                    </div> -->
-                                <!-- Clear Link -->
-                                <!-- <div class="clear-selection" title="Click to Clear Selections" (click)="clearSelection()" *ngIf="selected_count">Clear Selection</div>
-
-                                    <div class="w"> -->
-                                <!-- Game List -->
-                                <!-- <ul class="categories-list">
-                                            <li *ngFor="let c of categories | filter: searchText" class="category-item">
-                                                <input (change)="getSelected()" type="checkbox" value="{{c.id}}" [(ngModel)]="c.selected" name="categories" />
-                                                <span class="category-text">{{c.description}}</span>
-                                            </li>
-                                        </ul>
-                                    </div> -->
-                                <!-- Selected Games-->
-                                <!-- <div class="selected-categories-wrap">
-                                        <div class="selected-category" *ngFor="let s of selected_categories">
-                                            <span>{{s.description}} <span class="delete-category" (click)="deleteCategory(s.id)" title="Click to delete">X</span></span>
-                                        </div>
-                                    </div> -->
+                                <div class="col-xl-6 newFormColumns"></div>
                             </div>
                             <br>
                             <span style="color: rgb(199, 0, 0)">All fields with * are required</span>

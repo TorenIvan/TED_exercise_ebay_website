@@ -1,7 +1,7 @@
 export class Category {
     id: number;
     description: string;
-    selected: boolean;
+    items: Array<Category>;
 }
 
 export class Cat {
