@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
+import { Bid } from '../bid';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
@@ -104,9 +105,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   geocoder: any;
 
   items = [];
-
+  
   uploadIm: string[] = [];
-
+  
   images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
 
   config = {
@@ -119,11 +120,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     highlightOnSelect: true,
     collapseOnSelect: true,
   };
-
+  
   isCollapsed: boolean = true;
-
+  
   hasBids: boolean;
   
+  bids: Bid[] = [];
+  
+  items1 = [];
+
+  loading1: boolean;
+
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.infoForm = this.formBuilder.group({
       prForm : '',
@@ -149,6 +156,17 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
+  apiCall2(): Promise<Product[]> {
+    return new Promise((resolve) => {
+      this.tableService.getBids(this.idAuction).toPromise().then(
+        (res: Bid[]) => {
+          this.bids = res;
+          resolve();
+        }
+      );
+    });
+  }
+
   ngOnInit() {
 
     this.tableService.getAllCategories().subscribe((data: any[]) => {
@@ -161,6 +179,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     console.log(this.idUser);
 
     this.loading = true;
+
+    this.loading1 = true;
 
     this.saveButton = false;
 
@@ -253,6 +273,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
             this.hasBids = true;
           } else {
             this.hasBids = false;
+            this.loading1 = true;
           }
           this.resFlag = true;
           this.modal.first.show();
@@ -555,7 +576,21 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   openBidsModal() {
-    
+    this.apiCall2().then( () => {
+      this.loading1 = false;
+      this.bids.forEach((bid, idx) => {
+        setTimeout(() => {
+          this.items1.push(bid);
+        }, 500 * (idx + 1));
+      });
+    });
+    this.modals[0].hide();
+    this.modals[3].show();
+  }
+
+  closeBidsModal() {
+    this.modals[3].hide();
+    this.modals[0].show();
   }
 
 }
