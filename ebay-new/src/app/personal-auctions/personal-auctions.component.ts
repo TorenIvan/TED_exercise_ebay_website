@@ -216,7 +216,11 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         $('td', row).bind('click', () => {
           this.selected_categories = [];
           console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.images = data[18];
+          if(data[18] == '') {
+            this.images = [];
+          } else {
+            this.images = data[18].split(",");
+          }
           this.infoForm.patchValue({
             prForm: data[2],
             seForm: data[1],
@@ -233,7 +237,16 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           this.saveButton = false;
           this.auctionAddress = data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11];
           this.idAuction = data[0];
-          this.ableToDeleteAuction = false;
+          var sd, now;
+          if((sd = new Date(data[7])) > (now = new Date())) {
+            if(data[6] == 0) {
+              this.ableToDeleteAuction = false;
+            } else {
+              this.ableToDeleteAuction = true;
+            }
+          } else {
+            this.ableToDeleteAuction = true;;
+          }
           this.resFlag = true;
           this.modal.first.show();
         });
