@@ -121,6 +121,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   };
 
   isCollapsed: boolean = true;
+
+  hasBids: boolean;
   
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.infoForm = this.formBuilder.group({
@@ -246,6 +248,11 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
             }
           } else {
             this.ableToDeleteAuction = true;;
+          }
+          if(data[6] == 0) {
+            this.hasBids = true;
+          } else {
+            this.hasBids = false;
           }
           this.resFlag = true;
           this.modal.first.show();
@@ -545,6 +552,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     this.isCollapsed = true;
     this.resFlag = true;
     this.res = '';
+  }
+
+  openBidsModal() {
+    
   }
 
 }
