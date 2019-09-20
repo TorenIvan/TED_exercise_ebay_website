@@ -177,9 +177,10 @@ if(isset($_POST) && !empty($_POST)) {
           }
           //that's all for now m8s
 
-          //edo 8a ginetai require ston wait_user
+          #this is where the fun begins
 
-         // require 'waituser.php';
+
+
          $new_pass = $pparam_password;
 
          $sqluserlist = "INSERT INTO userlist (username, password, name, surname, email, phone_number, country, state, town, address, postcode, afm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -198,6 +199,19 @@ if(isset($_POST) && !empty($_POST)) {
            $ppostcode=$postcode;
            $aafm=$param_afm;
 
+           #parameters of mail
+           $to = $eemail;
+           $subject = "Mail varification";
+           $txt = $uusername;
+           $headers = $headers=array(
+             'From: "admin@ted_ebay.com',
+             'Content-Type:text/html;charset=UTF-8',
+             );
+           $headers = implode("\r\n", $headers);
+
+           #just send it
+           //You should do localy sudo apt-get install sendmail
+           mail($to,$subject,$txt,$headers);
 
            //execute and insert into the db
            mysqli_stmt_execute($stmtuserlist);

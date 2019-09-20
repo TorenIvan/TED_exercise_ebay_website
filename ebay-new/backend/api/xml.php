@@ -2,7 +2,7 @@
 
 require 'connect.php';
 
-$xml = simplexml_load_file("items-0.xml") or die("Error: Cannot create object");
+$xml = simplexml_load_file("items-39.xml") or die("Error: Cannot create object");
 $d=0;
 
 //we have to add a random user for every bid if he does not exist
@@ -30,7 +30,7 @@ foreach ($xml->children() as $row) {
     echo "\n";
     echo "statetown = ";
     echo $product_statetown = (string )$Location;
-    $product_statetown = mysqli_real_escape_string($product_statetown);
+    $product_statetown = mysqli_real_escape_string($con, $product_statetown);
     echo "\n";
   }
   foreach ($row->Name as $product_name) {
@@ -61,7 +61,7 @@ foreach ($xml->children() as $row) {
     echo "\n";
   }
   foreach ($row->Country as $country) {
-    echo $country = (string) mysqli_real_escape_string($country);
+    echo $country = (string) mysqli_real_escape_string($con,$country);
 
     echo "\n";
   }
@@ -293,7 +293,7 @@ foreach ($xml->children() as $row) {
   //Add bid
   $n_bids = 0;
   foreach ($row->Bids->Bid as $bid) {
-    $n_bid++;
+    $n_bids++;
     echo $bid_time = $bid->Time;
     foreach ($bid->Amount as $bid_amounts) {
       echo $bid_amount = (double)str_replace('$','' , $bid_amounts);

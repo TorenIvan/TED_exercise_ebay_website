@@ -42,6 +42,19 @@ if(isset($_POST) && !empty($_POST)) {
           //print_r("Deleted from userlist\n");
           json_encode("User accepted. He could sigin now");
           //print_r("User accepted. He could sigin now\n");
+          #parameters of mail
+          $to = $param['email'];
+          $subject = "Ted_ebay admin's decision";
+          $txt = "You 've been accepted. You can sign in now";
+          $headers = $headers=array(
+            'From: "admin@ted_ebay.com',
+            'Content-Type:text/html;charset=UTF-8',
+            );
+          $headers = implode("\r\n", $headers);
+
+          #just send it
+          //You should do localy sudo apt-get install sendmail
+          mail($to,$subject,$txt,$headers);
         }else {
           json_encode("Something is wrong with mysqli_query");
           //print_r("Something is wrong with mysqli_query");
@@ -52,6 +65,14 @@ if(isset($_POST) && !empty($_POST)) {
         if($resultd = mysqli_query($con,$sqld)){
           //print_r("Deleted from userlist\n");
           json_encode("User rejected. He couldn't sigin, because administrator won't accept him");
+          $to = $param['email'];
+          $subject = "Ted_ebay admin's decision";
+          $txt = "You 've been rejected. You can't sign in.";
+          $headers = $headers=array(
+            'From: "admin@ted_ebay.com',
+            'Content-Type:text/html;charset=UTF-8',
+            );
+          $headers = implode("\r\n", $headers);
         }else {
           json_encode("Something is wrong with the id, front_end send");
         }
