@@ -8,10 +8,6 @@ export class TableServiceService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllAuctions(i) {
-    return this.httpClient.post('/api/read.php', {i})
-  }
-
   checkUser(username, password) {
     return this.httpClient.post('/api/signin.php', {username, password})
   }
