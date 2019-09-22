@@ -17,13 +17,21 @@ a:hover {
     color: white;
 }
 
+p {
+    color: white;
+    font-size: 95%;
+    text-shadow: 2px 2px 20px white;
+    font-weight: 900;
+}
+
 .container {
     height: 100vh;
     align-content: center;
 }
 
 .card {
-    height: 400px;
+    min-height: 400px;
+    height: fit-content;
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;

@@ -234,6 +234,7 @@
                     <br>
                     <div>
                         <button type="button" class="btn deleteButton" (click)="openDeleteModal()" [hidden]="ableToDeleteAuction">Delete Auction</button>
+                        <button type="button" class="btn bidsButton float-right" (click)="openBidsModal()" [hidden]="hasBids">See Bids</button>
                     </div>
                 </div>
 
@@ -446,6 +447,63 @@
         <!--/.Dialog-->
     </div>
     <!--/.Modal new-->
+
+
+
+    <!--Modal Bids-->
+    <div mdbModal #frame3="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}" style="overflow-y: auto">
+        <!--Dialog-->
+        <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">
+                        Bids
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeBidsModal()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div>
+                        <table *ngIf="bids?.length > 0" [@listAnimation]="items1.length">
+                            <tr>
+                                <th>User</th>
+                                <th>Amount of money</th>
+                                <th>Time of bid</th>
+                            </tr>
+                            <div *ngIf="loading1 else loaded1">
+                                <tr>
+                                    <td colspan="3" class="no-data-available">Loading...</td>
+                                </tr>
+                            </div>
+                            <ng-template #loaded1>
+                                <tr *ngFor="let bid of bids">
+                                    <th>{{bid.username}}</th>
+                                    <th>{{bid.money}}</th>
+                                    <th>{{bid.time}}</th>
+                                </tr>
+                            </ng-template>
+                        </table>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <button type="button" mdbBtn color="primary" class="waves-effect" (click)="closeBidsModal()" mdbWavesEffect>
+                        Close
+                        </button>
+                </div>
+                <!--Footer-->
+            </div>
+            <!--/.Content-->
+        </div>
+        <!--/.Dialog-->
+    </div>
+    <!--/.Modal Bids-->
 
 
 

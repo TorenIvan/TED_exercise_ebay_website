@@ -114,6 +114,23 @@ input:focus {
     outline-color: mix(white, red, 20%);
 }
 
+.bidsButton {
+    color: mix(black, rgb(1, 172, 240), 20%);
+    align-self: flex-start;
+    font-weight: 1000;
+    background-color: white;
+    outline-color: mix(black, rgb(1, 172, 240), 20%);
+    outline-width: 1px;
+    width: auto;
+    outline-style: solid;
+}
+
+.bidsButton:hover {
+    color: black;
+    background-color: mix(white, rgb(1, 172, 240), 95%);
+    outline-color: mix(white, rgb(1, 172, 240), 20%);
+}
+
 .newButton {
     color: white;
     align-self: flex-start;

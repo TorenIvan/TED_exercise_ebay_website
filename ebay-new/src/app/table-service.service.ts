@@ -79,4 +79,8 @@ export class TableServiceService {
   saveAuctionChanges(id, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude) {
     return this.httpClient.post('/api/editauction.php', {id, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude})
   }
+
+  getBids(id) {
+    return this.httpClient.post('/api/getBidsForAuction.php', id)
+  }
 }
