@@ -47,7 +47,8 @@ foreach ($xml->children() as $row) {
   $buy_price_index = 0;
   foreach ($row->Buy_Price as $buy_price) {
     echo "buy_price = ";
-    echo $buy_price = (int) $buy_price;
+    echo $buy_price = (double)str_replace('$', '', $buy_price);
+    //echo $buy_price = (double) $buy_price;
     $buy_price_index = $buy_price_index + 1;
     echo "\n";
   }

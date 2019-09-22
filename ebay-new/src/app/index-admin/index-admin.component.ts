@@ -41,7 +41,7 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtOptions: DataTables.Settings = {};
 
-  products: Product[];
+  products: Product[][];
 
   datatable: any;
 
@@ -63,11 +63,12 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private tableService: TableServiceService) { }
 
-  apiCall(): Promise<Product[]> {
+  apiCall(i): Promise<Product[]> {
     return new Promise((resolve, reject) => {
-      this.tableService.getAllAuctions().toPromise().then(
+      this.tableService.getAllAuctions(i).toPromise().then(
         (res: Product[]) => {
-          this.products = res;
+          this.products[i] = [];
+          this.products[i] = res;
           resolve();
         }
       );
@@ -78,14 +79,16 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.loading = true;
 
-    this.apiCall().then( (data: Product[]) => {
-      this.loading = false;
-      this.products.forEach((product, idx) => {
-        setTimeout(() => {
-          this.items.push(product);
-        }, 500 * (idx + 1));
+    for(let i=0; i<40; i++){
+      this.apiCall(i).then( (data: Product[]) => {
+        this.loading = false;
+        this.products[i].forEach((product, idx) => {
+          setTimeout(() => {
+            this.items.push(product);
+          }, 500 * (idx + 1));
+        });
       });
-    });
+    }
 
     this.dtOptions = {
       dom: 'Blfrtip',

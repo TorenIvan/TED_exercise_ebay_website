@@ -1,6 +1,5 @@
 //8a doume pote
 Ti allo 8eloume? Let's find out:
-  A) LSH
-  B) Apostolh email meta thn eggrush apo ton xrhsth (isws kai meta to sign up)
-  C) Apostolh email gia na kanei retrieve to password!
-  D) HTTPS
+  A) WHY THE FUCK KEEPS DOING THAT FUCKING WAITING
+  B) LSH
+  C) HTTPS

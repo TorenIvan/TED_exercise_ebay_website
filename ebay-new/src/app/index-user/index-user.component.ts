@@ -43,7 +43,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtOptions: DataTables.Settings = {};
 
-  products: Product[];
+  products: Product[][] = [];
+
+  p: Product[];
 
   datatable: any;
 
@@ -78,13 +80,16 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   images = ['../../assets/b.png'];
 
+  ohgjhyh: number = 0;
+
   constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
 
-  apiCall(): Promise<Product[]> {
+  apiCall(i): Promise<Product[]> {
     return new Promise((resolve, reject) => {
-      this.tableService.getAllAuctions().toPromise().then(
+      this.tableService.getAllAuctions(i).toPromise().then(
         (res: Product[]) => {
-          this.products = res;
+          this.products[i] = [];
+          this.products[i] = res;
           resolve();
         }
       );
@@ -98,90 +103,98 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
 
-    this.apiCall().then( (data: Product[]) => {
-      this.loading = false;
-      this.products.forEach((product, idx) => {
-        setTimeout(() => {
-          this.items.push(product);
-        }, 500 * (idx + 1));
-      });
-    });
+
+    // for(let i=0; i<40; i++){
+    //   this.apiCall(i).then( (data: Product[]) => {
+    //     this.loading = false;
+    //     this.products[i].forEach((product, idx) => {
+    //       setTimeout(() => {
+    //         this.items.push(product);
+    //       }, 500 * (idx + 1));
+    //     });
+    //   });
+    // }
+
+    // this.p = this.items;
 
     this.bidAmount = 0;
 
     this.dtOptions = {
       retrieve: true,
       pagingType: 'full_numbers',
+      ajax: {
+        url: 'http://localhost:8080/api/read.php'
+      },
       columns: [
-        { title: 'id' },
-        { title: 'Seller' },
-        { title: 'Product' },
-        { title: 'Buy Price' },
-        { title: 'Currently' },
-        { title: 'First Bid' },
-        { title: 'Number of Bids' },
-        { title: 'Start Date' },
-        { title: 'End Date' },
-        { title: 'Description' },
-        { title: 'Country' },
-        { title: 'State' },
-        { title: 'Town' },
-        { title: 'Address' },
-        { title: 'Postcode' },
-        { title: 'Latitude' },
-        { title: 'Longitude' },
-        { title: 'UserId' },
-        { title: 'Category' },
-        { title: 'Path' }
+        // { title: 'id' },
+        { title: 'Seller', data: 'user_surname' },
+        { title: 'Product', data: 'product_name' },
+        { title: 'Buy Price', data: 'buy_price' },
+        { title: 'Currently', data: 'currently' },
+        // { title: 'First Bid' },
+        // { title: 'Number of Bids' },
+        { title: 'Start Date', data: 'start_date' },
+        // { title: 'End Date' },
+        // { title: 'Description' },
+        // { title: 'Country' },
+        // { title: 'State' },
+        // { title: 'Town' },
+        // { title: 'Address' },
+        // { title: 'Postcode' },
+        // { title: 'Latitude' },
+        // { title: 'Longitude' },
+        // { title: 'UserId' },
+        { title: 'Category', data: 'categories' }
+        // { title: 'Path' }
       ],
       order: [[ 2, "asc" ]],
-      columnDefs: [
-        { "searchable": false, "visible": false, "targets": 0 },
-        { "searchable": false, "visible": false, "targets": 5 },
-        { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 8 },
-        { "searchable": true, "visible": false, "targets": 9 },
-        { "searchable": true, "visible": false, "targets": 10 },
-        { "searchable": true, "visible": false, "targets": 11 },
-        { "searchable": true, "visible": false, "targets": 12 },
-        { "searchable": false, "visible": false, "targets": 13 },
-        { "searchable": false, "visible": false, "targets": 14 },
-        { "searchable": false, "visible": false, "targets": 15 },
-        { "searchable": false, "visible": false, "targets": 16 },
-        { "searchable": false, "visible": false, "targets": 17 },
-        { "searchable": false, "visible": false, "targets": 19 }
-      ],
+      // columnDefs: [
+        // { "searchable": false, "visible": false, "targets": 0 },
+        // { "searchable": false, "visible": false, "targets": 5 },
+        // { "searchable": false, "visible": false, "targets": 6 },
+        // { "searchable": false, "visible": false, "targets": 8 },
+        // { "searchable": true, "visible": false, "targets": 9 },
+        // { "searchable": true, "visible": false, "targets": 10 },
+        // { "searchable": true, "visible": false, "targets": 11 },
+        // { "searchable": true, "visible": false, "targets": 12 },
+        // { "searchable": false, "visible": false, "targets": 13 },
+        // { "searchable": false, "visible": false, "targets": 14 },
+        // { "searchable": false, "visible": false, "targets": 15 },
+        // { "searchable": false, "visible": false, "targets": 16 },
+        // { "searchable": false, "visible": false, "targets": 17 },
+        // { "searchable": false, "visible": false, "targets": 19 }
+      // ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
-          this.images = data[19];
-          this.bidAmount = 0;
-          this.usersAuction = false;
-          console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.data = data;
-          this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
-          this.lat = parseFloat(data[15]);
-          this.lon = parseFloat(data[16]);
-          if(data[17] == this.idUser.toString()) {
-            this.usersAuction = true;
-          } else {
-            this.idAuctionToBid = data[0];
-            if(data[3].trim() == '') {
-              this.buyPriceOfAuction = 0;
-            } else {
-              this.buyPriceOfAuction = data[3];
-            }
-          }
+          // this.images = data[19];
+          // this.bidAmount = 0;
+          // this.usersAuction = false;
+          // console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
+          // this.data = data;
+          // this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
+          // this.lat = parseFloat(data[15]);
+          // this.lon = parseFloat(data[16]);
+          // if(data[17] == this.idUser.toString()) {
+          //   this.usersAuction = true;
+          // } else {
+          //   this.idAuctionToBid = data[0];
+          //   if(data[3].trim() == '') {
+          //     this.buyPriceOfAuction = 0;
+          //   } else {
+          //     this.buyPriceOfAuction = data[3];
+          //   }
+          // }
           this.modal.first.show();
         });
         return row;
       }
     };
 
-    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-    });
+    // this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
+    //   dtInstance.draw();
+    // });
   }
 
   ngOnDestroy() {
