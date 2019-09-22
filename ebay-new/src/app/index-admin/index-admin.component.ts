@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { saveAs } from 'file-saver';
@@ -28,7 +27,7 @@ import 'datatables.net-buttons';
     ])
   ]
 })
-export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
+export class IndexAdminComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
@@ -38,8 +37,6 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtOptions: DataTables.Settings = {};
 
-  dtTrigger: Subject<any> = new Subject();
-  
   lat: number;
   lon: number;
   zoom: number = 15;
@@ -146,6 +143,7 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
         { "targets": [ 18 ], "visible": false, "searchable": false }
       ],
       order: [[ 2, "asc" ]],
+      deferRender: true,
       rowCallback: (row: Node, data: any[] | Object) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
@@ -167,7 +165,6 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -179,20 +176,6 @@ export class IndexAdminComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
       });
-    });
-    this.rerender();
-  }
-
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
-  }
-
-  rerender(): void{
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
     });
   }
 

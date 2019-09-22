@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
-import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +27,7 @@ import 'datatables.net-dt';
     ])
   ]
 })
-export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
+export class IndexUserComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
@@ -39,8 +38,6 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   bidAmount: number;
 
   dtOptions: DataTables.Settings = {};
-
-  dtTrigger: Subject<any> = new Subject();
 
   openform = false;
 
@@ -119,7 +116,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 19 }
       ],
       order: [[ 2, "asc" ]],
-      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+      deferRender: true,
+      rowCallback: (row: Node, data: any[] | Object) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           // console.log("row: " + row + "\ndata: " + data['id'] + "\nindex: "+  index);
@@ -151,14 +149,8 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
     
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
-  }
-    
-    
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
-    this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -171,16 +163,6 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
-    this.rerender();
-  }
-
-  rerender(): void{
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
-      });
   }
 
   openBiddingForm() {

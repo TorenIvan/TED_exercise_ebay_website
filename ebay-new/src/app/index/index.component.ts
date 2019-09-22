@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 
@@ -26,7 +25,7 @@ import 'datatables.net-dt';
     ])
   ]
 })
-export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
+export class IndexComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
@@ -35,8 +34,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
   modal: ModalDirective;
 
   dtOptions: DataTables.Settings = {};
-
-  dtTrigger: Subject<any> = new Subject();
 
   lat: number;
   lon: number;
@@ -95,6 +92,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
         { "targets": [ 18 ], "visible": false, "searchable": false }
       ],
       order: [[ 2, "asc" ]],
+      deferRender: true,
       rowCallback: (row: Node, data: any[] | Object) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
@@ -115,12 +113,7 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
-  }
-
   ngAfterViewInit() {
-    this.dtTrigger.next();
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // console.log(dtInstance.columns());
       dtInstance.columns().every(function () {
@@ -133,16 +126,6 @@ export class IndexComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
       });
-    });
-    this.rerender();
-  }
-
-  rerender(): void{
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
     });
   }
 
