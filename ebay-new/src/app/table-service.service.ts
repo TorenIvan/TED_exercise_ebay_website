@@ -20,10 +20,6 @@ export class TableServiceService {
     return this.httpClient.post('api/retrievepass.php', {email})
   }
 
-  getMyAuctions(id) {
-    return this.httpClient.post('/api/usersonlyauctions.php', {id})
-  }
-
   getUserInfo(id) {
     return this.httpClient.post('/api/userinfo.php', {id})
   }

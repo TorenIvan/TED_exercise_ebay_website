@@ -12,8 +12,10 @@
 
   $_POST = json_decode(file_get_contents('php://input'), true);
 
-  if(isset($_POST) && !empty($_POST)) {
-      $id = $_POST['id'];
+  $postVariable = filter_input_array($_POST);
+
+  if(isset($postVariable) && !empty($postVariable)) {
+    $id = htmlspecialchars($postVariable['id']);
 
     $sql="select a.id, u.surname, p.id as product_id, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.path from auction as a inner join user as u on a.user_id = u.id and a.user_id = $id inner join product as p on a.product_id = p.id order by p.id;";
 
@@ -22,23 +24,23 @@
       $cr = 0;
       while($row = mysqli_fetch_assoc($result))
       {
-        $auctions[$cr]['id']    = $row['id'];
-        $auctions[$cr]['user_surname'] = $row['surname'];
-        $auctions[$cr]['product_name'] = $row['name'];
-        $auctions[$cr]['description'] = $row['description'];
-        $auctions[$cr]['country'] = $row['country'];
-        $auctions[$cr]['state'] = $row['state'];
-        $auctions[$cr]['town'] = $row['town'];
-        $auctions[$cr]['address'] = $row['address'];
-        $auctions[$cr]['postcode'] = $row['postcode'];
-        $auctions[$cr]['latitude'] = $row['latitude'];
-        $auctions[$cr]['longitude'] = $row['longitude'];
-        $auctions[$cr]['buy_price'] = $row['buy_price'];
-        $auctions[$cr]['currently'] = $row['currently'];
-        $auctions[$cr]['first_bid'] = $row['first_bid'];
-        $auctions[$cr]['number_of_bids'] = $row['number_of_bids'];
-        $auctions[$cr]['start_date'] = $row['start_date'];
-        $auctions[$cr]['end_date'] = $row['end_date'];
+        $auctions['data'][$cr]['id'] = $row['id'];
+        $auctions['data'][$cr]['user_surname'] = $row['surname'];
+        $auctions['data'][$cr]['product_name'] = $row['name'];
+        $auctions['data'][$cr]['description'] = $row['description'];
+        $auctions['data'][$cr]['country'] = $row['country'];
+        $auctions['data'][$cr]['state'] = $row['state'];
+        $auctions['data'][$cr]['town'] = $row['town'];
+        $auctions['data'][$cr]['address'] = $row['address'];
+        $auctions['data'][$cr]['postcode'] = $row['postcode'];
+        $auctions['data'][$cr]['latitude'] = $row['latitude'];
+        $auctions['data'][$cr]['longitude'] = $row['longitude'];
+        $auctions['data'][$cr]['buy_price'] = $row['buy_price'];
+        $auctions['data'][$cr]['currently'] = $row['currently'];
+        $auctions['data'][$cr]['first_bid'] = $row['first_bid'];
+        $auctions['data'][$cr]['number_of_bids'] = $row['number_of_bids'];
+        $auctions['data'][$cr]['start_date'] = $row['start_date'];
+        $auctions['data'][$cr]['end_date'] = $row['end_date'];
         $ic = 0;
         if($row['path'] != null) {
           $files = [];
@@ -48,9 +50,9 @@
               $ic++;
             }
           }
-          $auctions[$cr]['images'] = $files;
+          $auctions['data'][$cr]['images'] = $files;
         } else {
-          $auctions[$cr]['images'] = [];
+          $auctions['data'][$cr]['images'] = [];
         }
         $c = null;
         while($row['product_id']>$ids[$idcount]) $idcount++;
@@ -62,7 +64,7 @@
               $c = $c . ", " . $i->description;
             }
           }
-          $auctions[$cr]['categories'] = $c;
+          $auctions['data'][$cr]['categories'] = $c;
         }
         $cr++;
       }
