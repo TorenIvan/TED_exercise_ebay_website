@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
-import { User } from '../user';
-import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
-import Chatkit from '@pusher/chatkit-client';
 import axios from 'axios';
 
 import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
@@ -31,7 +28,7 @@ import 'datatables.net-dt';
     ])
   ]
 })
-export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
+export class UsersListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
@@ -43,73 +40,43 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dtOptions: DataTables.Settings = {};
 
-  users: User[];
-
-  datatable: any;
-
-  dtTrigger: Subject<any> = new Subject();
-
   ableToDeleteUser: boolean; // an uparxei estw kai ena bid den mporei na diagrafei
-
-  tableInstance: any;
 
   idUser: string;
   usernameUser: string;
 
-  loading: boolean;
-
-  items = [];
-
   constructor(private tableService: TableServiceService, private rooter: Router) { }
 
-  apiCall(): Promise<User[]> {
-    return new Promise((resolve, reject) => {
-      this.tableService.getAllUsers().toPromise().then(
-        (res: User[]) => {
-          this.users = res;
-          resolve();
-        }
-      );
-    });
-  }
-
   ngOnInit() {
-
-    this.loading = true;
-
-    this.apiCall().then( (data: User[]) => {
-      this.loading = false;
-      this.users.forEach((user, idx) => {
-        setTimeout(() => {
-          this.items.push(user);
-        }, 500 * (idx + 1));
-      });
-    });
 
     this.dtOptions = {
       retrieve: true,
       pagingType: 'full_numbers',
       scrollX: true,
       scrollCollapse: true,
+      deferRender: true,
+      ajax: {
+        url: 'http://localhost:8080/api/printusers.php'
+      },
       columns: [
-        { title: 'id' },
-        { title: 'Username' },
-        { title: 'Email' },
-        { title: 'Name' },
-        { title: 'Surname' },
-        { title: 'Phone Number' },
-        { title: 'Country' },
-        { title: 'State' },
-        { title: 'Town' },
-        { title: 'Address' },
-        { title: 'Postcode' },
-        { title: 'TIN / ΑΦΜ' },
-        { title: 'Latitude' },
-        { title: 'Longitude' }
+        { title: 'id', data: 'id'},
+        { title: 'Username', data: 'username' },
+        { title: 'Email', data: 'email' },
+        { title: 'Name', data: 'name' },
+        { title: 'Surname', data: 'surname' },
+        { title: 'Phone Number', data: 'phone_number' },
+        { title: 'Country', data: 'country' },
+        { title: 'State', data: 'state' },
+        { title: 'Town', data: 'town' },
+        { title: 'Address', data: 'address' },
+        { title: 'Postcode', data: 'postcode' },
+        { title: 'TIN / ΑΦΜ', data: 'afm' },
+        { title: 'Rating Bidder', data: 'rating_bidder' },
+        { title: 'Rating Seller', data: 'rating_seller' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
-        { "visible": false, "targets": 0 },
+        { "searchable": false, "visible": false, "targets": 0 },
         { "visible": false, "targets": 5 },
         { "visible": false, "targets": 7 },
         { "visible": false, "targets": 8 },
@@ -119,11 +86,10 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 13 }
       ],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
-        const self = this;
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
-          console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          this.modalBody = this.format(data.toString());
+          // console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
+          this.modalBody = this.format(data);
           this.usernameUser = data[1];
           this.ableToDeleteUser = false;
           this.modal.first.show();
@@ -131,19 +97,9 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         return row;
       }
     };
-
-    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-    });
-  }
-
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
   }
 
   ngAfterViewInit() {
-    this.dtTrigger.next();
-    this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -156,36 +112,25 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
-    this.rerender();
   }
 
-  rerender(): void{
-    this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
-  }
-
-  format(data : string) {
-    const p = data.split(',');
-    this.idUser = p[0];
+  format(data: any[] | Object) {
+    this.idUser = data['id'];
     return '<div class="container">'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Username: </strong></h4><p>' + p[1] + '</p></div>'
-            + '<div class="col"><h4 class="h4-responsive"><strong>Email: </strong></h4><p>' + p[2] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Full name: </strong></h4><p>' + p[4] + " " + p[3] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Phone number: </strong></h4><p>' + p[5] + '</p></div></div><br>'
-            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + p[6] + ", " + p[7] + ", " + p[8] + " " + p[9] + ", " + p[10] + '</p></div>'
-            + '<div class="col"><h4 class="h4-responsive"><strong>TIN / ΑΦΜ: </strong></h4><p>' + p[11] + '</p></div></div><br>'
+            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Username: </strong></h4><p>' + data['username'] + '</p></div>'
+            + '<div class="col"><h4 class="h4-responsive"><strong>Email: </strong></h4><p>' + data['email'] + '</p></div></div><br>'
+            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Full name: </strong></h4><p>' + data['surname'] + " " + data['name'] + '</p></div></div><br>'
+            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Phone number: </strong></h4><p>' + data['phone_number'] + '</p></div></div><br>'
+            + '<div class="row"><div class="col"><h4 class="h4-responsive"><strong>Address: </strong></h4><p>' + data['country'] + ", " + data['town'] + ", " + data['address'] + " " + data['postcode'] + ", " + data['state'] + '</p></div>'
+            + '<div class="col"><h4 class="h4-responsive"><strong>TIN / ΑΦΜ: </strong></h4><p>' + data['afm'] + '</p></div></div><br>'
             + '</div>';
   }
 
   deleteUser() {
     this.ableToDeleteUser = true;
     console.log("user deleted with id: " + this.idUser);
-    // this.tableService.deleteUser(this.idUser).subscribe(data => {
-    //   console.log(data);
+    this.tableService.deleteUser(this.idUser).subscribe(data => {
+      console.log(data);
       const id = this.usernameUser;
       console.log({userId: id});
       axios.post('http://localhost:5200/delete', {userId: id})
@@ -195,8 +140,8 @@ export class UsersListComponent implements OnInit, OnDestroy, AfterViewInit {
         .catch(error => console.error(error));
       this.modal.first.hide();
       this.modal.last.hide();
-    //   this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
-    // });
+      this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
+    });
   }
 
   openDeleteModal() {

@@ -28,14 +28,6 @@ export class TableServiceService {
     return this.httpClient.post('/api/userinfo.php', {id})
   }
 
-  getAllUsers() {
-    return this.httpClient.post('/api/printusers.php', {})
-  }
-
-  getApplications() {
-    return this.httpClient.post('/api/printuserlistwithconnect.php', {})
-  }
-
   deleteUser(id) {
     return this.httpClient.post('/api/deleteuser.php', {id})
   }
