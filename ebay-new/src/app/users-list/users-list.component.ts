@@ -90,7 +90,7 @@ export class UsersListComponent implements OnInit, AfterViewInit {
         $('td', row).bind('click', () => {
           // console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           this.modalBody = this.format(data);
-          this.usernameUser = data[1];
+          this.usernameUser = data['username'];
           this.ableToDeleteUser = false;
           this.modal.first.show();
         });

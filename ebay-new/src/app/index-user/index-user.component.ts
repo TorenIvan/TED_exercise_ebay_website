@@ -124,7 +124,7 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
           if(data['images'] == '') {
             this.images = [];
           } else {
-            this.images = data['images'].split(",");
+            this.images = data['images'];
           }
           this.bidAmount = 0;
           this.usersAuction = false;

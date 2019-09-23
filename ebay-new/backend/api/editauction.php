@@ -14,9 +14,13 @@ if(isset($_POST) && !empty($_POST)) {
   $auction_id = htmlspecialchars($_POST['id']);
   $buy_price = htmlspecialchars($_POST['buy_price']);
   $start_date = htmlspecialchars($_POST['start_date']);
-  $start_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
+  $start_formatted_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
+  $start_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('M-d-y H-m-s');
+  $start_date = strval($start_date);
   $end_date = htmlspecialchars($_POST['end_date']);
-  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
+  $end_formatted_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
+  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('M-d-y H-m-s');
+  $end_date = strval($end_date);
   $pname = htmlspecialchars($_POST['product']);
   $pdescription = htmlspecialchars($_POST['description']);
   $ptown = htmlspecialchars($_POST['town']);
@@ -63,7 +67,7 @@ if(isset($_POST) && !empty($_POST)) {
   if($stmt1 = mysqli_prepare($con, $sql1)) {
     // print_r($sql1);
     #check for start_date
-    if ((new DateTime())->format('Y-m-d') > $start_date) {
+    if ((new DateTime())->format('Y-m-d') > $start_formatted_date  || $end_formatted_date < $start_formatted_date) {
       echo json_encode("Datetime is wrong");
       // exit("Datetime is wrong\n");
     } else {

@@ -100,7 +100,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
           if(data['images'] == '') {
             this.images = [];
           } else {
-            this.images = data['images'].split(",");
+            this.images = data['images'];
           }
           this.dataAddress = data['country'] + ", " + data['town'] + ", " + data['address'] + ", " + data['postcode'] + " " + data['state'];
           this.lat = parseFloat(data['latitude']);

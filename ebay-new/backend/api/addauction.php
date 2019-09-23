@@ -17,9 +17,13 @@ if(isset($_POST) && !empty($_POST)) {
   $first_bid = 0;
   $number_of_bids = 0;
   $start_date = htmlspecialchars($_POST['start_date']);
-  $result_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
+  $start_formatted_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
+  $start_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('M-d-y H-m-s');
+  $start_date = strval($start_date);
   $end_date = htmlspecialchars($_POST['end_date']);
-  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
+  $end_formatted_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
+  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('M-d-y H-m-s');
+  $end_date = strval($end_date);
   $pname = htmlspecialchars($_POST['product']);
   $pdescription = htmlspecialchars($_POST['description']);
   $ptown = htmlspecialchars($_POST['town']);
@@ -39,6 +43,8 @@ if(isset($_POST) && !empty($_POST)) {
     $i++;
   }
 
+  print_r($category_ids);
+
 
   //example
   //// IDEA: pou 8a boi8isei i symela
@@ -49,7 +55,7 @@ if(isset($_POST) && !empty($_POST)) {
   // $first_bid = 0.6;
   // $number_of_bids = 7;
   // $start_date = new DateTime('2019-07-01 12:30:11');
-  // $result_date = $start_date->format('Y-m-d H:i:s');
+  // $start_formatted_date = $start_date->format('Y-m-d H:i:s');
   //
   // $pname = 'lava';
   // $pdescription = 'allou eidous';
@@ -137,7 +143,7 @@ if(isset($_POST) && !empty($_POST)) {
                   if($stmt = mysqli_prepare($con, $sql)) {
 
                     #check for start_date
-                    if ((new DateTime())->format('Y-m-d') > $result_date) {
+                    if ((new DateTime())->format('Y-m-d') > $start_formatted_date || $end_formatted_date < $start_formatted_date) {
                       echo json_encode("Datetime is wrong");
                     } else {
                       
@@ -162,7 +168,7 @@ if(isset($_POST) && !empty($_POST)) {
                       $param_end_date = $end_date;
                       $fold = $foldy;
 
-                      //print_r($result_date);
+                      //print_r($start_formatted_date);
                       mysqli_stmt_execute($stmt);  #ta balame sto auction
                       mysqli_stmt_close($stmt);
 

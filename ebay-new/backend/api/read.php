@@ -61,6 +61,8 @@ if($result = mysqli_query($con,$sql))
         }
       }
       $auctions['data'][$cr]['categories'] = $c;
+    } else {
+      $auctions['data'][$cr]['categories'] = '';
     }
     $cr++;
   }

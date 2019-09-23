@@ -143,11 +143,11 @@ export class ApplicationsComponent implements OnInit, AfterViewInit {
   }
 
   acceptUser() {
-    this.tableService.acceptUser(this.idUser, 1).subscribe(data => {
+    this.tableService.acceptUser(this.idUser, 1).subscribe((data: string) => {
         console.log(data);
+        console.log("user accepted with id: " + this.idUser);
         this.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
     });
-    console.log("user accepted with id: " + this.idUser);
     this.modal.first.hide();
     this.modals[1].hide();
     this.modal.last.hide();
@@ -164,11 +164,11 @@ export class ApplicationsComponent implements OnInit, AfterViewInit {
   }
 
   rejectUser() {
-    this.tableService.acceptUser(this.idUser, 0).subscribe(data => {
-        console.log(data);
+    this.tableService.acceptUser(this.idUser, 0).subscribe((data: string) => {
+      console.log(data);
+      console.log("user rejected with id: " + this.idUser);
         this.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
     });
-    console.log("user accepted with id: " + this.idUser);
     this.modal.first.hide();
     this.modal.last.hide();
     this.modals[1].hide();

@@ -133,6 +133,7 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       this.tableService.getBids(this.idAuction).toPromise().then(
         (res: Bid[]) => {
           this.bids = res;
+          console.log(this.bids);
           resolve();
         }
       );
@@ -208,8 +209,10 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
           if(data['images'] == '') {
             this.images = [];
           } else {
-            this.images = data['images'].split(",");
+            this.images = data['images'];
           }
+          const s = data['start_date'].split(" ");
+          const e = data['end_date'].split(" ");
           this.infoForm.patchValue({
             prForm: data['product_name'],
             seForm: data['user_surname'],
@@ -218,8 +221,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
             cdForm: data['categories'],
             bpForm: data['buy_price'],
             cuForm: data['currently'],
-            sdForm: formatDate(data['start_date'], 'yyyy-MM-dd', 'en'),
-            edForm: formatDate(data['end_date'], 'yyyy-MM-dd', 'en')
+            sdForm: formatDate(s[0], 'yyyy-MM-dd', 'en'),
+            edForm: formatDate(e[0], 'yyyy-MM-dd', 'en')
           });
           this.lat = parseFloat(data['latitude']);
           this.lon = parseFloat(data['longitude']);
@@ -227,7 +230,7 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
           this.auctionAddress = data['country'] + ", " + data['town'] + ", " + data['address'] + " " + data['postcode'] + ", " + data['state'];
           this.idAuction = data['id'];
           var sd, now;
-          if((sd = new Date(data['start_date'])) > (now = new Date())) {
+          if((sd = new Date(s[0])) > (now = new Date())) {
             if(data['number_of_bids'] == 0) {
               this.ableToDeleteAuction = false;
             } else {
@@ -317,7 +320,7 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
     var latitude = 0;
     var longitude = 0;
 
-    // console.log(category);
+    console.log(this.selected_categories);
 
     if(product.trim() && description.trim() && buy_price.trim() && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
       this.geocoder.geocode({address: location}, (
@@ -455,6 +458,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       );
 
     }
+
+    console.log(this.selected_categories);
 
     if(product != '' && this.infoForm.get('cdForm').value.trim() != '' && description != '' && buy_price > 0 && start_date != null && end_date != null && this.infoForm.get('adForm').value.trim() != '') {
       this.tableService.saveAuctionChanges(this.idAuction, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude).subscribe(data => {

@@ -14,8 +14,8 @@ export class RefreshDearComponent implements OnInit {
     const id = parseInt(this.route.snapshot.paramMap.get("id"));
     const flag = parseInt(this.route.snapshot.paramMap.get("flag"));
 
-    console.log(id);
-    console.log(flag);
+    // console.log(id);
+    // console.log(flag);
 
     switch(flag) { // for admin pages are the odd numbers
       case 10: this.rr.navigateByUrl('/applications'); break;
