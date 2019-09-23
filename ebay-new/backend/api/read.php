@@ -51,16 +51,19 @@ if($result = mysqli_query($con,$sql))
       $auctions['data'][$cr]['images'] = [];
     }
     $c = null;
-    while($row['product_id']>$ids[$idcount]) $idcount++;
-    if($row['product_id'] == $ids[$idcount]) {
-      foreach($products[$idcount]['categories'] as $i) {
-        if($c == null) {
-          $c = $c . $i->description;
-        } else {
-          $c = $c . ", " . $i->description;
+    if(count($ids) > 0) {
+      while($row['product_id']>$ids[$idcount] && $idcount < count($ids)) $idcount++;
+      if($idcount == count($ids)) $idcount--;
+      if($row['product_id'] == $ids[$idcount]) {
+        foreach($products[$idcount]['categories'] as $i) {
+          if($c == null) {
+            $c = $c . $i->description;
+          } else {
+            $c = $c . ", " . $i->description;
+          }
         }
+        $auctions['data'][$cr]['categories'] = $c;
       }
-      $auctions['data'][$cr]['categories'] = $c;
     } else {
       $auctions['data'][$cr]['categories'] = '';
     }

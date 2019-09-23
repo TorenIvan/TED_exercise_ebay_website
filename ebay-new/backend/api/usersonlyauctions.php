@@ -81,7 +81,9 @@
         $cr++;
       }
 
+      ob_start("ob_gzhandler");
       echo json_encode($auctions);
+      ob_end_flush();
     }
     else
     {
