@@ -34,62 +34,30 @@
     <div class="dTableCont">
         <div class="d-flex justify-content-center blueBox">
 
-            <table #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
-                <div *ngIf="loading else loaded" class="d-flex justify-content-center h-100">
-                    <tbody>
-                        <tr>
-                            <td colspan="19" class="no-data-available">Loading...</td>
-                            <!-- <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td> -->
-                        </tr>
-                    </tbody>
-                </div>
-                <ng-template #loaded>
-                    <tbody *ngIf="products?.length != 0" [@listAnimation]="items.length">
-                        <tr *ngFor="let product of products">
-                            <td>{{product.id}}</td>
-                            <td>{{product.user_surname}}</td>
-                            <td>{{product.product_name}}</td>
-                            <td>{{product.buy_price}}</td>
-                            <td>{{product.currently}}</td>
-                            <td>{{product.first_bid}}</td>
-                            <td>{{product.number_of_bids}}</td>
-                            <td>{{product.start_date}}</td>
-                            <td>{{product.end_date}}</td>
-                            <td>{{product.description}}</td>
-                            <td>{{product.country}}</td>
-                            <td>{{product.state}}</td>
-                            <td>{{product.town}}</td>
-                            <td>{{product.address}}</td>
-                            <td>{{product.postcode}}</td>
-                            <td>{{product.latitude}}</td>
-                            <td>{{product.longitude}}</td>
-                            <td>{{product.categories}}</td>
-                            <td>{{product.images}}</td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngIf="products == null">
-                        <tr>
-                            <td colspan="5" class="no-data-available">No availiable auctions!</td>
-                        </tr>
-                    </tbody>
-                </ng-template>
+            <table #tableP datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Seller</th>
+                        <th>Product</th>
+                        <th>Buy Price</th>
+                        <th>Currently</th>
+                        <th>First Bid</th>
+                        <th>Number of Bids</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Description</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>Town</th>
+                        <th>Address</th>
+                        <th>Postcode</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Category</th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
                 <tfoot>
                     <tr>
                         <th><input type="text" placeholder="id" name="search-id" hidden disabled/></th>
@@ -143,41 +111,41 @@
                         <div class="row">
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Product: </strong></h4>
-                                <p>{{data[2]}}</p>
+                                <p>{{data['product_name']}}</p>
                             </div>
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Seller: </strong></h4>
-                                <p>{{data[1]}}</p>
+                                <p>{{data['user_surname']}}</p>
                             </div>
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Category: </strong></h4>
-                                <p>{{data[17]}}</p>
+                                <p>{{data['categories']}}</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Description: </strong></h4>
-                                <p>{{data[9]}}</p>
+                                <p>{{data['description']}}</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Buy Price: </strong></h4>
-                                <p>{{data[3]}}</p>
+                                <p>{{data['buy_price']}}</p>
                             </div>
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Currently: </strong></h4>
-                                <p>{{data[4]}}</p>
+                                <p>{{data['currently']}}</p>
                             </div>
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>Start Date: </strong></h4>
-                                <p>{{data[7]}}</p>
+                                <p>{{data['start_date']}}</p>
                             </div>
                             <div class="col">
                                 <h4 class="h4-responsive"><strong>End Date: </strong></h4>
-                                <p>{{data[8]}}</p>
+                                <p>{{data['end_date']}}</p>
                             </div>
                         </div>
                         <hr>
@@ -236,9 +204,9 @@
     </footer>
     <!-- Footer -->
 
-
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 </body>
 
 </html>

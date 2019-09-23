@@ -12,22 +12,20 @@ if($result=mysqli_query($con,$sql)){
   while($row = mysqli_fetch_assoc($result))
   {
     // echo "mpikes";
-    $users[$count]['id'] = $row['id'];
-    // $users[$count]['user_category_id'] = $row['user_category_id'];
-    $users[$count]['username'] = $row['username'];
-    // $users[$count]['password'] = $row['password']; 
-    $users[$count]['name'] = $row['name'];
-    $users[$count]['surname'] = $row['surname'];
-    $users[$count]['email'] = $row['email'];
-    $users[$count]['phone_number'] = $row['phone_number'];
-    $users[$count]['country'] = $row['country'];
-    $users[$count]['state'] = $row['state'];
-    $users[$count]['town'] = $row['town'];
-    $users[$count]['address'] = $row['address'];
-    $users[$count]['postcode'] = $row['postcode'];
-    $users[$count]['afm'] = $row['afm'];
-    $users[$count]['rating_bidder'] = $row['rating_bidder'];
-    $users[$count]['rating_seller'] = $row['rating_seller'];
+    $users['data'][$count]['id'] = $row['id'];
+    $users['data'][$count]['username'] = $row['username'];
+    $users['data'][$count]['name'] = $row['name'];
+    $users['data'][$count]['surname'] = $row['surname'];
+    $users['data'][$count]['email'] = $row['email'];
+    $users['data'][$count]['phone_number'] = $row['phone_number'];
+    $users['data'][$count]['country'] = $row['country'];
+    $users['data'][$count]['state'] = $row['state'];
+    $users['data'][$count]['town'] = $row['town'];
+    $users['data'][$count]['address'] = $row['address'];
+    $users['data'][$count]['postcode'] = $row['postcode'];
+    $users['data'][$count]['afm'] = $row['afm'];
+    $users['data'][$count]['rating_bidder'] = $row['rating_bidder'];
+    $users['data'][$count]['rating_seller'] = $row['rating_seller'];
     $count++;
   }
   echo json_encode($users);

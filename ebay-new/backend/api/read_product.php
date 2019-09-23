@@ -1,6 +1,7 @@
 <?php
-set_time_limit(600);
+set_time_limit(1200);
 
+// require 'connect.php';
 
 class Cat {
   public $id;
@@ -15,7 +16,10 @@ class Cat {
 $products = [];
 $ids = [];
 
-$sql = "SELECT a.product_id as id, a.product_category_id as category_id, b.description as category_description FROM product_is_category as a inner join product_category as b on a.product_category_id = b.id order by id;";
+$sql = "SELECT a.product_id AS id, a.product_category_id AS category_id, b.description AS category_description
+        FROM product_is_category AS a
+        INNER JOIN product_category AS b ON a.product_category_id = b.id
+        ORDER BY id;";
 
 if($result = mysqli_query($con,$sql))
 {
@@ -41,7 +45,7 @@ if($result = mysqli_query($con,$sql))
       }
     }
   }
-  // echo json_encode($products);
+  // echo json_encode($ids);
 }
 else
 {

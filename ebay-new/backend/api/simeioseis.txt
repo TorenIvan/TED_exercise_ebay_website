@@ -1,5 +1,4 @@
 //8a doume pote
 Ti allo 8eloume? Let's find out:
-  A) WHY THE FUCK KEEPS DOING THAT FUCKING WAITING
-  B) LSH
-  C) HTTPS
+  A) LSH
+  B) HTTPS

@@ -12,8 +12,6 @@
 
     <!--DataTables CDN && js file-->
     <link rel="stylesheet" routerLink="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -44,53 +42,25 @@
     <div class="dTableCont">
         <div class="d-flex justify-content-center blueBox">
 
-            <table id="tableP" #tableP datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display dTable" cellspasing="0">
-                <div *ngIf="loading else loaded">
-                    <tbody>
-                        <tr>
-                            <td colspan="14" class="no-data-available">Loading...</td>
-                            <!-- <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td> -->
-                        </tr>
-                    </tbody>
-                </div>
-                <ng-template #loaded>
-                    <tbody *ngIf="users?.length != 0" [@listAnimation]="items.length">
-                        <tr *ngFor="let user of users">
-                            <td>{{user.id}}</td>
-                            <td>{{user.username}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.name}}</td>
-                            <td>{{user.surname}}</td>
-                            <td>{{user.phone_number}}</td>
-                            <td>{{user.country}}</td>
-                            <td>{{user.state}}</td>
-                            <td>{{user.town}}</td>
-                            <td>{{user.address}}</td>
-                            <td>{{user.postcode}}</td>
-                            <td>{{user.afm}}</td>
-                            <td>{{user.latitude}}</td>
-                            <td>{{user.longitude}}</td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngIf="users == null">
-                        <tr>
-                            <td colspan="5" class="no-data-available">No users in the system yet!</td>
-                        </tr>
-                    </tbody>
-                </ng-template>
+            <table id="tableP" #tableP datatable [dtOptions]="dtOptions" class="display dTable" cellspasing="0">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Phone Number</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>Town</th>
+                        <th>Address</th>
+                        <th>Postcode</th>
+                        <th>TIN / ΑΦΜ</th>
+                        <th>Rating Bidder</th>
+                        <th>Rating Seller</th>
+                    </tr>
+                </thead>
                 <tfoot>
                     <tr>
                         <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
@@ -105,8 +75,8 @@
                         <th><input type="text" placeholder="Search address" name="search-address" hidden disabled/></th>
                         <th><input type="text" placeholder="Search postcode" name="search-postcode" hidden disabled/></th>
                         <th><input type="text" placeholder="Search afm" name="search-afm" /></th>
-                        <th><input type="text" placeholder="Search latitude" name="search-latitude" hidden disabled/></th>
-                        <th><input type="text" placeholder="Search longitude" name="search-longitude" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search rating bidder" name="search-rating-bidder" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search rating seller" name="search-rating-seller" hidden disabled/></th>
                     </tr>
                 </tfoot>
             </table>
@@ -206,6 +176,10 @@
 
     </footer>
     <!-- Footer -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 </body>
 
 </html>

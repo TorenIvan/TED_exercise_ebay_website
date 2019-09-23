@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
-import { Product } from '../product';
-import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,7 +27,7 @@ import 'datatables.net-dt';
     ])
   ]
 })
-export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
+export class IndexUserComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
@@ -37,19 +35,9 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren(ModalDirective)
   modal: QueryList<ModalDirective>;
 
-  modalBody: string;
-
   bidAmount: number;
 
   dtOptions: DataTables.Settings = {};
-
-  products: Product[][] = [];
-
-  p: Product[];
-
-  datatable: any;
-
-  dtTrigger: Subject<any> = new Subject();
 
   openform = false;
 
@@ -64,58 +52,22 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   modals:any;
 
-  tableInstance: any;
-
-  loading: boolean;
+  data: any = [];
 
   lat: number;
   lon: number;
   zoom: number = 15;
 
-  items = [];
-
-  data: any = [];
-
   dataAddress: string = "";
 
   images = ['../../assets/b.png'];
 
-  ohgjhyh: number = 0;
-
   constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
-
-  apiCall(i): Promise<Product[]> {
-    return new Promise((resolve, reject) => {
-      this.tableService.getAllAuctions(i).toPromise().then(
-        (res: Product[]) => {
-          this.products[i] = [];
-          this.products[i] = res;
-          resolve();
-        }
-      );
-    });
-  }
 
   ngOnInit() {
 
-    this.loading = true;
-
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
-
-
-    // for(let i=0; i<40; i++){
-    //   this.apiCall(i).then( (data: Product[]) => {
-    //     this.loading = false;
-    //     this.products[i].forEach((product, idx) => {
-    //       setTimeout(() => {
-    //         this.items.push(product);
-    //       }, 500 * (idx + 1));
-    //     });
-    //   });
-    // }
-
-    // this.p = this.items;
 
     this.bidAmount = 0;
 
@@ -126,90 +78,79 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         url: 'http://localhost:8080/api/read.php'
       },
       columns: [
-        // { title: 'id' },
+        { title: 'id', data: 'id'},
         { title: 'Seller', data: 'user_surname' },
         { title: 'Product', data: 'product_name' },
         { title: 'Buy Price', data: 'buy_price' },
         { title: 'Currently', data: 'currently' },
-        // { title: 'First Bid' },
-        // { title: 'Number of Bids' },
+        { title: 'First Bid', data: 'first_bid' },
+        { title: 'Number of Bids', data: 'number_of_bids' },
         { title: 'Start Date', data: 'start_date' },
-        // { title: 'End Date' },
-        // { title: 'Description' },
-        // { title: 'Country' },
-        // { title: 'State' },
-        // { title: 'Town' },
-        // { title: 'Address' },
-        // { title: 'Postcode' },
-        // { title: 'Latitude' },
-        // { title: 'Longitude' },
-        // { title: 'UserId' },
-        { title: 'Category', data: 'categories' }
-        // { title: 'Path' }
+        { title: 'End Date', data: 'end_date' },
+        { title: 'Description', data: 'description' },
+        { title: 'Country', data: 'country' },
+        { title: 'State', data: 'state' },
+        { title: 'Town', data: 'town' },
+        { title: 'Address', data: 'address' },
+        { title: 'Postcode', data: 'postcode' },
+        { title: 'Latitude', data: 'latitude' },
+        { title: 'Longitude', data: 'longitude' },
+        { title: 'Creator', data: 'id_creator' },
+        { title: 'Category', data: 'categories' },
+        { title: 'Path', data: 'images' }
+      ],
+      columnDefs: [
+        { "searchable": false, "visible": false, "targets": 0 },
+        { "searchable": false, "visible": false, "targets": 5 },
+        { "searchable": false, "visible": false, "targets": 6 },
+        { "searchable": false, "visible": false, "targets": 8 },
+        { "searchable": true, "visible": false, "targets": 9 },
+        { "searchable": true, "visible": false, "targets": 10 },
+        { "searchable": true, "visible": false, "targets": 11 },
+        { "searchable": true, "visible": false, "targets": 12 },
+        { "searchable": false, "visible": false, "targets": 13 },
+        { "searchable": false, "visible": false, "targets": 14 },
+        { "searchable": false, "visible": false, "targets": 15 },
+        { "searchable": false, "visible": false, "targets": 16 },
+        { "searchable": false, "visible": false, "targets": 17 },
+        { "searchable": false, "visible": false, "targets": 19 }
       ],
       order: [[ 2, "asc" ]],
-      // columnDefs: [
-        // { "searchable": false, "visible": false, "targets": 0 },
-        // { "searchable": false, "visible": false, "targets": 5 },
-        // { "searchable": false, "visible": false, "targets": 6 },
-        // { "searchable": false, "visible": false, "targets": 8 },
-        // { "searchable": true, "visible": false, "targets": 9 },
-        // { "searchable": true, "visible": false, "targets": 10 },
-        // { "searchable": true, "visible": false, "targets": 11 },
-        // { "searchable": true, "visible": false, "targets": 12 },
-        // { "searchable": false, "visible": false, "targets": 13 },
-        // { "searchable": false, "visible": false, "targets": 14 },
-        // { "searchable": false, "visible": false, "targets": 15 },
-        // { "searchable": false, "visible": false, "targets": 16 },
-        // { "searchable": false, "visible": false, "targets": 17 },
-        // { "searchable": false, "visible": false, "targets": 19 }
-      // ],
-      rowCallback: (row: Node, data: any[] | Object, index: number) => {
-        const self = this;
+      deferRender: true,
+      rowCallback: (row: Node, data: any[] | Object) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
-          // if(data[19] == '') {
-          //   this.images = [];
-          // } else {
-          //   this.images = data[19].split(",");
-          // }
-          // this.bidAmount = 0;
-          // this.usersAuction = false;
-          // console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          // this.data = data;
-          // this.dataAddress = data[10] + ", " + data[12] + ", " + data[13] + ", " + data[14] + " " + data[11];
-          // this.lat = parseFloat(data[15]);
-          // this.lon = parseFloat(data[16]);
-          // if(data[17] == this.idUser.toString()) {
-          //   this.usersAuction = true;
-          // } else {
-          //   this.idAuctionToBid = data[0];
-          //   if(data[3].trim() == '') {
-          //     this.buyPriceOfAuction = 0;
-          //   } else {
-          //     this.buyPriceOfAuction = data[3];
-          //   }
-          // }
+          // console.log("row: " + row + "\ndata: " + data['id'] + "\nindex: "+  index);
+          if(data['images'] == '') {
+            this.images = [];
+          } else {
+            this.images = data['images'];
+          }
+          this.bidAmount = 0;
+          this.usersAuction = false;
+          this.dataAddress = data['country'] + ", " + data['town'] + ", " + data['address'] + ", " + data['postcode'] + " " + data['state'];
+          this.lat = parseFloat(data['latitude']);
+          this.lon = parseFloat(data['longitude']);
+          if(data['id_creator'] == this.idUser.toString()) {
+            this.usersAuction = true;
+          } else {
+            this.idAuctionToBid = data['id'];
+            if(data['buy_price'] == null || data['buy_price'].trim() == '') {
+              this.buyPriceOfAuction = 0;
+            } else {
+              this.buyPriceOfAuction = data['buy_price'];
+            }
+          }
+          this.data = data;
           this.modal.first.show();
         });
         return row;
       }
     };
-
-    // this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-    //   dtInstance.draw();
-    // });
   }
-
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
-  }
-
-
+    
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
-    this.dtTrigger.next();
-    this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -222,16 +163,6 @@ export class IndexUserComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     });
-    this.rerender();
-  }
-
-  rerender(): void{
-      this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
-      });
   }
 
   openBiddingForm() {

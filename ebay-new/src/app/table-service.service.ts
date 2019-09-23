@@ -8,10 +8,6 @@ export class TableServiceService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllAuctions(i) {
-    return this.httpClient.post('/api/read.php', {i})
-  }
-
   checkUser(username, password) {
     return this.httpClient.post('/api/signin.php', {username, password})
   }
@@ -24,20 +20,8 @@ export class TableServiceService {
     return this.httpClient.post('api/retrievepass.php', {email})
   }
 
-  getMyAuctions(id) {
-    return this.httpClient.post('/api/usersonlyauctions.php', {id})
-  }
-
   getUserInfo(id) {
     return this.httpClient.post('/api/userinfo.php', {id})
-  }
-
-  getAllUsers() {
-    return this.httpClient.post('/api/printusers.php', {})
-  }
-
-  getApplications() {
-    return this.httpClient.post('/api/printuserlistwithconnect.php', {})
   }
 
   deleteUser(id) {

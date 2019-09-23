@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
 import { Product } from '../product';
 import { Bid } from '../bid';
-import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
-import { Category, Cat } from '../category';
+import { Cat } from '../category';
 
 import {} from 'googlemaps';
 
@@ -36,7 +35,7 @@ import { trigger, style, query, stagger, animate, transition } from '@angular/an
     ])
   ]
 })
-export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
   datatableElement: DataTableDirective;
@@ -44,19 +43,9 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   @ViewChildren(ModalDirective)
   modal: QueryList<ModalDirective>;
 
-  modalBody: string;
-
   categories: any[] = [];
 
-  selectedCategory: Category;
-
   dtOptions: DataTables.Settings = {};
-
-  products: Product[];
-
-  datatable: any;
-
-  dtTrigger: Subject<any> = new Subject();
 
   ableToDeleteAuction: boolean; // an uparxei estw kai ena bid den mporei na diagrafei
 
@@ -72,8 +61,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
   auctionAddress: string;
 
-  tableInstance: any;
-
   modals: any;
   
   hhh: string;
@@ -81,8 +68,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   res: string;
 
   saveButton: boolean;
-
-  loading: boolean;
 
   infoForm = new FormGroup({
     prForm : new FormControl(),
@@ -103,8 +88,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
   zoom: number = 15;
 
   geocoder: any;
-
-  items = [];
   
   uploadIm: string[] = [];
   
@@ -145,22 +128,12 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
-  apiCall(): Promise<Product[]> {
-    return new Promise((resolve) => {
-      this.tableService.getMyAuctions(this.idUser).toPromise().then(
-        (res: Product[]) => {
-          this.products = res;
-          resolve();
-        }
-      );
-    });
-  }
-
   apiCall2(): Promise<Product[]> {
     return new Promise((resolve) => {
       this.tableService.getBids(this.idAuction).toPromise().then(
         (res: Bid[]) => {
           this.bids = res;
+          console.log(this.bids);
           resolve();
         }
       );
@@ -171,51 +144,46 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
 
     this.tableService.getAllCategories().subscribe((data: any[]) => {
       this.categories = data;
-      // this.getSelected();
     });
     
     // id xrhsth
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log(this.idUser);
 
-    this.loading = true;
-
     this.loading1 = true;
 
     this.saveButton = false;
 
-    this.apiCall().then( () => {
-      this.loading = false;
-      this.products.forEach((product, idx) => {
-        setTimeout(() => {
-          this.items.push(product);
-        }, 500 * (idx + 1));
-      });
-    });
-
     this.dtOptions = {
       retrieve: true,
       pagingType: 'full_numbers',
+      ajax: {
+        url: 'http://localhost:8080/api/usersonlyauctions.php',
+        type: 'POST',
+        data: {
+          id: this.idUser
+        }
+      },
       columns: [
-        { title: 'id' },
-        { title: 'Seller' },
-        { title: 'Product' },
-        { title: 'Buy Price' },
-        { title: 'Currently' },
-        { title: 'First Bid' },
-        { title: 'Number of Bids' },
-        { title: 'Start Date' },
-        { title: 'End Date' },
-        { title: 'Description' },
-        { title: 'Country' },
-        { title: 'State' },
-        { title: 'Town' },
-        { title: 'Address' },
-        { title: 'Postcode' },
-        { title: 'Latitude' },
-        { title: 'Longitude' },
-        { title: 'Category' },
-        { title: 'Path' }
+        { title: 'id', data: 'id'},
+        { title: 'Seller', data: 'user_surname' },
+        { title: 'Product', data: 'product_name' },
+        { title: 'Buy Price', data: 'buy_price' },
+        { title: 'Currently', data: 'currently' },
+        { title: 'First Bid', data: 'first_bid' },
+        { title: 'Number of Bids', data: 'number_of_bids' },
+        { title: 'Start Date', data: 'start_date' },
+        { title: 'End Date', data: 'end_date' },
+        { title: 'Description', data: 'description' },
+        { title: 'Country', data: 'country' },
+        { title: 'State', data: 'state' },
+        { title: 'Town', data: 'town' },
+        { title: 'Address', data: 'address' },
+        { title: 'Postcode', data: 'postcode' },
+        { title: 'Latitude', data: 'latitude' },
+        { title: 'Longitude', data: 'longitude' },
+        { title: 'Category', data: 'categories' },
+        { title: 'Path', data: 'images' }
       ],
       order: [[ 2, "asc" ]],
       columnDefs: [
@@ -233,35 +201,37 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
         { "searchable": false, "visible": false, "targets": 16 },
         { "searchable": false, "visible": false, "targets": 18 }
       ],
-      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+      rowCallback: (row: Node, data: any[] | Object) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           this.selected_categories = [];
-          console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
-          if(data[18] == '') {
+          // console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
+          if(data['images'] == '') {
             this.images = [];
           } else {
-            this.images = data[18].split(",");
+            this.images = data['images'];
           }
+          const s = data['start_date'].split(" ");
+          const e = data['end_date'].split(" ");
           this.infoForm.patchValue({
-            prForm: data[2],
-            seForm: data[1],
-            deForm: data[9],
-            adForm: data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11],
-            cdForm: data[17],
-            bpForm: data[3],
-            cuForm: data[4],
-            sdForm: formatDate(data[7], 'yyyy-MM-dd', 'en'),
-            edForm: formatDate(data[8], 'yyyy-MM-dd', 'en')
+            prForm: data['product_name'],
+            seForm: data['user_surname'],
+            deForm: data['description'],
+            adForm: data['country'] + ", " + data['town'] + ", " + data['address'] + " " + data['postcode'] + ", " + data['state'],
+            cdForm: data['categories'],
+            bpForm: data['buy_price'],
+            cuForm: data['currently'],
+            sdForm: formatDate(s[0], 'yyyy-MM-dd', 'en'),
+            edForm: formatDate(e[0], 'yyyy-MM-dd', 'en')
           });
-          this.lat = parseFloat(data[15]);
-          this.lon = parseFloat(data[16]);
+          this.lat = parseFloat(data['latitude']);
+          this.lon = parseFloat(data['longitude']);
           this.saveButton = false;
-          this.auctionAddress = data[10] + ", " + data[12] + ", " + data[13] + " " + data[14] + ", " + data[11];
-          this.idAuction = data[0];
+          this.auctionAddress = data['country'] + ", " + data['town'] + ", " + data['address'] + " " + data['postcode'] + ", " + data['state'];
+          this.idAuction = data['id'];
           var sd, now;
-          if((sd = new Date(data[7])) > (now = new Date())) {
-            if(data[6] == 0) {
+          if((sd = new Date(s[0])) > (now = new Date())) {
+            if(data['number_of_bids'] == 0) {
               this.ableToDeleteAuction = false;
             } else {
               this.ableToDeleteAuction = true;
@@ -269,7 +239,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
           } else {
             this.ableToDeleteAuction = true;;
           }
-          if(data[6] == 0) {
+          if(data['number_of_bids'] == 0) {
             this.hasBids = true;
           } else {
             this.hasBids = false;
@@ -283,21 +253,10 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     };
 
     this.onChanges();
-
-    this.datatableElement.dtInstance.then( (dtInstance: DataTables.Api) => {
-      dtInstance.draw();
-    });
   }
-
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
-  }
-
 
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
-    this.dtTrigger.next();
-    this.tableInstance = this.datatableElement;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
@@ -311,16 +270,6 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       });
     });
     this.geocoder = new google.maps.Geocoder;
-    this.rerender();
-  }
-
-  rerender(): void{
-    this.tableInstance.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
   }
 
   openFormForNewAuction() {
@@ -371,7 +320,7 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
     var latitude = 0;
     var longitude = 0;
 
-    // console.log(category);
+    console.log(this.selected_categories);
 
     if(product.trim() && description.trim() && buy_price.trim() && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
       this.geocoder.geocode({address: location}, (
@@ -509,6 +458,8 @@ export class PersonalAuctionsComponent implements OnInit, OnDestroy, AfterViewIn
       );
 
     }
+
+    console.log(this.selected_categories);
 
     if(product != '' && this.infoForm.get('cdForm').value.trim() != '' && description != '' && buy_price > 0 && start_date != null && end_date != null && this.infoForm.get('adForm').value.trim() != '') {
       this.tableService.saveAuctionChanges(this.idAuction, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude).subscribe(data => {

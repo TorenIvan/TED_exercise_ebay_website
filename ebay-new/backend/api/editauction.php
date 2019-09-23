@@ -14,9 +14,13 @@ if(isset($_POST) && !empty($_POST)) {
   $auction_id = htmlspecialchars($_POST['id']);
   $buy_price = htmlspecialchars($_POST['buy_price']);
   $start_date = htmlspecialchars($_POST['start_date']);
-  $start_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
+  $start_formatted_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d');
+  $start_date = DateTime::createFromFormat('Y-m-d', $start_date)->format('M-d-y H-m-s');
+  $start_date = strval($start_date);
   $end_date = htmlspecialchars($_POST['end_date']);
-  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
+  $end_formatted_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('Y-m-d');
+  $end_date = DateTime::createFromFormat('Y-m-d', $end_date)->format('M-d-y H-m-s');
+  $end_date = strval($end_date);
   $pname = htmlspecialchars($_POST['product']);
   $pdescription = htmlspecialchars($_POST['description']);
   $ptown = htmlspecialchars($_POST['town']);
@@ -63,11 +67,11 @@ if(isset($_POST) && !empty($_POST)) {
   if($stmt1 = mysqli_prepare($con, $sql1)) {
     // print_r($sql1);
     #check for start_date
-    if ((new DateTime())->format('Y-m-d') > $start_date) {
+    if ((new DateTime())->format('Y-m-d') > $start_formatted_date  || $end_formatted_date < $start_formatted_date) {
       echo json_encode("Datetime is wrong");
       // exit("Datetime is wrong\n");
     } else {
-      mysqli_stmt_bind_param($stmt1, dssi , $param_buy_price, $param_start_date, $param_end_date, $param_id);
+      mysqli_stmt_bind_param($stmt1, 'dssi' , $param_buy_price, $param_start_date, $param_end_date, $param_id);
       $param_buy_price = $buy_price;
       $param_start_date = $start_date;
       $param_end_date = $end_date;
@@ -83,7 +87,7 @@ if(isset($_POST) && !empty($_POST)) {
       if ($stmt2 = mysqli_prepare($con, $sql2)) {
         // print_r($sql2);
         if($pcountry == '' && $pstate == '' && $ptown == '' && $paddress == '' && $ppostcode == '') {
-          mysqli_stmt_bind_param($stmt2, ssi, $param_name, $param_description, $param_id);
+          mysqli_stmt_bind_param($stmt2, 'ssi', $param_name, $param_description, $param_id);
           $param_name = $pname;
           $param_description = $pdescription;
           $param_id = $auction_id;
@@ -94,7 +98,7 @@ if(isset($_POST) && !empty($_POST)) {
           mysqli_stmt_close($stmt2);
         } else {
           
-          mysqli_stmt_bind_param($stmt2, sssssssdd, $param_name, $param_description, $param_country, $param_state, $param_town, $param_address, $param_postcode, $param_latitude, $patam_longitude);
+          mysqli_stmt_bind_param($stmt2, 'sssssssdd', $param_name, $param_description, $param_country, $param_state, $param_town, $param_address, $param_postcode, $param_latitude, $patam_longitude);
           $param_name = $pname;
           $param_description = $pdescription;
           $param_country = $pcountry;
@@ -124,7 +128,7 @@ if(isset($_POST) && !empty($_POST)) {
           $sql3 = "SELECT product_id FROM auction WHERE id = ?;";
 
           if ($stmt3 = mysqli_prepare($con, $sql3)) {
-            mysqli_stmt_bind_param($stmt3, i, $param_id);
+            mysqli_stmt_bind_param($stmt3, 'i', $param_id);
             $param_id = $auction_id;
             mysqli_stmt_execute($stmt3);
             mysqli_stmt_bind_result($stmt3, $data_id);
@@ -136,20 +140,17 @@ if(isset($_POST) && !empty($_POST)) {
               $sql4 = "DELETE FROM product_is_category WHERE product_id = $data_id;";
 
               if($stmt4 = mysqli_query($con, $sql4)) {
-                
-                mysqli_stmt_close($stmt4);
 
                 for ($i = 0; $i < $krata; $i++) {
 
-                  $sql5 = "INSERT INTO product_is_category (product_id, product_category_id) VALUES ($data_id, $category_ids[$i]);";
+                  $sql5 = "INSERT INTO product_is_category (product_id, product_category_id, category_list) VALUES ($data_id, $category_ids[$i], $i);";
 
                   if($stmt5 = mysqli_query($con, $sql5)) {
-                    mysqli_stmt_close($stmt5);
                     //OLA KALA
                     $flag = true;
                   }else {
                     $flag = false;
-                    echo json_encode("Something is wrong with fifth prepare");
+                    echo json_encode("Something is wrong with fifth query");
                     break;
                   }
                 }
@@ -157,7 +158,7 @@ if(isset($_POST) && !empty($_POST)) {
                   echo json_encode("1");
                 }
               } else {
-                echo json_encode("Something is wrong with forth prepare");
+                echo json_encode("Something is wrong with forth query");
               }
             } else {
               echo json_encode("One id too many products!!!");

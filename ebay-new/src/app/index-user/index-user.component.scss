@@ -54,16 +54,18 @@ p {
 }
 
 .dTableCont {
-    height: 85%;
+    min-height: 85%;
+    height: fit-content;
     align-content: center;
-    padding-block-start: 5%;
+    padding-block-start: 2%;
+    padding-block-end: 2%;
     width: inherit;
 }
 
 .blueBox {
     background-color: #83b7d8b4;
     height: fit-content;
-    padding: 2% 0 1.5% 0;
+    padding: 2% 5% 1.5% 5%;
     margin: 0 1%;
     border-radius: 20px;
 }
@@ -512,6 +514,7 @@ table.dataTable td {
 
 .dataTables_wrapper {
     position: relative;
+    width: 70vh;
     clear: both;
     *zoom: 1;
     // Page length options
