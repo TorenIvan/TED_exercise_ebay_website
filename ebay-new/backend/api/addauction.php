@@ -175,7 +175,7 @@ if(isset($_POST) && !empty($_POST)) {
                       //require product_category ;i apla grapse to
                       $krata = count($category_ids);
                       for ($i = 0; $i < $krata; $i++) {
-                        $sqlpic = "INSERT INTO product_is_category (product_id, product_category_id) VALUES ($param_product_id, $category_ids[$i]);";
+                        $sqlpic = "INSERT INTO product_is_category (product_id, product_category_id, category_list) VALUES ($param_product_id, $category_ids[$i], $i);";
                         if($resultpic = mysqli_query($con,$sqlpic)){
                           //OLA KALA
                           echo json_encode("1");

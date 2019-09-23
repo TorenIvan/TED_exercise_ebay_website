@@ -41,6 +41,15 @@ if($result = mysqli_query($con,$sql))
           while($row4 = mysqli_fetch_assoc($result4)) {
             $categories[$cr]['items'][$cr1]['items'][$cr2]['items'][$cr3]['items'][$cr4]['context'] = $row4['id'].' 4';
             $categories[$cr]['items'][$cr1]['items'][$cr2]['items'][$cr3]['items'][$cr4]['label'] = $row4['description'];
+
+            $sql5 = "select * from SubCategoriesLevel5 where id_Father=".$row4['id'].";";
+            $result5 = mysqli_query($con,$sql5);
+            $cr5 = 0;
+            while($row5 = mysqli_fetch_assoc($result5)) {
+              $categories[$cr]['items'][$cr1]['items'][$cr2]['items'][$cr3]['items'][$cr4]['items'][$cr5]['context'] = $row5['id'].' 5';
+              $categories[$cr]['items'][$cr1]['items'][$cr2]['items'][$cr3]['items'][$cr4]['items'][$cr5]['label'] = $row5['description'];
+              $cr5++;
+            }
             $cr4++;
           }
           $cr3++;
