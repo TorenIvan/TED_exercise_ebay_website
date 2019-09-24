@@ -52,6 +52,8 @@ export class ApplicationsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
+    const that = this;
+
     this.dtOptions = {
       dom: 'Blfrtip',
       buttons: [
@@ -59,14 +61,36 @@ export class ApplicationsComponent implements OnInit, AfterViewInit {
           text: 'Accept All',
           key: '1',
           action: function ( e, dt, button, config ) {
-            alert("Accepted All()");
+            $.ajax({
+              url: 'http://localhost:8080/api/acceptall.php',
+              type: 'POST',
+              data: {
+                id: that.idUser,
+                flag: 2
+              },
+              success: function(r) {
+                // console.log(r);
+                that.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
+              }
+            })
           }
         },
         {
           text: 'Reject All',
           key: '2',
           action: function (e, dt, node, config) {
-            alert("Rejected All()");
+            $.ajax({
+              url: 'http://localhost:8080/api/acceptall.php',
+              type: 'POST',
+              data: {
+                id: that.idUser,
+                flag: 3
+              },
+              success: function(r) {
+                // console.log(r);
+                that.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
+              }
+            })
           }
         }
       ],
