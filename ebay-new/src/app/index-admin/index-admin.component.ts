@@ -94,7 +94,7 @@ export class IndexAdminComponent implements OnInit, AfterViewInit {
             var options = {compact: true, ignoreComment: true, spaces: 4};
             var result = convert.json2xml(p, options);
 
-            console.log(result);
+            // console.log(result);
             saveAs(
                 new Blob( [ JSON.stringify(result) ] ),
                 'Export.xml'

@@ -21,8 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
     if(email) {
       this.tableService.sendEmail(email).subscribe(data => {
         if(data != null) {
-          console.log(data)
-          // form.querySelector('#result').style.color = "rgb(6, 73, 52)" //green
+          // console.log(data)
           form.querySelector('#result').style.color = "white"
           form.querySelector('#result').innerHTML = data
         } else {

@@ -432,24 +432,21 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div>
-                        <table *ngIf="bids?.length > 0" [@listAnimation]="items1.length">
-                            <tr>
-                                <th>User</th>
-                                <th>Amount of money</th>
-                                <th>Time of bid</th>
-                            </tr>
-                            <div *ngIf="loading1 else loaded1">
+                        <table #tableP2 datatable [dtOptions]="dtOptions2" class="display" style="width: 100%">
+                            <thead>
                                 <tr>
-                                    <td colspan="3" class="no-data-available">Loading...</td>
+                                    <th>User</th>
+                                    <th>Amount of money</th>
+                                    <th>Time of bid</th>
                                 </tr>
-                            </div>
-                            <ng-template #loaded1>
-                                <tr *ngFor="let bid of bids">
-                                    <th>{{bid.username}}</th>
-                                    <th>{{bid.money}}</th>
-                                    <th>{{bid.time}}</th>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Amount of money</th>
+                                    <th>Time of bid</th>
                                 </tr>
-                            </ng-template>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

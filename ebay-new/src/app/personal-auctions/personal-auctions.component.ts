@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { TableServiceService } from '../table-service.service';
-import { Product } from '../product';
-import { Bid } from '../bid';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Cat } from '../category';
@@ -37,8 +35,8 @@ import { trigger, style, query, stagger, animate, transition } from '@angular/an
 })
 export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(DataTableDirective, null)
-  datatableElement: DataTableDirective;
+  @ViewChildren(DataTableDirective, null)
+  datatableElement: QueryList<DataTableDirective>;
 
   @ViewChildren(ModalDirective)
   modal: QueryList<ModalDirective>;
@@ -57,7 +55,7 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
 
   idUser: number;
 
-  idAuction: string;
+  idAuction: number;
 
   auctionAddress: string;
 
@@ -93,6 +91,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
   
   images = ['../../assets/DivaExpressLogo2.png', '../../assets/b.png', '../../assets/correct.png'];
 
+  dtOptions2: DataTables.Settings = {};
+
   config = {
     paddingAtStart: true,
     classname: 'categories-arcodion',
@@ -107,12 +107,6 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
   isCollapsed: boolean = true;
   
   hasBids: boolean;
-  
-  bids: Bid[] = [];
-  
-  items1 = [];
-
-  loading1: boolean;
 
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.infoForm = this.formBuilder.group({
@@ -128,18 +122,6 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  apiCall2(): Promise<Product[]> {
-    return new Promise((resolve) => {
-      this.tableService.getBids(this.idAuction).toPromise().then(
-        (res: Bid[]) => {
-          this.bids = res;
-          console.log(this.bids);
-          resolve();
-        }
-      );
-    });
-  }
-
   ngOnInit() {
 
     this.tableService.getAllCategories().subscribe((data: any[]) => {
@@ -148,11 +130,11 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
     
     // id xrhsth
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
-    console.log(this.idUser);
-
-    this.loading1 = true;
+    // console.log(this.idUser);
 
     this.saveButton = false;
+
+    this.idAuction = -1;
 
     this.dtOptions = {
       retrieve: true,
@@ -229,8 +211,9 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
           this.saveButton = false;
           this.auctionAddress = data['country'] + ", " + data['town'] + ", " + data['address'] + " " + data['postcode'] + ", " + data['state'];
           this.idAuction = data['id'];
-          var sd, now;
-          if((sd = new Date(s[0])) > (now = new Date())) {
+          var sd = new Date(s[0]);
+          var now = new Date();
+          if(sd > now) {
             if(data['number_of_bids'] == 0) {
               this.ableToDeleteAuction = false;
             } else {
@@ -243,7 +226,6 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
             this.hasBids = true;
           } else {
             this.hasBids = false;
-            this.loading1 = true;
           }
           this.resFlag = true;
           this.modal.first.show();
@@ -252,12 +234,34 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       }
     };
 
+    const that = this;
+
+    this.dtOptions2 = {
+      retrieve: true,
+      pagingType: 'full_numbers',
+      ajax: {
+        url: 'http://localhost:8080/api/getBidsForAuction.php',
+        type: 'POST',
+        data: function ( d ) {
+          return $.extend( {}, d, {
+            id: that.idAuction
+          } );
+       }
+      },
+      columns: [
+        { title: 'User', data: 'username'},
+        { title: 'Amount of Money', data: 'money' },
+        { title: 'Time of Bid', data: 'time' }
+      ],
+      order: [[ 1, "asc" ]]
+    };
+
     this.onChanges();
   }
 
   ngAfterViewInit() {
     this.modals = this.modal.toArray();
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.datatableElement.first.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
         $('input', this.footer()).on('keyup change', function () {
@@ -267,6 +271,12 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
             .draw();
           }
         });
+      });
+    });
+    this.datatableElement.last.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.columns().every(function () {
+        const that = this;
+        that.draw();
       });
     });
     this.geocoder = new google.maps.Geocoder;
@@ -320,19 +330,19 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
     var latitude = 0;
     var longitude = 0;
 
-    console.log(this.selected_categories);
+    // console.log(this.selected_categories);
 
     if(product.trim() && description.trim() && buy_price.trim() && category.length > 0 && country.trim() && town.trim() && address.trim() && postcode.trim() && start_date && end_date) {
       this.geocoder.geocode({address: location}, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if(status === google.maps.GeocoderStatus.OK) {
-            console.log(results);
+            // console.log(results);
             latitude = results[0].geometry.location.lat();
             longitude = results[0].geometry.location.lng();
-            console.log(latitude);
-            console.log(longitude);
+            // console.log(latitude);
+            // console.log(longitude);
           } else {
-            console.log('Geocoding service: geocoder failed due to: ' + status);
+            // console.log('Geocoding service: geocoder failed due to: ' + status);
             latitude = 0;
             longitude = 0;
           }
@@ -345,23 +355,23 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       ajaxHandler.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             flag = 1;
-            console.log("File created!");
+            // console.log("File created!");
         }
       }
       ajaxHandler.send(imageToUpload);
 
       if(flag == 1) {
         this.tableService.addAuction(this.idUser, product, description, buy_price, category, country, state, town, address, postcode, latitude, longitude, end_date, start_date).subscribe(data => {
-          console.log(data)
+          // console.log(data)
           this.hhh = data.toString();
+          // console.log("New Auction YAY!");
           this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
         });
-        console.log("New Auction YAY!");
         this.ableToSubmitAuction = false;
         this.resultFlag = false;
         this.modals[2].hide();
       } else {
-        console.log("Problem with creating pictures file");
+        // console.log("Problem with creating pictures file");
         this.ableToSubmitAuction = false;
         this.hhh = "There was a problem adding the new auction. Please try again later.";
       }
@@ -375,10 +385,10 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
   deleteAuction() {
     this.ableToDeleteAuction = true;
     this.tableService.deleteAuction(this.idAuction).subscribe(data => {
-      console.log(data);
+      // console.log(data);
+      // console.log("auction deleted with id: " + this.idAuction);
       this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
     });
-    console.log("auction deleted with id: " + this.idAuction);
     this.modals[1].hide();
     this.modals[0].hide();
     this.modals[2].hide();
@@ -444,13 +454,13 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       this.geocoder.geocode({address: location}, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if(status === google.maps.GeocoderStatus.OK) {
-            console.log(results);
+            // console.log(results);
             latitude = results[0].geometry.location.lat();
             longitude = results[0].geometry.location.lng();
-            console.log(latitude);
-            console.log(longitude);
+            // console.log(latitude);
+            // console.log(longitude);
           } else {
-            console.log('Geocoding service: geocoder failed due to: ' + status);
+            // console.log('Geocoding service: geocoder failed due to: ' + status);
             latitude = 0;
             longitude = 0;
           }
@@ -459,13 +469,13 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
 
     }
 
-    console.log(this.selected_categories);
+    // console.log(this.selected_categories);
 
     if(product != '' && this.infoForm.get('cdForm').value.trim() != '' && description != '' && buy_price > 0 && start_date != null && end_date != null && this.infoForm.get('adForm').value.trim() != '') {
       this.tableService.saveAuctionChanges(this.idAuction, product, category, description, buy_price, start_date, end_date, country, state, town, address, postcode, latitude, longitude).subscribe(data => {
-        console.log(data);
+        // console.log(data);
         if(data == '1') {
-          console.log("edited and saved changes");
+          // console.log("edited and saved changes");
           this.modals[0].hide();
           this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 40);
         } else {
@@ -527,13 +537,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
   }
 
   openBidsModal() {
-    this.apiCall2().then( () => {
-      this.loading1 = false;
-      this.bids.forEach((bid, idx) => {
-        setTimeout(() => {
-          this.items1.push(bid);
-        }, 500 * (idx + 1));
-      });
+    this.datatableElement.last.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.ajax.reload();
     });
     this.modals[0].hide();
     this.modals[3].show();

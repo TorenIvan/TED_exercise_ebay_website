@@ -65,6 +65,6 @@ export class TableServiceService {
   }
 
   getBids(id) {
-    return this.httpClient.post('/api/getBidsForAuction.php', id)
+    return this.httpClient.post('/api/getBidsForAuction.php', {id})
   }
 }

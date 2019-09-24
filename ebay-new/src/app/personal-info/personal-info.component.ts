@@ -53,7 +53,7 @@ export class PersonalInfoComponent implements OnInit {
 
   ngOnInit() {
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
-    console.log(this.idUser);
+    // console.log(this.idUser);
 
     this.tableService.getUserInfo(this.idUser).subscribe((data: User) => {
       // console.log(data);

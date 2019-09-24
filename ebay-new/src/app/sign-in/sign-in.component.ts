@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
       
       this.tableService.checkUser(username, password).subscribe(data => {
         if(data != null) {
-          console.log(data);
+          // console.log(data);
           if(data == "0") {
             this.rooter.navigateByUrl('/index');
           } else if(data == 1) {

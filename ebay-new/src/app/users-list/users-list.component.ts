@@ -128,11 +128,11 @@ export class UsersListComponent implements OnInit, AfterViewInit {
 
   deleteUser() {
     this.ableToDeleteUser = true;
-    console.log("user deleted with id: " + this.idUser);
+    // console.log("user deleted with id: " + this.idUser);
     this.tableService.deleteUser(this.idUser).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       const id = this.usernameUser;
-      console.log({userId: id});
+      // console.log({userId: id});
       axios.post('http://localhost:5200/delete', {userId: id})
         .then(() => {
           console.log("Successful!");

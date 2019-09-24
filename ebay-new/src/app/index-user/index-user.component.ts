@@ -67,7 +67,7 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
-    console.log(this.idUser);
+    // console.log(this.idUser);
 
     this.bidAmount = 0;
 
@@ -191,7 +191,7 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
     const aid = this.idAuctionToBid;
     const bp = this.buyPriceOfAuction;
     this.tableService.addBid(this.idUser, aid, this.bidAmount, bp).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.r.navigateByUrl('/refresh/+' + this.idUser + '/+' + 20);
     });
     this.modals[1].hide();

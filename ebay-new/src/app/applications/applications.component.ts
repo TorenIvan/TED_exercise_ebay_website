@@ -144,8 +144,8 @@ export class ApplicationsComponent implements OnInit, AfterViewInit {
 
   acceptUser() {
     this.tableService.acceptUser(this.idUser, 1).subscribe((data: string) => {
-        console.log(data);
-        console.log("user accepted with id: " + this.idUser);
+        // console.log(data);
+        // console.log("user accepted with id: " + this.idUser);
         this.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
     });
     this.modal.first.hide();
@@ -165,8 +165,8 @@ export class ApplicationsComponent implements OnInit, AfterViewInit {
 
   rejectUser() {
     this.tableService.acceptUser(this.idUser, 0).subscribe((data: string) => {
-      console.log(data);
-      console.log("user rejected with id: " + this.idUser);
+      // console.log(data);
+      // console.log("user rejected with id: " + this.idUser);
         this.rooter.navigateByUrl('/refresh/+' + 0 + '/+' + 10);
     });
     this.modal.first.hide();
