@@ -58,47 +58,39 @@ export class IndexAdminComponent implements OnInit, AfterViewInit {
           text: 'JSON',
           key: '1',
           action: function ( e, dt ) {
-            var data = dt.buttons.exportData();
 
-            var p = {};
-
-            for(let i = 0; i<data['body'].length; i++) {
-              p[i] = {};
-              for(let j = 0, k = 0; j<data['header'].length, k<data['body'][i].length; j++, k++) {
-                p[i][data['header'][j]] = data['body'][i][k];
+            $.ajax({
+              url: 'http://localhost:8080/api/read.php',
+              type: 'POST',
+              success: function(r) {
+                saveAs(
+                    new Blob( [ JSON.stringify( r ) ] ),
+                    'Export.json'
+                );
               }
-            }
-
-            saveAs(
-                new Blob( [ JSON.stringify( p ) ] ),
-                'Export.json'
-            );
-        }
+            })
+          }
         },
         {
           text: 'XML',
           key: '2',
           action: function (e, dt) {
-            var data = dt.buttons.exportData();
 
-            var p = {};
+            $.ajax({
+              url: 'http://localhost:8080/api/read.php',
+              type: 'POST',
+              success: function(r) {
 
-            for(let i = 0; i<data['body'].length; i++) {
-              p[i] = {};
-              for(let j = 0, k = 0; j<data['header'].length, k<data['body'][i].length; j++, k++) {
-                p[i][data['header'][j]] = data['body'][i][k];
+                var convert = require('xml-js');
+                var options = {compact: true, ignoreComment: true, spaces: 4};
+                var result = convert.json2xml(r, options);
+
+                saveAs(
+                    new Blob( [ JSON.stringify( result ) ] ),
+                    'Export.xml'
+                );
               }
-            }
-
-            var convert = require('xml-js');
-            var options = {compact: true, ignoreComment: true, spaces: 4};
-            var result = convert.json2xml(p, options);
-
-            // console.log(result);
-            saveAs(
-                new Blob( [ JSON.stringify(result) ] ),
-                'Export.xml'
-            );
+            })
           }
         }
       ],
