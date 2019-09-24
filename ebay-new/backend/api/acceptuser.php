@@ -7,19 +7,13 @@
   if(isset($_POST) && !empty($_POST)) {
     $lid = $_POST['id'];
 
-    //pairnei ena username tetoio oste na 8elei na ginei accept
-    // $lid = 16;
     $param = [];
-    //print_r("flag is 1\n"); //ara 8a mpei
-    $sqll = "SELECT * from userlist WHERE id = $lid;"; //pare ta kai bale ta se metablites oste na ta steilei sto xwstavasi(en to metaksu den xreiazetai sqlinjection check, gt exoun ginei idi check gia na mpoun sti lista. ALLA YOLO!!!)
-    //print_r($sqll);
+
+    $sqll = "SELECT * FROM userlist WHERE id = $lid;"; //pare ta kai bale ta se metablites oste na ta steilei sto xwstavasi(en to metaksu den xreiazetai sqlinjection check, gt exoun ginei idi check gia na mpoun sti lista. ALLA YOLO!!!)
+    
     if($resultl=mysqli_query($con,$sqll)){
-      // Process all rows
-      //echo "a";
-      //$count=0;
+      
       while($row = mysqli_fetch_assoc($resultl)){
-        //  echo "mpikes";
-        #//print_r($row);
         $param['id'] = $row['id'];
         $param['username'] = $row['username'];
         $param['password'] = $row['password'];
@@ -37,11 +31,11 @@
       $flag=$_POST['flag'];  //esto oti den 8elei na ton balei
       if ($flag==1) {
         require 'xwstavasi.php';
-        $sqld = "DELETE from userlist where id = $lid;";
+        $sqld = "DELETE FROM userlist WHERE id = $lid;";
         if($resultd = mysqli_query($con,$sqld)){
-          //print_r("Deleted from userlist\n");
+          
           echo json_encode("User accepted. He could sigin now");
-          //print_r("User accepted. He could sigin now\n");
+          
           #parameters of mail
           $to = $param['email'];
           $subject = "Ted_ebay admin's decision";
@@ -61,9 +55,9 @@
         }
       }elseif ($flag == 0) {
         // to reject the user
-        $sqld = "DELETE from userlist where id = $lid;";
+        $sqld = "DELETE FROM userlist WHERE id = $lid;";
         if($resultd = mysqli_query($con,$sqld)){
-          //print_r("Deleted from userlist\n");
+          
           echo json_encode("User rejected. He couldn't sign in, because administrator won't accept him");
           $to = $param['email'];
           $subject = "Ted_ebay admin's decision";
@@ -78,20 +72,46 @@
         }
       }elseif ($flag == 2) {
         // accept all
+        $sqlall = "SELECT * FROM userlist;";
+        if($resultall=mysqli_query($con,$sqlall)){
+      
+          while($rowall = mysqli_fetch_assoc($resultall)){
+            $param['id'] = $rowall['id'];
+            $param['username'] = $rowall['username'];
+            $param['password'] = $rowall['password'];
+            $param['name'] = $rowall['name'];
+            $param['surname'] = $rowall['surname'];
+            $param['email'] = $rowall['email'];
+            $param['phone_number'] = $rowall['phone_number'];
+            $param['country'] = $rowall['country'];
+            $param['state'] = $rowall['state'];
+            $param['town'] = $rowall['town'];
+            $param['address'] = $rowall['address'];
+            $param['postcode'] = $rowall['postcode'];
+            $param['afm'] = $rowall['afm'];
+
+            require 'xwstavasi.php';
+          }
+          $sqlt = "TRUNCATE TABLE userlist;";
+          if($resultd = mysqli_query($con,$sqlt)){
+            echo json_encode("ALL users accepted.");
+          }else {
+            echo json_encode("Couldn't delete data.");
+          }
+        } else {
+          echo json_encode("Something is wrong with executing query.");
+        }
       }elseif ($flag == 3) {
         //  reject all
         $sqlt = "TRUNCATE TABLE userlist;";
         if($resultd = mysqli_query($con,$sqlt)){
-          //print_r("Deleted from userlist\n");
+          
           echo json_encode("ALL users rejected.");
         }else {
-          echo json_encode("Something is wrong with sqlt, front_end send");
+          echo json_encode("Couldn't delete data.");
         }
       }else{
-        //"aa";
-        //print_r("aa");
         http_response_code(404);
-        
       }
     }else {
       echo json_encode("Something is wrong with mysqli_query");

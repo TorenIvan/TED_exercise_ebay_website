@@ -21,7 +21,7 @@ if($stmt = mysqli_prepare($con, $sql)) {
 
   //execute and insert into the db
   mysqli_stmt_execute($stmt);
-  echo json_encode("executed");
+  // echo json_encode("executed");
 
 
 }else {
