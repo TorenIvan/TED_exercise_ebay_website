@@ -4,7 +4,6 @@ import re
 import time
 from datasketch import MinHash, MinHashLSHForest
 
-
 #Preprocess will split a string of text into individual tokens/shingles based on whitespace.
 def preprocess(text):
     text = re.sub(r'[^\w\s]','',text)
@@ -25,7 +24,7 @@ def get_forest(data, perms):
 
     minhash = []
 
-    for text in data['text']:
+    for text in data['description']:
         tokens = preprocess(text)
         m = MinHash(num_perm=perms)
         for s in tokens:
@@ -46,20 +45,26 @@ def get_forest(data, perms):
 
 
 
-def predict(text, database, perms, num_results, forest):
-    start_time = time.time()
 
-    tokens = preprocess(text)
-    m = MinHash(num_perm=perms)
-    for s in tokens:
-        m.update(s.encode('utf8'))
+    def predict(text, database, perms, num_results, forest):
+        start_time = time.time()
 
-    idx_array = np.array(forest.query(m, num_results))
-    if len(idx_array) == 0:
-        return None # if your query is empty, return none
+        tokens = preprocess(text)
+        m = MinHash(num_perm=perms)
+        for s in tokens:
+            m.update(s.encode('utf8'))
 
-    result = database.iloc[idx_array]['title']
+        idx_array = np.array(forest.query(m, num_results))
+        if len(idx_array) == 0:
+            return None # if your query is empty, return none
 
-    print('It took %s seconds to query forest.' %(time.time()-start_time))
+        result = database.iloc[idx_array]['description']
 
-    return result
+        print('It took %s seconds to query forest.' %(time.time()-start_time))
+
+        return result
+
+
+
+db = pd.read_csv('/var/lib/mysql-files/all.csv')
+forest = get_forest(db, permutations)
