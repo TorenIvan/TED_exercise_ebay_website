@@ -18,7 +18,7 @@
 
     require 'read_my_categories.php';
 
-    $sql="SELECT a.id, u.surname, p.id AS product_id, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.path
+    $sql="SELECT a.id, u.username, p.id AS product_id, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.path
           FROM auction AS a
           INNER JOIN user AS u ON a.user_id = u.id AND a.user_id = $id 
           INNER JOIN product AS p ON a.product_id = p.id
@@ -30,7 +30,7 @@
       while($row = mysqli_fetch_assoc($result))
       {
         $auctions['data'][$cr]['id'] = $row['id'];
-        $auctions['data'][$cr]['user_surname'] = $row['surname'];
+        $auctions['data'][$cr]['username'] = $row['username'];
         $auctions['data'][$cr]['product_name'] = $row['name'];
         $auctions['data'][$cr]['description'] = $row['description'];
         $auctions['data'][$cr]['country'] = $row['country'];

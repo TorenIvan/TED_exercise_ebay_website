@@ -57,7 +57,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
       },
       columns: [
         { title: 'id', data: 'id'},
-        { title: 'Seller', data: 'user_surname' },
+        { title: 'Seller', data: 'username' },
         { title: 'Product', data: 'product_name' },
         { title: 'Buy Price', data: 'buy_price' },
         { title: 'Currently', data: 'currently' },

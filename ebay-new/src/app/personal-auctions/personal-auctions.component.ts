@@ -148,7 +148,7 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       },
       columns: [
         { title: 'id', data: 'id'},
-        { title: 'Seller', data: 'user_surname' },
+        { title: 'Seller', data: 'username' },
         { title: 'Product', data: 'product_name' },
         { title: 'Buy Price', data: 'buy_price' },
         { title: 'Currently', data: 'currently' },
@@ -197,7 +197,7 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
           const e = data['end_date'].split(" ");
           this.infoForm.patchValue({
             prForm: data['product_name'],
-            seForm: data['user_surname'],
+            seForm: data['username'],
             deForm: data['description'],
             adForm: data['country'] + ", " + data['town'] + ", " + data['address'] + " " + data['postcode'] + ", " + data['state'],
             cdForm: data['categories'],

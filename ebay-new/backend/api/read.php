@@ -9,7 +9,7 @@ $auctions = [];
 $files = [];
 $idcount = 0;
 
-$sql = "SELECT a.id, u.surname, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.user_id, a.path, p.id as product_id
+$sql = "SELECT a.id, u.username, p.name, p.description, p.country, p.state, p.town, p.address, p.postcode, p.latitude, p.longitude, a.buy_price, a.currently, a.first_bid, a.number_of_bids, a.start_date, a.end_date, a.user_id, a.path, p.id as product_id
 from auction as a
 inner join user as u on a.user_id = u.id
 inner join product as p on a.product_id = p.id
@@ -21,7 +21,7 @@ if($result = mysqli_query($con,$sql))
   while($row = mysqli_fetch_assoc($result))
   {
     $auctions['data'][$cr]['id']    = $row['id'];
-    $auctions['data'][$cr]['user_surname'] = $row['surname'];
+    $auctions['data'][$cr]['username'] = $row['username'];
     $auctions['data'][$cr]['product_name'] = $row['name'];
     $auctions['data'][$cr]['description'] = $row['description'];
     $auctions['data'][$cr]['country'] = $row['country'];
