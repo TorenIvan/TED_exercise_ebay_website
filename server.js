@@ -12,7 +12,11 @@ const chatkit = new Chatkit.default({
     key: process.env.CHATKIT_SECRET_KEY,
 });
 
-app.use(cors());
+var corsOptions = {
+    origin: '*'
+}
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

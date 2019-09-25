@@ -134,8 +134,15 @@ export class ChatroomComponent implements OnInit {
 
   addUser() {
     const userId = this.usernameUser;
-    axios.post('http://localhost:5200/users', {userId})
-      .then(() => {
+    const that = this;
+
+    $.ajax({
+      url: '/users',
+      type: 'POST',
+      data: {
+        userId: this.usernameUser
+      },
+      success: function() {
         const tokenProvider = new Chatkit.TokenProvider({
           url: 'http://localhost:5200/authenticate'
         });
@@ -147,17 +154,17 @@ export class ChatroomComponent implements OnInit {
         return chatManager
           .connect({
             onAddedToRoom: room => {
-              this.userRooms.push(room);
-              this.getJoinableRooms();
+              that.userRooms.push(room);
+              that.getJoinableRooms();
             },
           })
           .then(currentUser => {
-            this.currentUser = currentUser;
-            this.connectToRoom('560e768e-ff6c-4150-a205-21b67c28a708');
-            this.getJoinableRooms();
+            that.currentUser = currentUser;
+            that.connectToRoom('560e768e-ff6c-4150-a205-21b67c28a708');
+            that.getJoinableRooms();
           });
-      })
-        .catch(error => console.error(error));
+      }
+    })
   }
 
   addUserToRoom() {

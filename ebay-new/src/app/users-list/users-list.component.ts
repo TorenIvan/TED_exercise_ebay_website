@@ -130,14 +130,16 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     this.ableToDeleteUser = true;
     // console.log("user deleted with id: " + this.idUser);
     this.tableService.deleteUser(this.idUser).subscribe(data => {
-      // console.log(data);
-      const id = this.usernameUser;
-      // console.log({userId: id});
-      axios.post('http://localhost:5200/delete', {userId: id})
-        .then(() => {
+      $.ajax({
+        url: '/delete',
+        type: 'POST',
+        data: {
+          userId: this.usernameUser
+        },
+        success: function() {
           console.log("Successful!");
-        })
-        .catch(error => console.error(error));
+        }
+      })
       this.modal.first.hide();
       this.modal.last.hide();
       this.rooter.navigateByUrl('/refresh/+' + this.idUser + '/+' + 30);
