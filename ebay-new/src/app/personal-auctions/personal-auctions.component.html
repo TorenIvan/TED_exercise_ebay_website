@@ -80,14 +80,14 @@
                 <tfoot>
                     <tr>
                         <th><input type="text" placeholder="Search id" name="search-id" hidden disabled/></th>
-                        <th><input type="text" placeholder="Search seller" name="search-seller" /></th>
+                        <th><input type="text" placeholder="Search seller" name="search-seller" hidden disabled/></th>
                         <th><input type="text" placeholder="Search product" name="search-product" /></th>
                         <th><input type="text" placeholder="Search buy price" name="search-buy-price" /></th>
                         <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
                         <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
                         <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
                         <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
-                        <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search end date" name="search-end-date" /></th>
                         <th><input type="text" placeholder="description" name="description" hidden disabled/></th>
                         <th><input type="text" placeholder="country" name="country" hidden disabled/></th>
                         <th><input type="text" placeholder="state" name="state" hidden disabled/></th>
@@ -145,9 +145,11 @@
                                         </div>
                                         <div class="row" style="width: 100%">
                                             <input class="input-group" formControlName="cdForm" type="text" style="width: 60%">
-                                            <button type="button" class="btn btn-info" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="allCat" style="width: 20%; margin: auto; font-weight: bold">Edit</button>
-                                            <div id="allCat" [ngbCollapse]="isCollapsed" style="width: 80%; background-color: gainsboro; margin: auto; padding: 5px">
-                                                <ng-material-multilevel-menu [configuration]='config' [items]='categories' (selectedItem)="newItem($event)" (selectedLabel)="newLabel($event)">
+                                            <input class="input-group disabled_input" id="show_the_goddamn_buyer" formControlName="buyerForm" type="text" style="width: 30%; padding: 0 0 0 5%" [hidden]="!buyerisindahouse" disabled>
+                                            <button type="button" class="btn btn-success" style="width: 20%; margin: auto; font-weight: bold" (click)="getBuyer()" [hidden]="whatelseamigoingtothinkasaflagname">See Buyer!!!</button>
+                                            <button type="button" class="btn btn-info" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="allCat" style="width: 20%; margin: auto; font-weight: bold" [hidden]="noEdit">Edit</button>
+                                            <div id="allCat" [ngbCollapse]="isCollapsed" style="width: 80%; background-color: gainsboro; margin: auto; padding: 5px" [hidden]="noEdit">
+                                                <ng-material-multilevel-menu [configuration]='config' [items]='categories' (selectedItem)="newItem($event)" (selectedLabel)="newLabel($event)" [hidden]="noEdit">
                                                 </ng-material-multilevel-menu>
                                             </div>
                                         </div>

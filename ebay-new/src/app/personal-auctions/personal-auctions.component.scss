@@ -179,6 +179,22 @@ agm-map {
     height: fit-content;
 }
 
+.red {
+    background-color: rgba(211, 71, 71, 0.527) !important;
+}
+
+.redText {
+    color: rgb(131, 0, 0) !important;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.blueText {
+    color: rgb(0, 9, 131) !important;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 // ----------- DataTable scss! --------------------------------------------------------------------------
 //
 // Colour customisation

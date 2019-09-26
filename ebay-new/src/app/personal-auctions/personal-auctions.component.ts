@@ -12,7 +12,7 @@ import 'datatables.net-dt';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import { formatDate } from '@angular/common';
+import { formatDate, getLocaleDateTimeFormat } from '@angular/common';
 
 import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
 
@@ -76,7 +76,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
     bpForm: new FormControl(),
     cuForm: new FormControl({disabled: true}),
     sdForm: new FormControl(),
-    edForm: new FormControl()
+    edForm: new FormControl(),
+    buyerForm: new FormControl()
   });
 
   selected_categories: any[] = [];
@@ -108,6 +109,12 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
   
   hasBids: boolean;
 
+  noEdit: boolean;
+
+  buyerisindahouse: boolean;
+
+  whatelseamigoingtothinkasaflagname: boolean;
+
   constructor(private tableService: TableServiceService, private formBuilder: FormBuilder, private route: ActivatedRoute, private r: Router) {
     this.infoForm = this.formBuilder.group({
       prForm : '',
@@ -118,7 +125,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
       bpForm: '',
       cuForm: '',
       sdForm: '',
-      edForm: ''
+      edForm: '',
+      buyerForm: ''
     });
   }
 
@@ -135,6 +143,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
     this.saveButton = false;
 
     this.idAuction = -1;
+
+    this.buyerisindahouse = false;
 
     this.dtOptions = {
       retrieve: true,
@@ -167,12 +177,12 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
         { title: 'Category', data: 'categories' },
         { title: 'Path', data: 'images' }
       ],
-      order: [[ 2, "asc" ]],
+      order: [[ 8, "desc" ]],
       columnDefs: [
         { "searchable": false, "visible": false, "targets": 0 },
+        { "searchable": true, "visible": false, "targets": 1 },
         { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 8 },
         { "searchable": true, "visible": false, "targets": 9 },
         { "searchable": true, "visible": false, "targets": 10 },
         { "searchable": true, "visible": false, "targets": 11 },
@@ -183,10 +193,19 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 16 },
         { "searchable": false, "visible": false, "targets": 18 }
       ],
+      createdRow: function( row, data, dataIndex ) {
+        const now = formatDate(new Date().toUTCString(), 'yyyy-MM-dd HH-mm-ss', 'en')
+        if ( data['end_date'] < now ) {        
+          $(row).addClass('red');
+        }
+      },
       rowCallback: (row: Node, data: any[] | Object) => {
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
           this.selected_categories = [];
+          this.noEdit = false;
+          this.buyerisindahouse = false;
+          this.whatelseamigoingtothinkasaflagname = true;
           // console.log("row: " + row + "\ndata: " + data + "\nindex: "+  index);
           if(data['images'] == '') {
             this.images = [];
@@ -204,7 +223,8 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
             bpForm: data['buy_price'],
             cuForm: data['currently'],
             sdForm: formatDate(s[0], 'yyyy-MM-dd', 'en'),
-            edForm: formatDate(e[0], 'yyyy-MM-dd', 'en')
+            edForm: formatDate(e[0], 'yyyy-MM-dd', 'en'),
+            buyerForm: ''
           });
           this.lat = parseFloat(data['latitude']);
           this.lon = parseFloat(data['longitude']);
@@ -226,6 +246,12 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
             this.hasBids = true;
           } else {
             this.hasBids = false;
+          }
+          var n = formatDate(new Date().toUTCString(), 'yyyy-MM-dd HH-mm-ss', 'en')
+          if ( data['end_date'] < n ) {  
+            this.hasBids = true;
+            this.noEdit = true;
+            this.whatelseamigoingtothinkasaflagname = false;
           }
           this.resFlag = true;
           this.modal.first.show();
@@ -547,6 +573,28 @@ export class PersonalAuctionsComponent implements OnInit, AfterViewInit {
   closeBidsModal() {
     this.modals[3].hide();
     this.modals[0].show();
+  }
+
+  getBuyer() {
+    this.tableService.findTheWinner(this.idAuction).subscribe((data: string) => {
+      // console.log(data)
+      this.buyerisindahouse = true;
+      this.whatelseamigoingtothinkasaflagname = true;
+      var b = document.getElementById('show_the_goddamn_buyer');
+      if(data != null && data != '') {
+        this.infoForm.patchValue({
+          buyerForm: 'Buyer:  ' + data
+        })
+        b.classList.remove('redText');
+        b.classList.add('blueText');
+      } else {
+        this.infoForm.patchValue({
+          buyerForm: 'No buyer... Sorry :\'('
+        })
+        b.classList.remove('blueText');
+        b.classList.add('redText');
+      }
+    })
   }
 
 }
