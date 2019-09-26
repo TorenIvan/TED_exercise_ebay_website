@@ -3,6 +3,7 @@ import { TableServiceService } from '../table-service.service';
 import { DataTableDirective } from 'angular-datatables';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Recommended } from '../recommended';
 
 import { trigger, style, query, stagger, animate, transition } from '@angular/animations';
 
@@ -27,6 +28,7 @@ import 'datatables.net-dt';
     ])
   ]
 })
+
 export class IndexUserComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DataTableDirective, null)
@@ -61,6 +63,12 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
   dataAddress: string = "";
 
   images = ['../../assets/b.png'];
+
+  recommended: Recommended[] = [{'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'seller': 'bomba'},
+                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'},
+                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'},
+                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'},
+                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'}];
 
   constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
 
@@ -103,7 +111,7 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
         { "searchable": false, "visible": false, "targets": 0 },
         { "searchable": false, "visible": false, "targets": 5 },
         { "searchable": false, "visible": false, "targets": 6 },
-        { "searchable": false, "visible": false, "targets": 8 },
+        { "searchable": false, "visible": false, "targets": 7 },
         { "searchable": true, "visible": false, "targets": 9 },
         { "searchable": true, "visible": false, "targets": 10 },
         { "searchable": true, "visible": false, "targets": 11 },

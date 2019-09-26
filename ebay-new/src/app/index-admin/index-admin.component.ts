@@ -123,7 +123,7 @@ export class IndexAdminComponent implements OnInit, AfterViewInit {
         { "targets": [ 0 ], "visible": false, "searchable": false },
         { "targets": [ 5 ], "visible": false, "searchable": false },
         { "targets": [ 6 ], "visible": false, "searchable": false },
-        { "targets": [ 8 ], "visible": false, "searchable": false },
+        { "targets": [ 7 ], "visible": false, "searchable": false },
         { "targets": [ 9 ], "visible": false, "searchable": true },
         { "targets": [ 10 ], "visible": false, "searchable": true },
         { "targets": [ 11 ], "visible": false, "searchable": true },

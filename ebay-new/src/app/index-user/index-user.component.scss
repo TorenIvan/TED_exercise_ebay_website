@@ -140,6 +140,51 @@ agm-map {
     height: 300px;
 }
 
+.recomCont {
+    height: 700px;
+    align-content: center;
+    width: inherit;
+}
+
+.rList {
+    width: 100%;
+}
+
+#recomList li {
+    display: inline-block;
+    list-style-type: none;
+    padding: 0 1%;
+}
+
+.rListDiv {
+    padding: 0 1%;
+    min-height: 100%;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 6px 6px #888888;
+    width: 280px;
+}
+
+.hRec {
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.descRec {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 60%;
+    width: inherit;
+    padding: 10px 15px 5px 15px;
+}
+
+.spanRec {
+    padding: 0 0 15px 15px;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 // ----------- DataTable scss! --------------------------------------------------------------------------
 //
 // Colour customisation

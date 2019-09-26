@@ -78,8 +78,8 @@
                         <th><input type="text" placeholder="Search currently" name="search-currently" /></th>
                         <th><input type="text" placeholder="Search first bid" name="search-first-bid" hidden disabled/></th>
                         <th><input type="text" placeholder="Search number of bids" name="search-number-of-bids" hidden disabled/></th>
-                        <th><input type="text" placeholder="Search start date" name="search-start-date" /></th>
-                        <th><input type="text" placeholder="Search end date" name="search-end-date" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search start date" name="search-start-date" hidden disabled/></th>
+                        <th><input type="text" placeholder="Search end date" name="search-end-date" /></th>
                         <th><input type="text" placeholder="description" name="description" hidden disabled/></th>
                         <th><input type="text" placeholder="country" name="country" hidden disabled/></th>
                         <th><input type="text" placeholder="state" name="state" hidden disabled/></th>
@@ -95,6 +95,24 @@
                 </tfoot>
             </table>
 
+        </div>
+    </div>
+
+    <!-- RECOMMENDED-->
+    <div class="d-flex justify-content-center" style="width: inherit; padding-block-start: 0.5%;">
+        <h3>Recommended for you</h3>
+    </div>
+    <div class="recomCont">
+        <div class="d-flex justify-content-center blueBox" style="width: inherit">
+            <ul id="recomList" class="row rList" *ngIf="recommended?.length > 0">
+                <li class="col" *ngFor="let rec of recommended">
+                    <div class="rListDiv">
+                        <h2 class="hRec">{{rec.product}}</h2>
+                        <p class="descRec">{{rec.description}}</p>
+                        <span class="spanRec">by {{rec.seller}}</span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
