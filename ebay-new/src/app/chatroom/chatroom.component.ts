@@ -31,12 +31,12 @@ export class ChatroomComponent implements OnInit {
 
   ngOnInit() {
     this.idUser = parseInt(this.route.snapshot.paramMap.get("id"));
-    console.log(this.idUser);
+    // console.log(this.idUser);
 
     new Promise((resolve, reject) => {
       this.tableService.getUserUsername(this.idUser).toPromise().then(
         (res: string) => {
-          console.log(res);
+          // console.log(res);
           switch(res) {
             case "No user with that id":
             case "problem while executing query":

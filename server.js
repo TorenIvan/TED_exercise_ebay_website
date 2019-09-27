@@ -24,7 +24,7 @@ app.post('/delete', (req, res) => {
 
     const userId = req.body.userId;
 
-    console.log(userId);
+    // console.log(userId);
 
     chatkit
         .asyncDeleteUser({
@@ -36,7 +36,7 @@ app.post('/delete', (req, res) => {
                 })
                 .then(user => {
                     console.error("User was not deleted!");
-                    console.log('got a user', user);
+                    // console.log('got a user', user);
                 })
                 .catch(err => {
                     if (err.error === 'services/chatkit/not_found/user_not_found') {
@@ -66,7 +66,7 @@ app.post('/users', (req, res) => {
         })
         .catch(err => {
             if (err.error === 'services/chatkit/user_already_exists') {
-                console.log(`User already exists: ${userId}`);
+                // console.log(`User already exists: ${userId}`);
                 res.sendStatus(200);
             } else {
                 res.status(err.status).json(err);
