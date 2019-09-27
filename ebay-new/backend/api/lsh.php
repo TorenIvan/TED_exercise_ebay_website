@@ -4,15 +4,25 @@ require 'connect.php';
 
 $data =[];
 
-$sql = "SELECT product.description as description, auction.user_id as user_id, product.name as name from product, auction where product.id = auction.product_id AND auction.user_id <> 14923 ORDER BY RAND() LIMIT 5;";
-if($result = mysqli_query($con,$sql)) {
-  $cr = 0;
-  while($row = mysqli_fetch_assoc($result)){
-    echo $data[$cr]['description'] = $row['description'];
-    echo $data[$cr]['name'] = $row['name'];
-    echo $data[$cr]['user_id'] = $row['user_id'];
-    $cr++;
-  }
-}
+$_POST = json_decode(file_get_contents('php://input'), true);
 
+  if(isset($_POST) && !empty($_POST)) {
+    $lid = htmlspecialchars($_POST['id']);
+
+    $sql = "SELECT product.description as description, user.username as username, product.name as name from product, auction, user where product.id = auction.product_id AND auction.user_id = user.id AND auction.user_id <> $lid ORDER BY RAND() LIMIT 5;";
+    if($result = mysqli_query($con,$sql)) {
+      $cr = 0;
+      while($row = mysqli_fetch_assoc($result)){
+        $data[$cr]['product'] = $row['name'];
+        $data[$cr]['description'] = $row['description'];
+        $data[$cr]['seller'] = $row['username'];
+        $cr++;
+      }
+
+      echo json_encode($data);
+    }
+} else {
+  // http_response_code("NO ONE REQUESTED THIS! WHY DO YOU ASK FOR IT?!");
+  http_response_code(404);
+}
  ?>

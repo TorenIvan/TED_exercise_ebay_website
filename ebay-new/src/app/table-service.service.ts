@@ -67,4 +67,8 @@ export class TableServiceService {
   findTheWinner(id) {
     return this.httpClient.post('/api/isThereABidder.php', {id})
   }
+
+  getRecs(id) {
+    return this.httpClient.post('/api/lsh.php', {id})
+  }
 }

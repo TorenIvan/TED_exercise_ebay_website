@@ -4,13 +4,19 @@ import sys
 import mysql.connector as mysql
 
 
+# db = mysql.connect(
+#     host = "localhost",
+#     user = "root",
+#     passwd = "toor",
+#     database = "ted_ebay"
+# )
+
 db = mysql.connect(
     host = "localhost",
-    user = "root",
-    passwd = "toor",
+    user = "ted_admin",
+    passwd = "toAdm1n!01or",
     database = "ted_ebay"
 )
-
 
 cursor = db.cursor()
 

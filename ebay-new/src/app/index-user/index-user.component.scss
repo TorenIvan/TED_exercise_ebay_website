@@ -174,7 +174,7 @@ agm-map {
 .descRec {
     text-overflow: ellipsis;
     overflow: hidden;
-    height: 60%;
+    max-height: 200px;
     width: inherit;
     padding: 10px 15px 5px 15px;
 }

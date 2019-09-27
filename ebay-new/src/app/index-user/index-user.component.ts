@@ -64,11 +64,9 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
 
   images = ['../../assets/b.png'];
 
-  recommended: Recommended[] = [{'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'seller': 'bomba'},
-                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'},
-                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'},
-                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'},
-                                {'product': 'Moumia', 'description': 'einai mia moumia pou se kunhgaei sta oneira sou kai den se afhnei se hsuxia', 'seller': 'bomba'}];
+  recommended: Recommended[] = [];
+
+  loading: boolean;
 
   constructor(private tableService: TableServiceService, private route: ActivatedRoute, private r: Router) { }
 
@@ -78,6 +76,8 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
     // console.log(this.idUser);
 
     this.bidAmount = 0;
+
+    this.loading = true;
 
     this.dtOptions = {
       retrieve: true,
@@ -155,6 +155,13 @@ export class IndexUserComponent implements OnInit, AfterViewInit {
         return row;
       }
     };
+
+    const that = this;
+
+    this.tableService.getRecs(this.idUser).subscribe((data: Recommended[]) => {
+      this.recommended = data;
+      that.loading = false;
+    })
   }
     
   ngAfterViewInit() {
